@@ -6,6 +6,9 @@ It is somewhat rudimentary in functionality (on purpose) as I was annoyed by the
 
 Also, it's worth noting that I only built this out far enough to run locally. (For more on this, read below...)
 
+## Preview
+![Screenshot](https://repository-images.githubusercontent.com/337882371/8bf10780-6bd4-11eb-9a6d-eb2282768596)
+
 ## Getting Started
 
 ### Prerequisites
