@@ -34,7 +34,7 @@ Also, it's worth noting that I only built this out far enough to run locally. (F
 ### Installation
 
 1. Clone the repo
-2. `cd cryptoaggregateviewer`
+2. `cd cryptovaluemonitor`
 3. Run `npm install`
 4. Run `npm run dev`
 5. Go to `http://localhost:5000` (this port may be different on your machine)
