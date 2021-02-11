@@ -1,0 +1,16 @@
+{
+  "wallet": [
+    {
+      "symbol": "BTC",
+      "amountHeld": 1
+    },
+    {
+      "symbol": "ETH",
+      "amountHeld": 5 
+    },
+    {
+      "symbol": "DOGE",
+      "amountHeld": 5000
+    }
+  ]
+}
