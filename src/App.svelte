@@ -38,6 +38,7 @@
 	{:else}
 		<Table displayData = {$displayData} totalValue = {$totalValue} />
 	{/if}
+	<a href="https://nomics.com" target="_blank" class="n-black n-underline-purple">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
 </main>
 
 <style>
@@ -48,5 +49,11 @@
 		display: block;
 		margin: 0 auto;
 		text-align: center;
+	}
+	a {
+		display: block;
+		margin: 20px auto 0;
+		text-align: center;
+		font-size: .8em;
 	}
 </style>
