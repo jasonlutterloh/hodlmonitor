@@ -38,7 +38,7 @@
 	{:else}
 		<Table displayData = {$displayData} totalValue = {$totalValue} />
 	{/if}
-	<a href="https://nomics.com" target="_blank" class="n-black n-underline-purple">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
+	<a href="https://nomics.com" target="_blank">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
 </main>
 
 <style>
