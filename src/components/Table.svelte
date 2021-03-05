@@ -28,13 +28,6 @@
       <td>${getDisplayValue(holding.value)}</td>
     </tr>
   {/each}
-    <tr>
-      <td></td>
-      <td>Total Value</td>
-      <td></td>
-      <td></td>
-      <td>${getDisplayValue(totalValue)}</td>
-    </tr>
   </tbody>
 </table>
 
@@ -63,7 +56,7 @@
 	tbody tr:not(:last-of-type){
 		border-bottom: thin solid #ccc;
 	}
-	tbody tr:hover:not(:last-of-type){
+	tbody tr:hover{
 		background: rgb(108 108 108);
 		color: #fff;
 		font-weight: bold;
@@ -74,11 +67,11 @@
 	tbody td:nth-of-type(2){
 		font-weight: bold;
 	}
-	tbody tr:last-of-type{
+	/* tbody tr:last-of-type{
 		background: rgba(40, 151, 85, 1);
 		color: #fff;
 		font-weight: bold;
-	}
+	} */
 	img{
 		width: 30px;
     height: 30px;
