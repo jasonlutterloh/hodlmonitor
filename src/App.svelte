@@ -7,8 +7,8 @@
 	import AddHolding from './components/AddHolding.svelte';
 	import Table from "./components/Table.svelte";
 	import { writable } from 'svelte/store';
-	import NomicsKeyForm from './components/NomicsKeyForm.svelte';
-
+	import Header from './components/Header.svelte';
+	import Setup from './components/Setup.svelte';
 	// // Store wallet data
 	// wallet.set(walletJson.wallet);
 
@@ -31,23 +31,23 @@
     });
 	});
 </script>
-
+<Header />
 <main>
 	{#if $hasError}
 		<p>Sorry, an error occurred.</p>
 	{:else}
 		<TotalValue />
-		<Table displayData = {$displayData} totalValue = {$totalValue} />
+		<Table displayData = {$displayData}/>
 		<AddHolding />
+		<Setup />
 	{/if}
-	<a href="https://nomics.com" target="_blank">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
-
-	<NomicsKeyForm />
 </main>
-
+<footer>
+	<a href="https://nomics.com" target="_blank">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
+</footer>
 <style>
 	main{
-		padding-top: 5em;
+		padding-top: 4em;
 	}
 	p{
 		display: block;
@@ -59,5 +59,12 @@
 		margin: 20px auto 0;
 		text-align: center;
 		font-size: .8em;
+		padding-bottom: .5em;
+	}
+	footer{
+		position: absolute;
+		bottom: 0;
+		text-align: center;
+		width: 100%;
 	}
 </style>
