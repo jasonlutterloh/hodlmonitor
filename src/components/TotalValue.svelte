@@ -1,11 +1,11 @@
 <script>
 	import {totalValue} from '../store.js';
-  import {getDisplayValue} from './utils.js';
+  import {getDollarDisplayValue} from './utils.js';
 </script>
 
 <div>
   <h2>Total Value</h2> 
-  <p>${getDisplayValue($totalValue)}</p>
+  <p>${getDollarDisplayValue($totalValue)}</p>
 </div>
 
 <style>

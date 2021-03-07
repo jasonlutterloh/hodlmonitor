@@ -1,25 +1,39 @@
 <script>
-	import {getDisplayValue} from './utils';
+	import {wallet} from '../store';
+	import {getDollarDisplayValue} from './utils';
+	import { fly } from 'svelte/transition';
+	import EditHolding from './edit/EditHolding.svelte';
   export let displayData;
+
+	export const editHolding = (currencyId) => {
+		//TODO:
+		console.log("Editing holding amount");
+	}
+	export const removeCurrency = (currencyId) => {
+		wallet.set($wallet.filter(holding => holding.id !== currencyId));
+	}
 </script>
 <table>
   <thead>
     <tr>
-      <th></th>
       <th>Currency</th>
-      <th>Current Price</th>
-      <th>Amount Held</th>
+      <th>Price</th>
+      <th>Amount</th>
       <th>Value</th>
+			<th>Actions</th>
     </tr>
   </thead>
   <tbody>
   {#each displayData as holding}
-    <tr>
-      <td><img src={holding.logo} alt={holding.name} width="30px" height="30px"/></td>
+    <tr out:fly="{{x:-200, duration: 500}}">
       <td>{holding.name}</td>
-      <td>${getDisplayValue(holding.price)}</td>
+      <td>${getDollarDisplayValue(holding.price)}</td>
       <td>{holding.amountHeld}</td>
-      <td>${getDisplayValue(holding.value)}</td>
+      <td>${getDollarDisplayValue(holding.value)}</td>
+			<td>
+				<EditHolding holding={holding} />
+				<button type="text" on:click={() => removeCurrency(holding.id)}>Delete</button>
+			</td>
     </tr>
   {/each}
   </tbody>
@@ -34,7 +48,7 @@
 		box-shadow: 0 0 30px 10px #ccc;
 	}
 	thead{
-		background:rgb(40, 151, 85);
+		background:#666;
 		color: white;
 		font-weight: bold;
 	}
@@ -51,7 +65,7 @@
 		border-bottom: thin solid #ccc;
 	}
 	tbody tr:hover{
-		background: rgb(108 108 108);
+		background: rgb(40, 151, 85);
 		color: #fff;
 		font-weight: bold;
   }
@@ -60,14 +74,5 @@
   }
 	tbody td:nth-of-type(2){
 		font-weight: bold;
-	}
-	/* tbody tr:last-of-type{
-		background: rgba(40, 151, 85, 1);
-		color: #fff;
-		font-weight: bold;
-	} */
-	img{
-		width: 30px;
-    height: 30px;
 	}
 </style>
