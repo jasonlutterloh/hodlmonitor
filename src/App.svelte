@@ -2,7 +2,7 @@
 	import { wallet, displayData} from './store.js';
 	import TotalValue from './components/TotalValue.svelte';
 	import AddHolding from './components/add/AddHolding.svelte';
-	import Table from "./components/Table.svelte";
+	import Table from "./components/WalletDisplay.svelte";
 	import Header from './components/Header.svelte';
 	import Footer from './components/Footer.svelte';
 import { onMount } from 'svelte';
@@ -12,21 +12,23 @@ import { onMount } from 'svelte';
 	// const holdingsArray = $wallet.map((holding)=> holding.symbol);
 
 	onMount(async () => {
-		const pricesWs = new WebSocket('wss://ws.coincap.io/prices?assets=' + commaSeparatedHoldings)
+		if ($wallet.length > 0){
+			const pricesWs = new WebSocket('wss://ws.coincap.io/prices?assets=' + commaSeparatedHoldings)
 
-    pricesWs.onmessage = function (msg) {
-    	let priceData = JSON.parse(msg.data);
-			for (const currencyId in priceData) {
-				const price = priceData[currencyId];
-				let modifiedWallet = $wallet;
-				modifiedWallet.forEach(walletHolding => {
-					if (walletHolding.id === currencyId){
-						walletHolding.priceUsd = price;
-					}
-				});
-				wallet.set(modifiedWallet);
+			pricesWs.onmessage = function (msg) {
+				let priceData = JSON.parse(msg.data);
+				for (const currencyId in priceData) {
+					const price = priceData[currencyId];
+					let modifiedWallet = $wallet;
+					modifiedWallet.forEach(walletHolding => {
+						if (walletHolding.id === currencyId){
+							walletHolding.priceUsd = price;
+						}
+					});
+					wallet.set(modifiedWallet);
+				}
 			}
-    }
+		}
 	});
 </script>
 
@@ -41,5 +43,6 @@ import { onMount } from 'svelte';
 <style>
 	main{
 		padding-top: 4em;
+		padding-bottom: 4em;
 	}
 </style>

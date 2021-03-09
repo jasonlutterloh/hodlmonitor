@@ -31,7 +31,11 @@
 
 </script>
 
-<button class="edit-button" on:click={() => formActive.set(true)}>Edit</button>
+<button class="edit-button" on:click={() => formActive.set(true)}>
+  <span class="material-icons">
+  edit
+  </span>
+</button>
 
 <Overlay trigger={formActive}>
   <h2>Edit Holding</h2>
@@ -54,7 +58,18 @@
 
 <style>
 h2{
-  font-size: 1.2em;
+  font-size: 2em;
   margin: 1em;
+}
+.edit-button{
+  background: none;
+  border: 0;
+  color: #222;
+}
+.edit-button:hover,
+.edit-button:focus{
+  background: #efefef;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>

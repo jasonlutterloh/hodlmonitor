@@ -15,7 +15,8 @@
 <style>
 	footer{
 		display: flex;
-		background: #444;
+		background: #222;
+		font-size: .8em;
 		color: white;
 	}
 	div{

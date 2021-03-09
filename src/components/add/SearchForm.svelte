@@ -56,7 +56,7 @@
     <button class="form-button" type="button" on:click={cancel}>Cancel</button>
   </div>
 </form>
-<div>
+<div class="results">
   {#if $noResultsError}
     <p>Could not find currency or currency not supported.</p>
   {:else if $searchError}
@@ -90,5 +90,8 @@ li > button {
 p{
   text-align: center;
   margin: 1em;
+}
+.results{
+  margin: 0 1em;
 }
 </style>
