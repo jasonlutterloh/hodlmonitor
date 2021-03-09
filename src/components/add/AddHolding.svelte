@@ -59,8 +59,7 @@
 
 <AddButton onClick={() => formActive.set(true)} />
 
-<Overlay trigger={formActive}>
-  <h2>Add Holding</h2>
+<Overlay trigger={formActive} title="Add Holding">
   {#if $step == 1}
     <div in:fly="{{x:200, duration: 500}}" out:fly="{{x:-200, duration: 500}}">
       <SearchForm onCancel={cancelForm} bind:holdingToAdd={holdingToAdd} />
@@ -74,32 +73,7 @@
     <p>Error: Currency already added.</p>
   {/if}
 </Overlay>
-
-
-
-
 <style>
-.add-button{
-  background: none;
-  border: 0;
-  color: #333;
-  cursor: pointer;
-  padding: 1em;
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1em;
-}
-.add-button:hover,
-.add-button:focus{
-  text-decoration: underline;
-}
-
-h2{
-  font-size: 1.2em;
-  margin: 1em;
-}
 p{
   text-align: center;
 }

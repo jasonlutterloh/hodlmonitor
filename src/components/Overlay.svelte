@@ -3,6 +3,7 @@
   import {writable} from 'svelte/store';
 
   export let trigger;
+  export let title;
 
   let isActive = writable(false);
 
@@ -19,6 +20,7 @@
 
 {#if $isActive}
 <div transition:slide>
+  <h2>{title}</h2>
   <slot></slot>
 </div>
 {/if}
@@ -34,5 +36,10 @@ div {
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
+}
+h2{
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
 }
 </style>

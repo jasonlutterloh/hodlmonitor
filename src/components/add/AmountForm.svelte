@@ -14,10 +14,10 @@
 </script>
 
 <form on:submit|preventDefault={submit}>
-  <div class="add-holding-input-container">
+  <div class="form-input-container">
     <div>
-      <label class="add-holding-label" for="amount">What amount of {currencyName} do you hold?</label>
-      <input required class="add-holding-input" id="amount" name="amount" type="number" min=0 step=.000000001 placeholder="10" />
+      <label class="form-label" for="amount">What amount of {currencyName} do you hold?</label>
+      <input required class="form-input" id="amount" name="amount" type="number" min=0 step=.000000001 placeholder="10" />
     </div>
   </div>
   <div class="button-container">

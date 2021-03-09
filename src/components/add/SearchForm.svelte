@@ -45,10 +45,10 @@
 </script>
 
 <form on:submit|preventDefault={getAsset}>
-  <div class="add-holding-input-container">
+  <div class="form-input-container">
     <div>
-      <label class="add-holding-label" for="cryptoSearch">Cryptocurrency Name or Symbol</label>
-      <input required class="add-holding-input" placeholder="BTC" type="text" name="cryptoSearch" bind:value={$searchText}/>
+      <label class="form-label" for="cryptoSearch">Cryptocurrency Name or Symbol</label>
+      <input required class="form-input" placeholder="BTC" type="text" name="cryptoSearch" bind:value={$searchText}/>
     </div>
   </div>
   <div class="button-container">

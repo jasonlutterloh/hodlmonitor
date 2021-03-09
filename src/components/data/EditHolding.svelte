@@ -34,15 +34,13 @@
 
 <EditButton onClick={() => formActive.set(true)} />
 
-<Overlay trigger={formActive}>
-  <h2>Edit Holding</h2>
-
+<Overlay trigger={formActive} title="Edit Holding">
   <div in:fly="{{x:200, duration: 500}}" out:fly="{{x:-200, duration: 500}}">
     <form on:submit|preventDefault={submit}>
-      <div class="add-holding-input-container">
+      <div class="form-input-container">
         <div>
-          <label class="add-holding-label" for="amount">What amount of {holding.name} do you hold?</label>
-          <input required class="add-holding-input" id="amount" name="amount" type="number" min=.000000001 step=.000000001 placeholder="10" value={holding.amountHeld}/>
+          <label class="form-label" for="amount">What amount of {holding.name} do you hold?</label>
+          <input required class="form-input" id="amount" name="amount" type="number" min=.000000001 step=.000000001 placeholder="10" value={holding.amountHeld}/>
         </div>
       </div>
       <div class="button-container">
@@ -52,10 +50,3 @@
     </form>
   </div>
 </Overlay>
-
-<style>
-h2{
-  font-size: 2em;
-  margin: 1em;
-}
-</style>

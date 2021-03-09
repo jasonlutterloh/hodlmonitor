@@ -5,16 +5,16 @@
 <style>
   header{
     color: white;
-    position: fixed;
     background: rgb(40, 151, 85);
     width: 100%;
-    padding: .4em;
+    flex: 0 1 auto;
   }
   h1{
-    display: inline-block;
-    font-weight: 100;
-    font-size: 1.4em;
+    display: block;
     margin: 0;
     line-height: 1em;
+    padding: 1em;
+    font-size: .8em;
+    text-transform: uppercase;
   }
 </style>

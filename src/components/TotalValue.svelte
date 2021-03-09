@@ -13,7 +13,7 @@
     background:rgb(40, 151, 85);
     color: #fff;
     margin: 0 auto;
-    padding: 4em 1em;
+    padding: 2em 1em;
     text-align: center;
   }
   h2{

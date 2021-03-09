@@ -21,21 +21,21 @@ header, main{
 footer{
 	flex-shrink: 0;
 }
-.add-holding-input-container{
+.form-input-container{
   display: flex;
   justify-content: center;
 }
-.add-holding-input-container > div{
+.form-input-container > div{
   flex: 0 1 auto;
 	text-align: center;
 }
-.add-holding-label{
+.form-label{
   display: block;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 1.1em;
   text-align: center;
 }
-.add-holding-input{
+.form-input{
   box-sizing: border-box;
   height: 1.4em;
   font-size: 1.2em;

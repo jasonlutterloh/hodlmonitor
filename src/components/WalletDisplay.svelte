@@ -19,7 +19,7 @@
 </script>
 <ul>
   {#each displayData as holding}
-	<li>
+	<li out:fly="{{x:-200}}">
 		<div class="collapsed-container">
 			<div class="name-container">
 				<h2>{holding.name}</h2>
@@ -90,7 +90,7 @@
 		text-align: left;
 	}
 	.value-container{
-		margin-right: 2em;
+		margin-right: 1em;
 		text-align: center;
 	}
 	.expanded-container{
