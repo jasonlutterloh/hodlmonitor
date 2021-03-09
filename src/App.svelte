@@ -42,7 +42,6 @@ import { onMount } from 'svelte';
 
 <style>
 	main{
-		padding-top: 4em;
 		padding-bottom: 4em;
 	}
 </style>

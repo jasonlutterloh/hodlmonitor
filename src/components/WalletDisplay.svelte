@@ -2,14 +2,12 @@
 	import {wallet} from '../store';
 	import {getDollarDisplayValue} from './utils';
 	import { fly, slide } from 'svelte/transition';
-	import EditHolding from './edit/EditHolding.svelte';
+	import EditHolding from './data/EditHolding.svelte';
+	import ExpandCollapseButton from './data/buttons/ExpandCollapseButton.svelte';
+	import DeleteButton from './data/buttons/DeleteButton.svelte';
 
   export let displayData;
 
-	export const editHolding = (currencyId) => {
-		//TODO:
-		console.log("Editing holding amount");
-	}
 	export const removeCurrency = (currencyId) => {
 		wallet.set($wallet.filter(holding => holding.id !== currencyId));
 	}
@@ -19,18 +17,7 @@
 		element.isActive = false;
 	});
 </script>
-<!-- <table>
-  <thead>
-    <tr>
-      <th>Currency</th>
-      <th>Price</th>
-      <th>Amount</th>
-      <th>Value</th>
-			<th>Actions</th>
-    </tr>
-  </thead>
-  <tbody> -->
-		<ul>
+<ul>
   {#each displayData as holding}
 	<li>
 		<div class="collapsed-container">
@@ -40,19 +27,10 @@
 			{#if !holding.isActive}
 			<!-- Doing it this way to make the animation nice. Not ideal from a code perspective-->
 			<div class="value-container" in:fly="{{x: 200, duration: 500, delay: 500}}" out:fly="{{x: 200, duration: 500}}">
-				<span class="data-label">Current Value</span>
 				<span>${getDollarDisplayValue(holding.value)}</span>
 			</div>
 			{/if}
-			<button class="expand-button" type="button" on:click={()=> holding.isActive = !holding.isActive}>
-				<span class="material-icons">
-					{#if holding.isActive} 
-						keyboard_arrow_up
-					{:else}
-						keyboard_arrow_down
-					{/if}
-					</span>
-			</button>
+			<ExpandCollapseButton bind:trigger={holding.isActive} />
 		</div>
 		{#if holding.isActive}
 		<div transition:slide class="expanded-container">
@@ -73,16 +51,10 @@
 			<div class="actions-container">
 				<span class="data-label">Actions</span>
 				<EditHolding holding={holding} />
-				<button class="delete-button" type="text" on:click={() => removeCurrency(holding.id)}>
-					<span class="material-icons">
-					delete
-					</span>
-				</button>
+				<DeleteButton onClick={() => removeCurrency(holding.id)} />
 			</div>
 		</div>
 		{/if}
-		
-		
 	</li>
   {/each}
 </ul>
@@ -100,13 +72,10 @@
 		margin: 0 auto;
 		padding: 0;
 		list-style: none;
-		box-shadow: 0 0 30px 10px #ccc;
 	}
 	li{
 		padding: 1em 1.4em;
 		transition: all .5s;
-	}
-	li:not(:last-of-type){
 		border-bottom: thin solid #ccc;
 	}
 	li > div{
@@ -161,22 +130,4 @@
 		text-transform: uppercase;
 		font-size: .6em;
 	}
-	.expand-button{
-		background: none;
-    border: 0;
-	}
-	.expand-button span{
-		color: #222;
-	}
-	.delete-button{
-  background: none;
-  border: 0;
-  color: #222;
-}
-.delete-button:hover,
-.delete-button:focus{
-  background: #efefef;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 </style>

@@ -10,7 +10,10 @@
 
 <style>
   div{
-    margin: 0 auto 1em;
+    background:rgb(40, 151, 85);
+    color: #fff;
+    margin: 0 auto;
+    padding: 4em 1em;
     text-align: center;
   }
   h2{
@@ -19,7 +22,7 @@
     margin: 0;
   }
   p{
-    color:rgb(40, 151, 85);
+    color:white;
     font-size: 2em;
     font-weight: bold;
     margin: 0;

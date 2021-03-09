@@ -3,6 +3,7 @@
   import {writable} from 'svelte/store';
   import { wallet } from '../../store.js';
   import Overlay from '../Overlay.svelte';
+  import EditButton from './buttons/EditButton.svelte';
 
   export let holding;
 
@@ -31,11 +32,7 @@
 
 </script>
 
-<button class="edit-button" on:click={() => formActive.set(true)}>
-  <span class="material-icons">
-  edit
-  </span>
-</button>
+<EditButton onClick={() => formActive.set(true)} />
 
 <Overlay trigger={formActive}>
   <h2>Edit Holding</h2>
@@ -60,16 +57,5 @@
 h2{
   font-size: 2em;
   margin: 1em;
-}
-.edit-button{
-  background: none;
-  border: 0;
-  color: #222;
-}
-.edit-button:hover,
-.edit-button:focus{
-  background: #efefef;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 </style>

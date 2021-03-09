@@ -5,6 +5,7 @@
 	import SearchForm from './SearchForm.svelte';
   import AmountForm from './AmountForm.svelte';
   import Overlay from '../Overlay.svelte';
+  import AddButton from './AddButton.svelte';
 
   let formActive = writable(false);
   let hasError = writable(false);
@@ -56,7 +57,7 @@
   });
 </script>
 
-<button class="add-button" on:click={() => formActive.set(true)}>Add Holding</button>
+<AddButton onClick={() => formActive.set(true)} />
 
 <Overlay trigger={formActive}>
   <h2>Add Holding</h2>
