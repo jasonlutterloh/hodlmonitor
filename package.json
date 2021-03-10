@@ -1,5 +1,5 @@
 {
-  "name": "crypto-value-monitor",
+  "name": "hodl-tracker",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
