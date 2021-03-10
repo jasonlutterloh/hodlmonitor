@@ -26,4 +26,6 @@ _Voila!_
 
 ## Additional Notes
 
-I used CoinCap's API for the data since they provide it without requiring an API key (which is amazing). Link [CoinCap](https://docs.coincap.io/)
+I used CoinCap's API for the data since they provide it without requiring an API key (which is amazing). Link [CoinCap](https://docs.coincap.io/).
+
+TODO: The code needs a lot of cleanup still but at least its working.
