@@ -1,6 +1,6 @@
 <script>
-	import {totalValue} from '../store.js';
-  import {getDollarDisplayValue} from './utils.js';
+	import {totalValue} from "../store.js";
+import {getDollarDisplayValue} from "./utils.js";
 </script>
 
 <div>

@@ -4,7 +4,7 @@
   export let currencyName;
 
   function submit(event) {
-    let amount = event.target.amount.value;
+    const amount = event.target.amount.value;
     console.log(amount);
     amountToAdd.set(amount);
   }

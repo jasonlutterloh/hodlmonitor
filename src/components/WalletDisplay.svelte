@@ -1,25 +1,25 @@
 <script>
-	import {wallet} from '../store';
-	import {getDollarDisplayValue} from './utils';
-	import { fly, slide } from 'svelte/transition';
-	import EditHolding from './data/EditHolding.svelte';
-	import ExpandCollapseButton from './data/buttons/ExpandCollapseButton.svelte';
-	import DeleteButton from './data/buttons/DeleteButton.svelte';
+	import {wallet} from "../store";
+	import {getDollarDisplayValue} from "./utils";
+	import {fly, slide} from "svelte/transition";
+	import EditHolding from "./data/EditHolding.svelte";
+	import ExpandCollapseButton from "./data/buttons/ExpandCollapseButton.svelte";
+	import DeleteButton from "./data/buttons/DeleteButton.svelte";
 
-  export let displayData;
+	export let displayData;
 
 	export const removeCurrency = (currencyId) => {
-		wallet.set($wallet.filter(holding => holding.id !== currencyId));
-	}
+	  wallet.set($wallet.filter((holding) => holding.id !== currencyId));
+	};
 
 	// Initialize all as collapsed
-	displayData.forEach(element => {
-		element.isActive = false;
+	displayData.forEach((element) => {
+	  element.isActive = false;
 	});
 </script>
 <ul>
   {#each displayData as holding}
-	<li out:fly="{{x:-200}}">
+	<li out:fly="{{x: -200}}">
 		<div class="collapsed-container">
 			<div class="name-container">
 				<h2>{holding.name}</h2>

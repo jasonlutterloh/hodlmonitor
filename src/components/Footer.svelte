@@ -1,16 +1,18 @@
 <script>
-	import { wallet } from '../store.js';
-	import { slide } from 'svelte/transition';
+	import {wallet} from "../store.js";
+	import {slide} from "svelte/transition";
 
 	let isExpanded = false;
 </script>
 
 <footer>
 	<button on:click={()=> isExpanded = !isExpanded}>About</button>
-	<button on:click={()=>{wallet.set([])}}>Clear Data</button>
+	<button on:click={()=>{
+wallet.set([]);
+}}>Clear Data</button>
 	{#if isExpanded}
 	<div transition:slide>
-		<strong>HODL Tracker is an open source project. <a href="#">GitHub Link</a></strong>
+		<strong>HODL Tracker is an open source project. <a href="https://github.com/jasonlutterloh/hodltracker">GitHub Link</a></strong>
 		<p>This app relies on your browser's LocalStorage for storing your holdings. The app does not trasmit holding amounts to any backend or services. The only service calls that are made are to an API provided by CoinCap in order to get pricing information.</p>
 	</div>
 	{/if}

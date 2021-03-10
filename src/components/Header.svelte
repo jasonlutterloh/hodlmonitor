@@ -1,5 +1,5 @@
 <header>
-	<h1>HODL Tracker</h1>
+	<h1>HODL Tracker (beta)</h1>
 </header>
 
 <style>

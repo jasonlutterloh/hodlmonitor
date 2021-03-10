@@ -1,5 +1,5 @@
 <script>
-  import ActionButton from './ActionButton.svelte';
+  import ActionButton from "./ActionButton.svelte";
   export let onClick;
 </script>
 

@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import json from '@rollup/plugin-json';
+import { generateSW } from 'rollup-plugin-workbox';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -59,7 +60,25 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
-
+		generateSW({
+			swDest: 'public/sw.js',
+			globDirectory: 'public/',
+			globPatterns: [
+					'**/*.{html,json,js,css}',
+			],
+			skipWaiting: true,
+			clientsClaim: true,
+			runtimeCaching: [{
+					urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+					handler: 'CacheFirst',
+					options: {
+							cacheName: 'images',
+							expiration: {
+									maxEntries: 10,
+							},
+					},
+			}],
+		}),
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
 		!production && serve(),

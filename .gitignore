@@ -3,3 +3,7 @@
 /src/nomicsKey.json
 
 /.firebase
+
+# Service Worker
+**/workbox*
+**/sw*

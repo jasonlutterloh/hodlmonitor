@@ -1,40 +1,40 @@
 <script>
-  import { writable } from 'svelte/store';
+  import {writable} from "svelte/store";
 
   export let onCancel;
   export let holdingToAdd;
   
-  let results = writable([]);
-  let searchText = writable("");
-  let noResultsError = writable(false);
-  let searchError = writable(false);
+  const results = writable([]);
+  const searchText = writable("");
+  const noResultsError = writable(false);
+  const searchError = writable(false);
 
   async function getAsset() {
     reset();
     const requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
+      method: "GET",
+      redirect: "follow",
     };
     fetch("https://api.coincap.io/v2/assets?search="+$searchText, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        console.log("Search Results", result);
-        if (result.data && result.data.length > 0){
-          results.set(result.data);
-        } else {
-          noResultsError.set(true);
-        }
-      })
-      .catch(error => {
-        console.log('Error with Search', error);
-        searchError.set(true);
-      });  
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Search Results", result);
+          if (result.data && result.data.length > 0) {
+            results.set(result.data);
+          } else {
+            noResultsError.set(true);
+          }
+        })
+        .catch((error) => {
+          console.log("Error with Search", error);
+          searchError.set(true);
+        });
   }
   function storeHoldingToAdd(result) {
     console.log("Updating holdingToAdd", result);
     holdingToAdd.set(result);
   }
-  function cancel(){
+  function cancel() {
     reset();
     onCancel();
   }

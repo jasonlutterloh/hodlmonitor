@@ -1,21 +1,19 @@
 <script>
-  import { slide } from 'svelte/transition';
-  import {writable} from 'svelte/store';
+  import {slide} from "svelte/transition";
+  import {writable} from "svelte/store";
 
   export let trigger;
   export let title;
 
-  let isActive = writable(false);
+  const isActive = writable(false);
 
-  trigger.subscribe(value => {
-    if (value === true){
+  trigger.subscribe((value) => {
+    if (value === true) {
       isActive.set(true);
     } else {
       isActive.set(false);
     }
-  })
-
-
+  });
 </script>
 
 {#if $isActive}
