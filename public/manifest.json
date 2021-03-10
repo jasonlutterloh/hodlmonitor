@@ -1,0 +1,10 @@
+{
+  "name": "HODL Tracker",
+  "short_name":"HODL",
+  "theme_color": "#ffffff",
+  "background_color": "#289755",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "splash_pages": null
+}

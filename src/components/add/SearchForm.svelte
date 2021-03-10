@@ -64,8 +64,8 @@
   {:else}
     <ul>
     {#each $results as result}
-      <li>{result.symbol} - {result.name}
-        <button on:click={() => storeHoldingToAdd(result)}>Add</button>
+      <li role="button" on:click={() => storeHoldingToAdd(result)}>{result.symbol} - {result.name}
+        <span class="material-icons">add</span>
       </li>
     {/each}
     </ul>
@@ -80,11 +80,21 @@ ul{
     max-width: 600px;
 }
 li {
+  cursor: pointer;
   padding: 1em;
-    border: 1px solid;
-    margin-bottom: .4em;
+  border: 1px solid;
+  margin-bottom: .4em;
+  transition: .5s all;
 }
-li > button {
+li:hover,
+li:focus{
+  background: white;
+  color: rgb(40, 151, 85);
+}
+li:active{
+  transform: scale(.95)
+}
+li > span{
   float: right;
 }
 p{
