@@ -1,43 +1,23 @@
-# Crypto Value Monitor
+# HODL Tracker
 
-The purpose of this app is to provide one place to view/monitor your crypto holdings spread across different wallets and systems.
+The purpose of this app is to provide one place to view/monitor your crypto holdings spread across different wallets and systems without the need for a complicated signup, API keys, or another password to remember.
 
-It is somewhat rudimentary in functionality (on purpose) as I was annoyed by the over-cluttered folio apps available and the API keys (security risks) they required. This app is probably only useful if you are hodling across a few different wallets and services and just want one place to monitor the value of your holdings.
+This app runs in the browser and relies on your browser's LocalStorage to remember your wallet. (Backup coming soon.) The only service calls are to get current prices by crypto name (the app doesn't send your data anywhere).
 
-Also, it's worth noting that I only built this out far enough to run locally. (For more on this, read below...)
+HODL Tracker is somewhat rudimentary in functionality (on purpose) as I was annoyed by the over-cluttered folio apps available and the API keys (security risks) they required.
+
+It's worth noting that this app is not going to be for everyone. It lacks historical trends, etc and is probably only useful if you are hodling across a few different wallets/services and just want one place to monitor the current value of your holdings.
 
 ## Preview
+
 ![Screenshot](https://repository-images.githubusercontent.com/337882371/8bf10780-6bd4-11eb-9a6d-eb2282768596)
 
 ## Getting Started
 
-### Prerequisites
-
-1. You must get an API key from [Nomics](https://p.nomics.com/pricing#free-plan). These are free.
-2. Update the `src/nomicsKey.json` file with your key.
-3. Update the `src/wallet.json` file with the crypto holdings you want to monitor.
-
-#### Example
-
-```json
-  {
-    "wallet": [
-      {
-        "symbol": "BTC",
-        "amountHeld": 5
-      },
-      {
-        "symbol": "ETH",
-        "amountHeld": 25
-      },
-    ]
-  }
-```
-
 ### Installation
 
 1. Clone the repo
-2. `cd cryptovaluemonitor`
+2. `cd hodltracker`
 3. Run `npm install`
 4. Run `npm run dev`
 5. Go to `http://localhost:5000` (this port may be different on your machine)
@@ -46,5 +26,6 @@ _Voila!_
 
 ## Additional Notes
 
-I only got as far as building this to run locally because that was my use case. There's a lot that could be done, though...
-You could buildand deploy it hardcoded with your data to your own server so its available anywhere. You could build it out with a login and store information by user (although, you'd need to pay for Nomics API at that point).
+I used CoinCap's API for the data since they provide it without requiring an API key (which is amazing). Link [CoinCap](https://docs.coincap.io/).
+
+TODO: The code needs a lot of cleanup still but at least its working.

@@ -1,59 +1,49 @@
 <script>
-	import {nomicsData, displayData, totalValue, wallet} from './store.js';
-	import walletJson from './wallet.json';
-	import nomicsKey from "./nomicsKey.json";
-	import { onMount } from "svelte";
-	import Table from "./components/Table.svelte";
-	import { writable } from 'svelte/store';
-
-	// Store wallet data
-	wallet.set(walletJson.wallet);
+	import {wallet, displayData} from "./store.js";
+	import TotalValue from "./components/TotalValue.svelte";
+	import AddHolding from "./components/add/AddHolding.svelte";
+	import Table from "./components/WalletDisplay.svelte";
+	import Header from "./components/Header.svelte";
+	import Footer from "./components/Footer.svelte";
+import {onMount} from "svelte";
 
 	// Get comma separated list of holdings
-	const commaSeparatedHoldings = $wallet.map((holding)=> holding.symbol).toString();
+	const commaSeparatedHoldings = $wallet.map((holding)=> holding.id).toString();
+	// const holdingsArray = $wallet.map((holding)=> holding.symbol);
 
-	// Get nomics API key
-	const key = nomicsKey.key;
-
-	// Initialize Error
-	const hasError = writable(false);
-
-	// Call Nomics to get data
 	onMount(async () => {
-		fetch("https://api.nomics.com/v1/currencies/ticker?key="+key+"&ids="+commaSeparatedHoldings)
-		.then(response => response.json())
-		.then(data => {
-      nomicsData.set(data);
-    }).catch(error => {
-			console.log(error);
-			hasError.set(true);
-      return [];
-    });
+	  if ($wallet.length > 0) {
+	    const pricesWs = new WebSocket("wss://ws.coincap.io/prices?assets=" + commaSeparatedHoldings);
+
+	    pricesWs.onmessage = function(msg) {
+	      const priceData = JSON.parse(msg.data);
+	      for (const currencyId in priceData) {
+	        if (priceData.hasOwnProperty(currencyId)) {
+	          const price = priceData[currencyId];
+	          const modifiedWallet = $wallet;
+	          modifiedWallet.forEach((walletHolding) => {
+	            if (walletHolding.id === currencyId) {
+	              walletHolding.priceUsd = price;
+	            }
+	          });
+	          wallet.set(modifiedWallet);
+	        }
+	      }
+	    };
+	  }
 	});
 </script>
 
+<Header />
 <main>
-	{#if $hasError}
-		<p>Sorry, an error occurred.</p>
-	{:else}
-		<Table displayData = {$displayData} totalValue = {$totalValue} />
-	{/if}
-	<a href="https://nomics.com" target="_blank">Crypto Market Cap &amp; Pricing Data Provided By Nomics</a>
+	<TotalValue />
+	<Table displayData = {$displayData}/>
+	<AddHolding />
 </main>
+<Footer />
 
 <style>
 	main{
-		padding-top: 5em;
-	}
-	p{
-		display: block;
-		margin: 0 auto;
-		text-align: center;
-	}
-	a {
-		display: block;
-		margin: 20px auto 0;
-		text-align: center;
-		font-size: .8em;
+		padding-bottom: 4em;
 	}
 </style>

@@ -1,3 +1,9 @@
 /node_modules
 /public/build
+/src/nomicsKey.json
 
+/.firebase
+
+# Service Worker
+**/workbox*
+**/sw*

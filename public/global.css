@@ -12,11 +12,66 @@ body {
 	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 15px;
+	display: flex;
+	flex-direction: column;
+}
+header, main{
+	flex: 1 0 auto;
+}
+footer{
+	flex-shrink: 0;
+}
+.form-input-container{
+  display: flex;
+  justify-content: center;
+}
+.form-input-container > div{
+  flex: 0 1 auto;
+	text-align: center;
+}
+.form-label{
+  display: block;
+  font-weight: normal;
+  font-size: 1.1em;
+  text-align: center;
+}
+.form-input{
+  box-sizing: border-box;
+  height: 1.4em;
+  font-size: 1.2em;
+  margin: .5em;
+}
+.form-button {
+  box-sizing: border-box;
+  margin: 1em auto;
+  display: block;
+  background: #fff;
+  color: rgb(40, 151, 85);
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 3px solid #fff;
+  padding: 1em 0;
+  transition: 0.2s all;
+  width: 100%;
+  max-width: 400px;
+}
+.form-button:hover, .form-button:focus {
+  background: transparent;
+  color:  #fff;
+}
+.form-button:active {
+  background: #FFFFFF;
+  color:  rgb(40, 151, 85);
+  transform: scale(.95);
+}
+.button-container{
+  margin: 2em 1em;
 }
 
 @media only screen and (max-width: 568px) {
 	body{
-		font-size: 12px;
+		font-size: 16px;
 	}
 }
 
