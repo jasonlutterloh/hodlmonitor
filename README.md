@@ -1,4 +1,4 @@
-# Crypto Value Monitor
+# HODL Tracker
 
 The purpose of this app is to provide one place to view/monitor your crypto holdings spread across different wallets and systems without the need for a complicated signup, API keys, or another password to remember.
 
