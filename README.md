@@ -8,9 +8,9 @@ HODL Tracker is somewhat rudimentary in functionality (on purpose) as I was anno
 
 It's worth noting that this app is not going to be for everyone. It lacks historical trends, etc and is probably only useful if you are hodling across a few different wallets/services and just want one place to monitor the current value of your holdings.
 
-## Preview
+## Demo
 
-![Screenshot](https://repository-images.githubusercontent.com/337882371/8bf10780-6bd4-11eb-9a6d-eb2282768596)
+[Live Demo](https://hodltracker.web.app)
 
 ## Getting Started
 
