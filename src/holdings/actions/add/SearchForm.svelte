@@ -76,15 +76,14 @@ li {
   cursor: pointer;
   padding: 1em;
   border: 3px solid;
-  background: var(--primary-color);
-  color: var(--alt-text-color);
+  color: var(--primary-color);
   margin-bottom: .4em;
   transition: .5s all;
 }
 li:hover,
 li:focus{
-  background: var(--alt-text-color);
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--alt-text-color);
 }
 li:active{
   transform: scale(.95)

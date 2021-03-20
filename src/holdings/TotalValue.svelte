@@ -33,6 +33,9 @@ import {getDollarDisplayValue} from "./utils.js";
       color: var(--primary-color);
       border-bottom: 1px solid var(--border-color);
     }
+    h2{
+      color: var(--main-text-color);
+    }
     p{
       color: var(--primary-color);
     }

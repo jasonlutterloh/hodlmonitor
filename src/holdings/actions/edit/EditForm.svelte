@@ -12,7 +12,7 @@
   <NumberInput name="amount" value={holding.amountHeld}>What amount of {holding.name} do you hold?</NumberInput>
 
   <ButtonContainer>
-    <FormButton type="submit">Add</FormButton>
+    <FormButton type="submit">Edit</FormButton>
     <FormButton type="button" on:click={onCancel}>Cancel</FormButton>
   </ButtonContainer>
 </form>

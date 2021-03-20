@@ -39,9 +39,8 @@ h2{
   font-size: 1.3em;
     font-weight: bold;
     text-align: center;
-    color: var(--alt-text-color);
+    color: var(--primary-color);
     margin: 0;
-    background: var(--primary-color);
     padding: 1em;
     margin-bottom: 1em;
 }
