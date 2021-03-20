@@ -10,7 +10,7 @@ import {getDollarDisplayValue} from "./utils.js";
 
 <style>
   div{
-    background:var(--main-green);
+    background:var(--primary-color);
     color: var(--alt-text-color);
     margin: 0 auto;
     padding: 2em 1em;
@@ -26,5 +26,15 @@ import {getDollarDisplayValue} from "./utils.js";
     font-size: 2em;
     font-weight: bold;
     margin: 0;
+  }
+  @media(prefers-color-scheme: dark){
+    div{
+      background:var(--body-color);
+      color: var(--primary-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    p{
+      color: var(--primary-color);
+    }
   }
 </style>

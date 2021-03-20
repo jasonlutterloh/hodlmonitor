@@ -14,6 +14,7 @@
 
 <style>
 input{
+  padding: 1em;
   display: block;
   box-sizing: border-box;
   height: 1.4em;

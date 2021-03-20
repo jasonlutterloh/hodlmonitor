@@ -1,0 +1,10 @@
+:root {
+	--body-color: #efefef;
+	--secondary-body-color: #fff;
+  --primary-color: rgb(40, 151, 85);
+	--main-text-color: #222;
+	--alt-text-color: #fff;
+	--secondary-text-color: #666;
+	--button-text-color: #333;
+	--border-color: #ccc;
+}

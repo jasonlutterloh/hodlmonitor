@@ -17,7 +17,7 @@
 
 <style>
   ul{
-		background: white;
+		background: var(--secondary-body-color);
 		border-collapse: collapse;
 		text-align: left;
 		margin: 0 auto;

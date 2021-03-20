@@ -10,21 +10,22 @@ export const commaSeparatedHoldings = derived(wallet, ($wallet) => {
   return $wallet.map((holding)=> holding.id).toString();
 });
 
-export const displayData = derived(wallet, ($wallet) => {
-  const returnData = [];
-  $wallet.forEach((holding) => {
-    holding.price = parseFloat(holding.priceUsd);
-    holding.value = (parseFloat(holding.priceUsd) * parseFloat(holding.amountHeld));
-    returnData.push(holding);
-  });
-
-  return returnData;
-});
-
 export const totalValue = derived(wallet, ($wallet) => {
   let total = 0;
   $wallet.forEach((holding) => {
     total += holding.value;
   });
   return total;
+});
+
+export const displayData = derived([wallet, totalValue], ([$wallet, $totalValue]) => {
+  const returnData = [];
+  $wallet.forEach((holding) => {
+    holding.price = parseFloat(holding.priceUsd);
+    holding.value = (parseFloat(holding.priceUsd) * parseFloat(holding.amountHeld));
+    holding.percentage = parseFloat((holding.value / $totalValue) * 100).toFixed(2);
+    returnData.push(holding);
+  });
+
+  return returnData;
 });

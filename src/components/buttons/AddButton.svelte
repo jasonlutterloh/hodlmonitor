@@ -12,7 +12,7 @@
 button{
   background: none;
   border: 0;
-  color: #333;
+  color: var(--button-text-color);
   cursor: pointer;
   padding: 1em;
   display: block;
@@ -28,7 +28,7 @@ button:focus{
 }
 button:hover .material-icons,
 button:focus .material-icons{
-  color: var(--main-green);
+  color: var(--primary-color);
 }
 .material-icons{
   font-size: 30px;

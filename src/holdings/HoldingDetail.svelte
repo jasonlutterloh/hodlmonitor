@@ -10,7 +10,7 @@
 
 <style>
   div{
-    flex: 1 1 auto;
+    flex: 1 1 50%;
   }
   span{
 		display: block;

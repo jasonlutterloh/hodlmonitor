@@ -1,16 +1,10 @@
-:root {
-  --main-green: rgb(40, 151, 85);
-	--main-text-color: #222;
-	--alt-text-color: #fff;
-	--secondary-text-color: #666;
-}
 html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
 body {
-	background: #efefef;
+	background: var(--body-color);
 	color: var(--main-text-color);
 	margin: 0;
 	padding: 0;
@@ -26,7 +20,6 @@ header, main{
 footer{
 	flex-shrink: 0;
 }
-
 
 @media only screen and (max-width: 568px) {
 	body{

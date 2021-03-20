@@ -10,6 +10,7 @@ import {slide} from "svelte/transition";
 <div transition:slide class="container">
   <div class="details">
       <HoldingDetail name="Quantity" value={holding.amountHeld} />
+      <HoldingDetail name="Portfolio Percentage" value="{holding.percentage}%" />
       <HoldingDetail name="Current Price" value="${getDollarDisplayValue(holding.price)}" />
       <HoldingDetail name="Current Value" value="${getDollarDisplayValue(holding.value)}" />
   </div>
@@ -23,6 +24,7 @@ import {slide} from "svelte/transition";
 		flex-wrap: wrap;
 		align-items: center;
 		text-align: center;
+    margin-top: 1em;
 	}
 	.details{
 		display: flex;

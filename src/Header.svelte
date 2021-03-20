@@ -5,7 +5,7 @@
 <style>
   header{
     color: var(--alt-text-color);
-    background: var(--main-green);
+    background: var(--primary-color);
     width: 100%;
     flex: 0 1 auto;
   }
@@ -16,5 +16,11 @@
     padding: 1em;
     font-size: .8em;
     text-transform: uppercase;
+  }
+  @media(prefers-color-scheme: dark){
+    header{
+      color: var(--main-text-color);
+      background: var(--body-color);
+    }
   }
 </style>

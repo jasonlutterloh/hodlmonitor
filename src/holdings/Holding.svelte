@@ -34,7 +34,7 @@ export let holding;
   li{
 		padding: 1em 1.4em;
 		transition: all .5s;
-		border-bottom: thin solid #ccc;
+		border-bottom: thin solid var(--border-color);
 	}
 	.container{
 		display: flex;

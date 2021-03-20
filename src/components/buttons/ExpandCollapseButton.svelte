@@ -19,6 +19,6 @@ button{
   border: 0;
 }
 button span{
-  color: #222;
+  color: var(--main-text-color);
 }
 </style>

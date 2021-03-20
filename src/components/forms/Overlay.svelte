@@ -25,8 +25,8 @@
 
 <style>
 div {
-  background: var(--main-green);
-  color: var(--alt-text-color);
+  background: var(--body-color);
+  color: var(--main-text-color);
   position: absolute;
   top: 0;
   left: 0;
@@ -37,7 +37,12 @@ div {
 }
 h2{
   font-size: 1.3em;
-  font-weight: bold;
-  text-align: center;
+    font-weight: bold;
+    text-align: center;
+    color: var(--alt-text-color);
+    margin: 0;
+    background: var(--primary-color);
+    padding: 1em;
+    margin-bottom: 1em;
 }
 </style>
