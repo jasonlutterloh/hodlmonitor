@@ -3,7 +3,7 @@
 </script>
 
 <!-- TODO: Make Accessible -->
-<button class="expand-button" type="button" on:click={()=> trigger = !trigger}>
+<button type="button" on:click={()=> trigger = !trigger}>
   <span class="material-icons">
     {#if trigger} 
       keyboard_arrow_up
@@ -14,11 +14,11 @@
 </button>
 
 <style>	
-.expand-button{
+button{
   background: none;
   border: 0;
 }
-.expand-button span{
+button span{
   color: #222;
 }
 </style>

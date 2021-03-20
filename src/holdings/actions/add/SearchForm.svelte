@@ -1,37 +1,35 @@
 <script>
   import {writable} from "svelte/store";
+  import TextInput from "../../../components/forms/TextInput.svelte";
+  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
+  import FormButton from "../../../components/buttons/FormButton.svelte";
+  import {searchCurrency} from "../../../external/coincap";
 
   export let onCancel;
   export let holdingToAdd;
   
   const results = writable([]);
-  const searchText = writable("");
   const noResultsError = writable(false);
   const searchError = writable(false);
 
-  async function getAsset() {
+  async function getAsset(event) {
+    const searchText = event.target.search.value;
+
     reset();
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-    fetch("https://api.coincap.io/v2/assets?search="+$searchText, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log("Search Results", result);
-          if (result.data && result.data.length > 0) {
-            results.set(result.data);
-          } else {
-            noResultsError.set(true);
-          }
-        })
-        .catch((error) => {
-          console.log("Error with Search", error);
-          searchError.set(true);
-        });
+    try {
+      const currency = await searchCurrency(searchText);
+  
+      if (currency && currency.length > 0) {
+        results.set(currency);
+      } else {
+        noResultsError.set(true);
+      }
+    } catch (error) {
+      console.log("Error with Search", error);
+      searchError.set(true);
+    }
   }
   function storeHoldingToAdd(result) {
-    console.log("Updating holdingToAdd", result);
     holdingToAdd.set(result);
   }
   function cancel() {
@@ -45,16 +43,11 @@
 </script>
 
 <form on:submit|preventDefault={getAsset}>
-  <div class="form-input-container">
-    <div>
-      <label class="form-label" for="cryptoSearch">Cryptocurrency Name or Symbol</label>
-      <input required class="form-input" placeholder="BTC" type="text" name="cryptoSearch" bind:value={$searchText}/>
-    </div>
-  </div>
-  <div class="button-container">
-    <button class="form-button" type="submit">Search</button>
-    <button class="form-button" type="button" on:click={cancel}>Cancel</button>
-  </div>
+  <TextInput name="search" placeholder="i.e. BTC, Bitcoin">Cryptocurrency Name or Symbol</TextInput>
+  <ButtonContainer>
+    <FormButton type="submit">Add</FormButton>
+    <FormButton type="button" on:click={cancel}>Cancel</FormButton>
+  </ButtonContainer>
 </form>
 <div class="results">
   {#if $noResultsError}
@@ -88,8 +81,8 @@ li {
 }
 li:hover,
 li:focus{
-  background: white;
-  color: rgb(40, 151, 85);
+  background: var(--alt-text-color);
+  color: var(--main-green);
 }
 li:active{
   transform: scale(.95)

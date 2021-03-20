@@ -1,15 +1,17 @@
 <script>
-	import {wallet} from "../store.js";
+	import {wallet} from "./store.js";
 	import {slide} from "svelte/transition";
 
 	let isExpanded = false;
+
+	function clear() {
+	  wallet.set([]);
+	}
 </script>
 
 <footer>
 	<button on:click={()=> isExpanded = !isExpanded}>About</button>
-	<button on:click={()=>{
-wallet.set([]);
-}}>Clear Data</button>
+	<button on:click={clear}>Clear Data</button>
 	{#if isExpanded}
 	<div transition:slide>
 		<strong>HODL Tracker is an open source project. <a href="https://github.com/jasonlutterloh/hodltracker">GitHub Link</a></strong>
@@ -29,14 +31,14 @@ wallet.set([]);
 		text-align: center;
 		padding: 1em;
 		text-transform: uppercase;
-		color: #666;
+		color: var(--secondary-text-color);
 	}
 	div{
 		margin: 1em;
 		flex: 1 1 100%;
 	}
 	a{
-		color: #666;
+		color: var(--secondary-text-color);
 	}
 	@media only screen and (max-width: 568px) {
 		footer {

@@ -6,6 +6,10 @@ wallet.subscribe((value) => {
   localStorage.setItem("wallet", JSON.stringify(value));
 });
 
+export const commaSeparatedHoldings = derived(wallet, ($wallet) => {
+  return $wallet.map((holding)=> holding.id).toString();
+});
+
 export const displayData = derived(wallet, ($wallet) => {
   const returnData = [];
   $wallet.forEach((holding) => {

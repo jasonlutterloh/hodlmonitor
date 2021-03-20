@@ -25,8 +25,8 @@
 
 <style>
 div {
-  background: rgb(40, 151, 85);
-  color: #fff;
+  background: var(--main-green);
+  color: var(--alt-text-color);
   position: absolute;
   top: 0;
   left: 0;

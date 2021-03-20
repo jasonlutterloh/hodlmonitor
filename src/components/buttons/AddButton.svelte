@@ -28,7 +28,7 @@ button:focus{
 }
 button:hover .material-icons,
 button:focus .material-icons{
-  color: rgb(40, 151, 85)
+  color: var(--main-green);
 }
 .material-icons{
   font-size: 30px;

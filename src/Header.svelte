@@ -4,8 +4,8 @@
 
 <style>
   header{
-    color: white;
-    background: rgb(40, 151, 85);
+    color: var(--alt-text-color);
+    background: var(--main-green);
     width: 100%;
     flex: 0 1 auto;
   }

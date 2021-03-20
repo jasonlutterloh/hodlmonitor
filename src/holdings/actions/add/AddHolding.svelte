@@ -1,11 +1,11 @@
 <script>
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
-  import {wallet} from "../../store.js";
-import SearchForm from "./SearchForm.svelte";
+  import {wallet} from "../../../store.js";
+  import SearchForm from "./SearchForm.svelte";
   import AmountForm from "./AmountForm.svelte";
-  import Overlay from "../Overlay.svelte";
-  import AddButton from "./AddButton.svelte";
+  import Overlay from "../../../components/forms/Overlay.svelte";
+  import AddButton from "../../../components/buttons/AddButton.svelte";
 
   const formActive = writable(false);
   const hasError = writable(false);
@@ -13,6 +13,7 @@ import SearchForm from "./SearchForm.svelte";
 
   let holdingToAdd = writable("");
   let amountToAdd = writable(0);
+  let y;
 
   const cancelForm = () => {
     reset();
@@ -23,6 +24,10 @@ import SearchForm from "./SearchForm.svelte";
     holdingToAdd.set("");
     amountToAdd.set(0);
     step.set(1);
+  };
+  const openForm = () => {
+    formActive.set(true);
+    y = 0;
   };
 
   holdingToAdd.subscribe((value) => {
@@ -57,7 +62,9 @@ import SearchForm from "./SearchForm.svelte";
   });
 </script>
 
-<AddButton onClick={() => formActive.set(true)} />
+<svelte:window bind:scrollY={y}/>
+
+<AddButton onClick={openForm} />
 
 <Overlay trigger={formActive} title="Add Holding">
   {#if $step == 1}
