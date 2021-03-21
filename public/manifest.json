@@ -6,7 +6,7 @@
   "start_url": "/",
   "name": "HODL Tracker",
   "description": "Securely keep track of your crypto holdings' value without complicated sign-ins or APIs",
-  "short_name": "hodl",
+  "short_name": "HODL",
   "icons": [
       {
           "src": "/img/icon-192x192.png",
