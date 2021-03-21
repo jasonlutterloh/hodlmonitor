@@ -17,6 +17,7 @@ input{
   border: 0;
   border-bottom: 4px solid var(--primary-color);
   background: none;
+  color: var(--main-text-color);
   outline: 0;
   padding: 1em;
   box-sizing: border-box;

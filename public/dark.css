@@ -1,10 +1,10 @@
 :root {
   --body-color: #121212;
   --secondary-body-color: #1f1f1f;
-  --primary-color: rgb(63, 187, 255);
+  --primary-color: rgb(0, 148, 201);
   --main-text-color: rgba(255, 255, 255, .87);
   --alt-text-color: rgb(41, 41, 41);
   --secondary-text-color: rgba(255, 255, 255, .6);
-  --button-text-color: #rgb(0, 138, 192);
+  --button-text-color: rgb(0, 148, 201);
   --border-color: #333;
 }

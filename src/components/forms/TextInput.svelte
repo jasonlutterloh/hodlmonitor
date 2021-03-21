@@ -14,6 +14,7 @@
 input{    
   border: 0;
   border-bottom: 4px solid var(--primary-color);
+  color: var(--main-text-color);
   background: none;
   outline: 0;
   padding: 1em;
