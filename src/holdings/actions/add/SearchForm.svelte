@@ -45,7 +45,7 @@
 <form on:submit|preventDefault={getAsset}>
   <TextInput name="search" placeholder="i.e. BTC, Bitcoin">Cryptocurrency Name or Symbol</TextInput>
   <ButtonContainer>
-    <FormButton type="submit">Add</FormButton>
+    <FormButton type="submit">Search</FormButton>
     <FormButton type="button" on:click={cancel}>Cancel</FormButton>
   </ButtonContainer>
 </form>
