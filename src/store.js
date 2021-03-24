@@ -27,5 +27,10 @@ export const displayData = derived([wallet, totalValue], ([$wallet, $totalValue]
     returnData.push(holding);
   });
 
+  // Sort by value
+  returnData.sort(function(a, b) {
+    return a["value"] - b["value"];
+  }).reverse();
+
   return returnData;
 });
