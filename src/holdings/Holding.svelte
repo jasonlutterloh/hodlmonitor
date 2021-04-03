@@ -2,13 +2,18 @@
   import {getDollarDisplayValue} from "./utils";
 import {fly} from "svelte/transition";
 import HoldingDetails from "./HoldingDetails.svelte";
-import ExpandCollapseButton from "../components/buttons/ExpandCollapseButton.svelte";
 
 export let holding;
+
+const handleKeyboard = (event) => {
+    if(event.keyCode == 13) {
+      event.target.click();
+    }
+  }
 </script>
 
 <li out:fly="{{x: -200}}">
-  <div class="container">
+  <div class="container" on:click={() => holding.isActive = !holding.isActive} tabindex="0" on:keypress={handleKeyboard}>
     <div class="name-container">
       <h2>{holding.name}</h2>
     </div>
@@ -18,7 +23,13 @@ export let holding;
       <span>${getDollarDisplayValue(holding.value)}</span>
     </div>
     {/if}
-    <ExpandCollapseButton bind:trigger={holding.isActive} />
+    <span class="material-icons">
+			{#if holding.isActive} 
+				keyboard_arrow_up
+			{:else}
+				keyboard_arrow_down
+			{/if}
+			</span>
   </div>
   {#if holding.isActive}
 		<HoldingDetails holding={holding}/>
@@ -32,7 +43,6 @@ export let holding;
     margin: 0;
 	}
   li{
-		padding: 1em 1.4em;
 		transition: all .5s;
 		border-bottom: thin solid var(--border-color);
 	}
@@ -40,6 +50,8 @@ export let holding;
 		display: flex;
 		align-items: center;
 		flex: 0 1 auto;
+		padding: 1em 1.4em;
+		cursor: pointer;
 	}
 	.name-container{
 		flex: 1 1 auto;

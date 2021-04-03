@@ -9,6 +9,7 @@
       wallet.set(json);
       messaging = "Restored data successfully."
     } catch (error) {
+      messaging = "Unsuccessful restoration."
       console.error("An error occurred uploading the data", error);
     }
   };
