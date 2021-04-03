@@ -1,11 +1,19 @@
 <script>
-  export let type;
+import {wallet} from "../store.js";
+
+
+let backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($wallet));
+
+wallet.subscribe(value => {
+  backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(value));
+});
+
 </script>
 
-<button type={type} on:click><slot></slot></button>
+<a type="button" href={backupHref} download="hodl-backup.json">Backup</a>
 
 <style>
-  button {
+a{
   box-sizing: border-box;
   margin: 1em auto;
   display: block;
@@ -24,14 +32,11 @@
   text-decoration: none;
   text-align: center;
 }
-button:hover, button:focus {
+a:hover, a:focus {
   background: var(--primary-color);
   color:  var(--alt-text-color);
 }
-button:active {
-  /* background: var(--alt-text-color);
-  color:  var(--primary-color); */
+a:active {
   transform: scale(.95);
 }
-
 </style>
