@@ -5,11 +5,11 @@ html, body {
 }
 body {
 	background: var(--body-color);
-	color: var(--main-text-color);
+	color: var(--text-color);
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;
 	font-size: 15px;
 	display: flex;
 	flex-direction: column;
@@ -19,6 +19,12 @@ header, main{
 }
 footer{
 	flex-shrink: 0;
+}
+h1,h2,h3,h4,h5,h6{
+	font-weight: normal;
+}
+button{
+	font-family: 'Roboto Condensed', sans-serif;
 }
 .sr-only{
 	border: 0; 

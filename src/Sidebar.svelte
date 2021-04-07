@@ -1,17 +1,18 @@
 <script>
   import {fly} from "svelte/transition";
-  import ActionButton from "./components/buttons/ActionButton.svelte";
+  import HeaderButton from "./components/buttons/HeaderButton.svelte";
 
   export let isSidebarOpen = false;
 </script>
 
 {#if isSidebarOpen}
-<aside transition:fly="{{x: 200, duration: 500}}" class:open = {isSidebarOpen}>
-  <div><ActionButton onClick={() => isSidebarOpen = false}>
+<aside transition:fly="{{x: -200, duration: 500}}" class:open = {isSidebarOpen}>
+  <div>
+    <HeaderButton on:click={() => isSidebarOpen = false}>
     <span class="material-icons">
     close
     </span>
-  </ActionButton>
+  </HeaderButton>
 </div>
   <div>
     <slot></slot>
@@ -26,20 +27,19 @@
     height: 100vh;
     width: 30vw;
     position: fixed;
-    background: var(--body-color);
-    color: var(--main-text-color);
+    background: var(--primary-color);
+    color: var(--alt-text-color);
     z-index: 99998;
     overflow: scroll;
   }
   .open{
-    left: 70vw;
+    left: 0;
     box-shadow: var(--border-color);
   }
   aside > div{
-    padding: 20px;
+    padding: 8px;
   }
   aside > div:first-of-type{
-    padding: 0;
     position: absolute;
     right: 0;
     top: 0;
@@ -53,13 +53,20 @@
     background:rgba(0,0,0,.5);
     z-index: 9997;
   }
-
   @media only screen and (max-width: 768px) {
     aside{
       width: 90vw;
     }
     .open{
-      left: 10vw;
+      left: 0;
     }
+  }
+
+  @media(prefers-color-scheme: dark){
+    aside{
+      background: var(--secondary-body-color);
+      color: var(--text-color);
+    }
+    
   }
 </style>

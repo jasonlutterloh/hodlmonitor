@@ -13,7 +13,9 @@ export const commaSeparatedHoldings = derived(wallet, ($wallet) => {
 export const totalValue = derived(wallet, ($wallet) => {
   let total = 0;
   $wallet.forEach((holding) => {
-    total += holding.value;
+    if (holding.value) {
+      total += holding.value;
+    }
   });
   return total;
 });

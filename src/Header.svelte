@@ -1,15 +1,27 @@
 <script>
-  import SettingsButton from "./components/buttons/SettingsButton.svelte";
-
+  import HeaderButton from "./components/buttons/HeaderButton.svelte";
+  import AddHolding from "./holdings/actions/add/AddHolding.svelte";
+  import {isAddMode} from "./applicationStateStore";
   export let isSidebarOpen = false;
 </script>
 
 <header>
   <div>
-    <h1>HODL Tracker (beta)</h1>
+    <HeaderButton on:click={() => isSidebarOpen = !isSidebarOpen} >
+      <span class="material-icons">
+        menu
+      </span>
+    </HeaderButton>
   </div>
   <div>
-    <SettingsButton bind:isSidebarOpen />
+    <h1>Crypto Monitor</h1>
+  </div>
+  <div>
+    <HeaderButton on:click={() => isAddMode.set(true)} >
+      <span class="material-icons">
+        add
+      </span>
+    </HeaderButton>
   </div>
 </header>
 
@@ -17,27 +29,32 @@
   header{
     color: var(--alt-text-color);
     background: var(--primary-color);
+    box-sizing: border-box;
     width: 100%;
     flex: 0 1 auto;
     display: flex;
+    padding: 8px;
   }
   div{
     flex: 0 1 auto;
   }
-  div:first-of-type{
+  div:nth-of-type(2){
     flex: 1 1 auto;
   }
   h1{
     display: block;
     margin: 0;
-    line-height: 1em;
-    padding: 1em;
-    font-size: .8em;
+    padding: 8px;
+    font-size: 16px;
     text-transform: uppercase;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 24px;
   }
   @media(prefers-color-scheme: dark){
     header{
-      color: var(--main-text-color);
+      color: var(--text-color);
       background: var(--body-color);
     }
   }

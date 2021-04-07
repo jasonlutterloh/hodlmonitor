@@ -25,15 +25,23 @@ import {wallet} from "../store";
 </p>
 <style>
   h2{
-    font-size: 1.3em;
-    font-weight: bold;
-    text-align: center;
-    color: var(--primary-color);
+    display: block;
     margin: 0;
-    padding: 1em;
-    margin-bottom: 1em;
+    padding: 8px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 24px;
   }
   p{
     text-align: center;
+  }
+  @media(prefers-color-scheme: dark){
+    h2{
+      color: var(--text-color);
+    }
+    
   }
 </style>

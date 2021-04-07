@@ -1,36 +1,34 @@
 <script>
-  import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
   import {wallet} from "../../../store";
-  import Overlay from "../../../components/forms/Overlay.svelte";
-  import EditButton from "../../../components/buttons/EditButton.svelte";
-  import EditForm from "./EditForm.svelte";
+  import {isEditMode, selectedHolding} from "../../../applicationStateStore";
+  import Overlay from "../../../components/Overlay.svelte";
+  import NumberInput from "../../../components/forms/NumberInput.svelte";
+  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
+  import FormButton from "../../../components/buttons/FormButton.svelte";
 
-  export let holding;
   let y;
 
-  const formActive = writable(false);
   const hasError = writable(false);
-  const openForm = () => {
-    formActive.set(true);
-    y = 0;
-  };
+  isEditMode.subscribe(value => {
+    if (value == true){
+      y = 0;
+    }
+  });
   const submit = (event) => {
     const newAmount = event.target.amount.value;
     const modifiedWallet = $wallet;
     modifiedWallet.forEach((walletHolding) => {
-      if (walletHolding.id === holding.id) {
+      if (walletHolding.id === $selectedHolding.id) {
         walletHolding.amountHeld = newAmount;
       }
     });
     wallet.set(modifiedWallet);
     reset();
   };
-  const cancel = () => {
-    reset();
-  };
+
   const reset = () => {
-    formActive.set(false);
+    isEditMode.set(false);
     hasError.set(false);
   };
 
@@ -38,10 +36,23 @@
 
 <svelte:window bind:scrollY={y}/>
 
-<EditButton onClick={openForm} />
-
-<Overlay trigger={formActive} title="Edit Holding">
-  <div in:fly="{{x: 200, duration: 500}}" out:fly="{{x: -200, duration: 500}}">
-    <EditForm onSubmit={submit} onCancel={cancel} holding={holding}/>
+{#if $isEditMode}
+<Overlay title="Edit Holding" onClose={reset}>
+  <div>
+    <form on:submit|preventDefault={submit}>
+      <NumberInput name="amount" value={$selectedHolding.amountHeld}>What amount of {$selectedHolding.name} do you hold?</NumberInput>
+    
+      <ButtonContainer>
+        <FormButton type="submit">Edit</FormButton>
+        <FormButton type="button" on:click={reset}>Cancel</FormButton>
+      </ButtonContainer>
+    </form>
   </div>
 </Overlay>
+{/if}
+
+<style>
+  form{
+    padding: 1em;
+  }
+</style>

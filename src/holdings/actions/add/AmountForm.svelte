@@ -4,16 +4,11 @@
   import FormButton from "../../../components/buttons/FormButton.svelte";
 
   export let amountToAdd;
-  export let onCancel;
   export let currencyName;
 
   function submit(event) {
     const amount = event.target.amount.value;
-    console.log(amount);
     amountToAdd.set(amount);
-  }
-  function cancel() {
-    onCancel();
   }
 </script>
 
@@ -21,6 +16,12 @@
   <NumberInput name="amount">What amount of {currencyName} do you hold?</NumberInput>
   <ButtonContainer>
     <FormButton type="submit">Add</FormButton>
-    <FormButton type="button" on:click={cancel}>Cancel</FormButton>
   </ButtonContainer>
 </form>
+
+<style>
+  form{
+    padding: 1em;
+    box-sizing: border-box;
+  }
+</style>

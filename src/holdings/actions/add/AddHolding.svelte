@@ -2,37 +2,44 @@
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
   import {wallet} from "../../../store.js";
+  import {isAddMode} from "../../../applicationStateStore.js";
   import SearchForm from "./SearchForm.svelte";
   import AmountForm from "./AmountForm.svelte";
-  import Overlay from "../../../components/forms/Overlay.svelte";
-  import AddButton from "../../../components/buttons/AddButton.svelte";
+  import Overlay from "../../../components/Overlay.svelte";
+  import HeaderButton from "../../../components/buttons/HeaderButton.svelte";
+  import ResultsList from "./ResultsList.svelte";
 
-  const formActive = writable(false);
   const hasError = writable(false);
   const step = writable(1);
 
+  let results = writable([]);
   let holdingToAdd = writable("");
   let amountToAdd = writable(0);
   let y;
 
-  const cancelForm = () => {
-    reset();
-  };
   const reset = () => {
-    formActive.set(false);
+    isAddMode.set(false);
     hasError.set(false);
     holdingToAdd.set("");
     amountToAdd.set(0);
     step.set(1);
   };
-  const openForm = () => {
-    formActive.set(true);
-    y = 0;
-  };
 
+  isAddMode.subscribe(value => {
+      if (value === true){
+        y = 0;
+      }
+  });
+
+  results.subscribe((value) => {
+    console.log("ResultsList", value);
+    if (value.length !== 0) {
+      step.set(2);
+    }
+  })
   holdingToAdd.subscribe((value) => {
     if (value != "") {
-      step.set(2);
+      step.set(3);
     }
   });
 
@@ -64,22 +71,26 @@
 
 <svelte:window bind:scrollY={y}/>
 
-<AddButton onClick={openForm} />
-
-<Overlay trigger={formActive} title="Add Holding">
+{#if $isAddMode}
+<Overlay title="Add Holding" onClose={reset}>
   {#if $step == 1}
-    <div in:fly="{{x: 200, duration: 500}}" out:fly="{{x: -200, duration: 500}}">
-      <SearchForm onCancel={cancelForm} bind:holdingToAdd={holdingToAdd} />
+    <div out:fly="{{x: -200, duration: 500}}">
+      <SearchForm bind:results />
     </div>
-  {:else if $step == 2}
+  {:else if $step == 2}  
     <div in:fly="{{x: 200, duration: 500, delay: 500}}" out:fly="{{x: -200, duration: 500}}">
-      <AmountForm onCancel={cancelForm} bind:amountToAdd={amountToAdd} currencyName={$holdingToAdd.name} />
+      <ResultsList bind:results bind:holdingToAdd />
+    </div> 
+  {:else if $step == 3}
+    <div in:fly="{{x: 200, duration: 500, delay: 500}}" out:fly="{{x: -200, duration: 500}}">
+      <AmountForm bind:amountToAdd={amountToAdd} currencyName={$holdingToAdd.name} />
     </div>
   {/if}
   {#if $hasError}
     <p>Error: Currency already added.</p>
   {/if}
 </Overlay>
+{/if}
 <style>
 p{
   text-align: center;

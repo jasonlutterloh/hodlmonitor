@@ -22,6 +22,7 @@ import {getDollarDisplayValue} from "./utils.js";
     margin: 0;
   }
   p{
+    font-family: 'Roboto Condensed', sans-serif;
     color:var(--alt-text-color);
     font-size: 2em;
     font-weight: bold;
@@ -34,7 +35,7 @@ import {getDollarDisplayValue} from "./utils.js";
       border-bottom: 1px solid var(--border-color);
     }
     h2{
-      color: var(--main-text-color);
+      color: var(--text-color);
     }
     p{
       color: var(--primary-color);

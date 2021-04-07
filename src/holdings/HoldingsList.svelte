@@ -1,16 +1,10 @@
 <script>
 	import Holding from "./Holding.svelte";
-
-	export let displayData;
-
-	// Initialize all as collapsed
-	displayData.forEach((element) => {
-	  element.isActive = false;
-	});
+	import {displayData} from "../store";
 </script>
 
 <ul>
-  {#each displayData as holding}
+  {#each $displayData as holding}
 	<Holding holding={holding} />
   {/each}
 </ul>
