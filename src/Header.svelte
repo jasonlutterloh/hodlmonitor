@@ -14,7 +14,7 @@
     </HeaderButton>
   </div>
   <div>
-    <h1>Crypto Monitor</h1>
+    <h1>HODL Monitor</h1>
   </div>
   <div>
     <HeaderButton on:click={() => isAddMode.set(true)} >
