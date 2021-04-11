@@ -1,5 +1,5 @@
 <script>
-  import {fade} from "svelte/transition";
+  import {slide} from "svelte/transition";
   import {wallet} from "../store";
   import HeaderButton from "../components/buttons/HeaderButton.svelte";
   import { isEditMode, selectedHolding } from "../applicationStateStore";
@@ -13,7 +13,7 @@
 
 <!-- If ID exists, we're in edit mode. -->
 {#if $selectedHolding.id} 
-<div class="bar" transition:fade>
+<div class="bar" transition:slide>
   <div>
     <HeaderButton on:click={()=> selectedHolding.set({})}>
       <span class="material-icons">
@@ -39,15 +39,16 @@
 <style>
   .bar{
     color: var(--alt-text-color);
-    background: var(--primary-color);
+    background: var(--top-bar-color);
     box-sizing: border-box;
     width: 100%;
     flex: 0 1 auto;
     display: flex;
     padding: 8px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+    box-shadow: 0 1px 4px var(--text-color);
   }
   .bar > div{
     flex: 0 1 auto;
@@ -58,7 +59,8 @@
 
 @media(prefers-color-scheme: dark){
   .bar{
-    background-color: var(--body-color);
+    background-color: var(--border-color);
+    box-shadow: 0 1px 4px #000000;
   }
 }
 </style>
