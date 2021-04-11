@@ -1,5 +1,5 @@
 <script>
-	import {wallet, commaSeparatedHoldings, cryptoList} from "./store.js";
+	import {wallet, commaSeparatedHoldings, cryptoList, updatePrices} from "./store.js";
 	import TotalValue from "./holdings/TotalValue.svelte";
 	import AddHolding from "./holdings/actions/add/AddHolding.svelte";
 	import EditHolding from "./holdings/actions/edit/EditHolding.svelte";
@@ -13,15 +13,20 @@
 
 	let isSidebarOpen = false;
 
-
 	onMount(async () => {
 	  if ($wallet.length > 0) {
-			getPrices($commaSeparatedHoldings);
+			updatePrices($commaSeparatedHoldings);
 	  }
 
 		//TODO: Make this more efficient. Only get if we haven't retrieved in awhile.
-		const list = await getCryptoList();
-		cryptoList.set(list);
+		fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+			return result.json();
+		})
+		.then(data => cryptoList.set(data))
+		.catch(error => {
+			console.error("Error getting prices", error);
+		});
+		
 	});
 </script>
 
