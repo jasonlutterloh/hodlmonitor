@@ -1,6 +1,6 @@
 <script>
   import {fly} from "svelte/transition";
-  import HeaderButton from "./components/buttons/HeaderButton.svelte";
+  import HeaderButton from "./buttons/HeaderButton.svelte";
 
   export let isSidebarOpen = false;
 </script>

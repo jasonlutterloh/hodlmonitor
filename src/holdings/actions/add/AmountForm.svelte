@@ -8,7 +8,7 @@
 
   function submit(event) {
     const amount = event.target.amount.value;
-    amountToAdd.set(amount);
+    amountToAdd.set(parseFloat(amount));
   }
 </script>
 

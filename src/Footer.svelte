@@ -1,5 +1,4 @@
 <script>
-	import {wallet} from "./store.js";
 	import {slide} from "svelte/transition";
 
 	let isExpanded = false;
@@ -10,7 +9,7 @@
 	{#if isExpanded}
 	<div transition:slide>
 		<p>HODL Monitor is an open source project. <a href="https://github.com/jasonlutterloh/hodltracker">GitHub</a></p>
-		<p>The app was built as a hobby and no support or warranty is provided. Accuracy is not guaranteed. Pricing data provided by <a target="_blank" href="https://docs.coincap.io/">CoinCap.io</a>.</p>
+		<p>The app was built as a hobby and no support or warranty is provided. Accuracy is not guaranteed. <a target="_blank" href="https://coingecko.com/en/api">Powered by CoinGecko API</a>.</p>
 	</div>
 	{/if}
 </footer>

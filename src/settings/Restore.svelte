@@ -6,7 +6,7 @@
   const updateWallet = (data) => {
     try {
       let json = JSON.parse(data);
-      wallet.set(json);
+      wallet.restoreFromFile(json);
       messaging = "Restored data successfully."
     } catch (error) {
       messaging = "Unsuccessful restoration."

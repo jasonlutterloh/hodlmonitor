@@ -1,6 +1,6 @@
 <script>
   import HeaderButton from "./components/buttons/HeaderButton.svelte";
-  import AddHolding from "./holdings/actions/add/AddHolding.svelte";
+  import RefreshButton from "./holdings/RefreshButton.svelte";
   import {isAddMode} from "./applicationStateStore";
   export let isSidebarOpen = false;
 </script>
@@ -17,6 +17,7 @@
     <h1>HODL Monitor</h1>
   </div>
   <div>
+    <RefreshButton />
     <HeaderButton on:click={() => isAddMode.set(true)} >
       <span class="material-icons">
         add

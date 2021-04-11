@@ -16,14 +16,8 @@
     }
   });
   const submit = (event) => {
-    const newAmount = event.target.amount.value;
-    const modifiedWallet = $wallet;
-    modifiedWallet.forEach((walletHolding) => {
-      if (walletHolding.id === $selectedHolding.id) {
-        walletHolding.amountHeld = newAmount;
-      }
-    });
-    wallet.set(modifiedWallet);
+    const newAmount = parseFloat(event.target.amount.value);
+    wallet.updateAmount($selectedHolding.id, newAmount);
     reset();
   };
 

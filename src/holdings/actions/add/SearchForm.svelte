@@ -3,19 +3,28 @@
   import TextInput from "../../../components/forms/TextInput.svelte";
   import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
   import FormButton from "../../../components/buttons/FormButton.svelte";
-  import {searchCurrency} from "../../../external/coincap";
+  import {cryptoList} from "../../../store";
 
   export let results;
   
   const noResultsError = writable(false);
   const searchError = writable(false);
 
+  export const filterCrypto = (searchTerm) => {
+    let filteredList = $cryptoList.filter(crypto => {
+      if (crypto.symbol.toUpperCase() == searchTerm.toUpperCase() || crypto.name.toUpperCase() == searchTerm.toUpperCase()){
+        return true;
+      }
+    });
+    return filteredList;
+  };
+
   async function getAsset(event) {
     const searchText = event.target.search.value;
 
     reset();
     try {
-      const currency = await searchCurrency(searchText);
+      const currency = await filterCrypto(searchText);
   
       if (currency && currency.length > 0) {
         results.set(currency);

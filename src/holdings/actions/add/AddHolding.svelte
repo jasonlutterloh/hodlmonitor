@@ -6,7 +6,6 @@
   import SearchForm from "./SearchForm.svelte";
   import AmountForm from "./AmountForm.svelte";
   import Overlay from "../../../components/Overlay.svelte";
-  import HeaderButton from "../../../components/buttons/HeaderButton.svelte";
   import ResultsList from "./ResultsList.svelte";
 
   const hasError = writable(false);
@@ -32,7 +31,6 @@
   });
 
   results.subscribe((value) => {
-    console.log("ResultsList", value);
     if (value.length !== 0) {
       step.set(2);
     }
@@ -50,17 +48,7 @@
       const doesExist = $wallet.some((holding) => holding.id === $holdingToAdd.id);
 
       if (!doesExist && $holdingToAdd != null) {
-        const walletHolding = {
-          "id": $holdingToAdd.id,
-          "name": $holdingToAdd.name,
-          "symbol": $holdingToAdd.symbol,
-          "priceUsd": $holdingToAdd.priceUsd,
-          "amountHeld": value,
-        };
-
-        const updatedWallet = $wallet;
-        updatedWallet.push(walletHolding);
-        wallet.set(updatedWallet);
+        wallet.addHolding($holdingToAdd, value);
         reset();
       } else {
         hasError.set(true);

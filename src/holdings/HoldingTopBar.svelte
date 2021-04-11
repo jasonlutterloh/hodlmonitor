@@ -6,11 +6,8 @@
 
   export const removeCurrency = (currencyId) => {
     selectedHolding.set({});
-    console.log(currencyId);
-    console.log($wallet);
-    wallet.set($wallet.filter((holding) => holding.id !== currencyId));
 
-    console.log($wallet);
+    wallet.removeHolding(currencyId);
   };
 </script>
 

@@ -1,6 +1,7 @@
 <script>
 	import Holding from "./Holding.svelte";
 	import {displayData} from "../store";
+
 </script>
 
 <ul>

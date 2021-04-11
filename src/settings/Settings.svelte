@@ -6,11 +6,13 @@ import {wallet} from "../store";
 
   let messaging = "";
 
+  // TODO: Handle any sort of error scenarios
   function clear() {
     messaging = "Data cleared."
-	  wallet.set([]);
+	  wallet.reset();
 	}
 </script>
+
 
 <h2>Manage Your Data</h2>
 {#if messaging.length > 0}

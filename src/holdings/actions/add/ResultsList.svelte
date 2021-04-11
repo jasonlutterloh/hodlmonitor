@@ -1,17 +1,12 @@
 <script>
   export let results;
   export let holdingToAdd;
-
-  function storeHoldingToAdd(result) {
-    holdingToAdd.set(result);
-  }
-
 </script>
 <div class="results">
   <p>Select Crypto</p>
   <ul>
   {#each $results as result}
-    <li role="button" on:click={() => storeHoldingToAdd(result)}>{result.symbol} - {result.name}
+    <li role="button" on:click={() => holdingToAdd.set(result)}>{result.name} ({result.symbol.toUpperCase()})
       <span class="material-icons">add</span>
     </li>
   {/each}
