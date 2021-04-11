@@ -10,7 +10,6 @@
 	import Sidebar from "./components/Sidebar.svelte";
 	import Settings from "./settings/Settings.svelte";
 	import {onMount} from "svelte";
-	import {getCryptoList, getPrices} from "./external/coingecko";
 
 	let isSidebarOpen = false;
 
