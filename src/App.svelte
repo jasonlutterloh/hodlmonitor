@@ -15,7 +15,7 @@
 
 	onMount(async () => {
 	  if ($wallet.length > 0) {
-			updatePrices($commaSeparatedHoldings);
+			setInterval(()=>updatePrices($commaSeparatedHoldings), 60000);
 	  }
 
 		//TODO: Make this more efficient. Only get if we haven't retrieved in awhile.
@@ -24,7 +24,7 @@
 		})
 		.then(data => cryptoList.set(data))
 		.catch(error => {
-			console.error("Error getting prices", error);
+			console.error("Error getting crypto list", error);
 		});
 		
 	});

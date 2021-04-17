@@ -5,7 +5,7 @@
   "scope": "/",
   "start_url": "/",
   "name": "HODL Monitor",
-  "description": "Securely keep track of your crypto holdings' value without complicated sign-ins or APIs",
+  "description": "Keep track of your crypto holdings' value without complicated sign-ins or APIs",
   "short_name": "HODL",
   "icons": [
       {

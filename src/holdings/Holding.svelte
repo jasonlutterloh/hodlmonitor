@@ -72,14 +72,6 @@ const handleKeyboard = (event) => {
 		margin-right: 1em;
 		text-align: center;
 	}
-	.top-bar{
-		background: var(--text-color);
-		color: var(--alt-text-color);
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-	}
 	@media(prefers-color-scheme: dark){
 		.value-container{
 			color: var(--primary-color);

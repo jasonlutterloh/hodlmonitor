@@ -2,6 +2,7 @@ import {derived, writable} from "svelte/store";
 
 export const cryptoList = writable(JSON.parse(localStorage.getItem("list")) || []);
 export const wallet = createWallet();
+export const lastUpdated = writable(localStorage.getItem("lastUpdated") || "");
 
 function createWallet() {
   const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("wallet")) || []);
@@ -56,16 +57,24 @@ export const updatePrices = (commaSeparatedHoldings) => {
   fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=" + commaSeparatedHoldings).then(result => {
     return result.json();
   }).then(json => {
+    const timestamp = new Date();
+
     for (const cryptoId in json) {
       if (json.hasOwnProperty(cryptoId)) {
         const price = json[cryptoId].usd;
         wallet.updatePrice(cryptoId, price);
       }
     }
+
+    updateTimestamp(timestamp);
   }).catch(error => {
     console.error("Error getting prices", error);
     return [];
   });
+};
+
+const updateTimestamp = (timestamp) => {
+  lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
 };
 
 wallet.subscribe((value) => {
@@ -74,6 +83,10 @@ wallet.subscribe((value) => {
 
 cryptoList.subscribe((value) => {
   localStorage.setItem("list", JSON.stringify(value));
+});
+
+lastUpdated.subscribe((value) => {
+  localStorage.setItem("lastUpdated", value);
 });
 
 export const commaSeparatedHoldings = derived(wallet, ($wallet) => {
