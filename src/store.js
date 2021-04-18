@@ -1,4 +1,5 @@
 import {derived, writable} from "svelte/store";
+import {infoMessages} from "./applicationStateStore";
 
 export const cryptoList = writable(JSON.parse(localStorage.getItem("list")) || []);
 export const wallet = createWallet();
@@ -65,10 +66,10 @@ export const updatePrices = (commaSeparatedHoldings) => {
         wallet.updatePrice(cryptoId, price);
       }
     }
-
     updateTimestamp(timestamp);
   }).catch(error => {
-    console.error("Error getting prices", error);
+    infoMessages.addMessage("Error getting current prices.");
+    console.error("Error getting current prices.", error);
     return [];
   });
 };

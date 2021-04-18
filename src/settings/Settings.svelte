@@ -1,25 +1,22 @@
 <script>
   import FormButton from "../components/buttons/FormButton.svelte";
+  import {infoMessages} from "../applicationStateStore";
 import Backup from "./Backup.svelte";
 import Restore from "./Restore.svelte";
 import {wallet} from "../store";
 
-  let messaging = "";
 
   // TODO: Handle any sort of error scenarios
   function clear() {
-    messaging = "Data cleared."
+    infoMessages.addMessage("Data cleared.");
 	  wallet.reset();
 	}
 </script>
 
 
 <h2>Manage Your Data</h2>
-{#if messaging.length > 0}
-<p>{messaging}</p>
-{/if}
 <Backup />
-<Restore bind:messaging/>
+<Restore/>
 <FormButton type="button" on:click={clear}>Clear Data</FormButton>
 <p>
   Reminder: Your data is not sent anywhere or stored remotely. This app runs

@@ -1,15 +1,15 @@
 <script>
   import { wallet } from "../store";
+  import {infoMessages} from "../applicationStateStore";
   let files;
-  export let messaging;
 
   const updateWallet = (data) => {
     try {
       let json = JSON.parse(data);
       wallet.restoreFromFile(json);
-      messaging = "Restored data successfully."
+      infoMessages.addMessage("Restored data successfully.");
     } catch (error) {
-      messaging = "Unsuccessful restoration."
+      infoMessages.addMessage("Could not restore data.");
       console.error("An error occurred uploading the data", error);
     }
   };

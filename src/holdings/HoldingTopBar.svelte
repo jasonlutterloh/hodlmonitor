@@ -2,12 +2,13 @@
   import {slide} from "svelte/transition";
   import {wallet} from "../store";
   import HeaderButton from "../components/buttons/HeaderButton.svelte";
-  import { isEditMode, selectedHolding } from "../applicationStateStore";
+  import { infoMessages, isEditMode, selectedHolding } from "../applicationStateStore";
 
   export const removeCurrency = (currencyId) => {
     selectedHolding.set({});
 
     wallet.removeHolding(currencyId);
+    infoMessages.addMessage("Crypto removed.")
   };
 </script>
 

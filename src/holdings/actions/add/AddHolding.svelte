@@ -1,12 +1,14 @@
 <script>
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
-  import {wallet} from "../../../store.js";
+  import {wallet, cryptoList} from "../../../store.js";
   import {isAddMode} from "../../../applicationStateStore.js";
   import SearchForm from "./SearchForm.svelte";
   import AmountForm from "./AmountForm.svelte";
   import Overlay from "../../../components/Overlay.svelte";
   import ResultsList from "./ResultsList.svelte";
+import { onMount } from "svelte";
+import {infoMessages} from "../../../applicationStateStore";
 
   const hasError = writable(false);
   const step = writable(1);
@@ -54,6 +56,17 @@
         hasError.set(true);
       }
     }
+  });
+
+  onMount(async () => {
+    fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+        return result.json();
+      })
+      .then(data => cryptoList.set(data))
+      .catch(error => {
+        infoMessages.addMessage("Error fetching available cryptocurrencies.");
+        console.error("Error getting crypto list", error);
+      });
   });
 </script>
 

@@ -8,6 +8,7 @@
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
 	import Sidebar from "./components/Sidebar.svelte";
+	import InfoMessages from "./components/InfoMessages.svelte";
 	import Settings from "./settings/Settings.svelte";
 	import {onMount} from "svelte";
 
@@ -17,16 +18,6 @@
 	  if ($wallet.length > 0) {
 			setInterval(()=>updatePrices($commaSeparatedHoldings), 60000);
 	  }
-
-		//TODO: Make this more efficient. Only get if we haven't retrieved in awhile.
-		fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
-			return result.json();
-		})
-		.then(data => cryptoList.set(data))
-		.catch(error => {
-			console.error("Error getting crypto list", error);
-		});
-		
 	});
 </script>
 
@@ -41,6 +32,7 @@
 	<HoldingTopBar />
 	<AddHolding />
 	<EditHolding />
+	<InfoMessages />
 </main>
 <Footer />
 
