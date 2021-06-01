@@ -18,7 +18,7 @@ import {infoMessages} from "../applicationStateStore";
   div{
     display: block;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 3em;
     z-index: 9999999;
   }
