@@ -5,7 +5,9 @@
   "scope": "/",
   "start_url": "/",
   "name": "HODL Monitor",
-  "description": "Keep track of your crypto holdings' value without complicated sign-ins or APIs",
+  "description": "Free open source web app to track crypto holdings' value",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "utilities"],
   "short_name": "HODL",
   "icons": [
       {
