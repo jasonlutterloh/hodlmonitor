@@ -10,7 +10,7 @@ let isExpanded = false;
 	<div transition:slide>
 	<p>HODL Monitor is an open source project. <a href="https://github.com/jasonlutterloh/hodltracker">GitHub</a></p>
 	<p>The app was built as a hobby and no support, liability, or warranty is provided. Accuracy is not guaranteed.</p>
-	<p>Privacy Promise: This app does not collect/store any data remotely, show ads, or use any analytics software. The app is <a target="_blank" href="https://coingecko.com/en/api">Powered by CoinGecko API</a> (to which it will pass a list of symbols) for pricing data and does rely on Google Fonts for, well, fonts.</p>
+	<p>Privacy Promise: This app does not collect/store any data remotely, show ads, or use any analytics software. The app is <a target="_blank" href="https://coingecko.com/en/api">Powered by CoinGecko API</a> (to which it will pass a list of symbols) for pricing data and uses Google Fonts for, well, fonts.</p>
 </div>
 {/if}
 </footer>
