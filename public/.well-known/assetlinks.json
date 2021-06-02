@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "dev.lutterloh.hodl.twa",
+                   "sha256_cert_fingerprints": ["B2:91:8B:12:06:DA:48:F8:99:13:DD:19:85:1E:39:11:FA:6C:0B:09:57:DE:D7:7E:85:7C:FF:FB:E7:9F:D3:23"] }
+    }]
