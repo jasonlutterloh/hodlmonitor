@@ -12,6 +12,10 @@
         "destination": "/robots.txt"
       },
       {
+        "source": "/privacypolicy.html",
+        "destination": "/privacypolicy.html"
+      },
+      {
         "source": "/.well-known/assetlinks.json",
         "destination": "/.well-known/assetlinks.json"
       },
