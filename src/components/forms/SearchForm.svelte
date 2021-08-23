@@ -1,9 +1,9 @@
 <script>
   import {writable} from "svelte/store";
-  import TextInput from "../../../components/forms/TextInput.svelte";
-  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
-  import FormButton from "../../../components/buttons/FormButton.svelte";
-  import {cryptoList} from "../../../store";
+  import TextInput from "./TextInput.svelte";
+  import ButtonContainer from "../buttons/ButtonContainer.svelte";
+  import FormButton from "../buttons/FormButton.svelte";
+  import {cryptoList} from "../../store";
 
   export let results;
   

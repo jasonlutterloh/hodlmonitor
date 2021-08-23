@@ -1,10 +1,10 @@
 <script>
-import {wallet} from "../store.js";
+import {portfolio} from "../portfolio/store.js";
 
 
-let backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($wallet));
+let backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($portfolio));
 
-wallet.subscribe(value => {
+portfolio.subscribe(value => {
   backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(value));
 });
 

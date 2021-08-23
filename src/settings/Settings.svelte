@@ -1,15 +1,15 @@
 <script>
   import FormButton from "../components/buttons/FormButton.svelte";
-  import {infoMessages} from "../applicationStateStore";
+  import {infoMessages} from "../store";
 import Backup from "./Backup.svelte";
 import Restore from "./Restore.svelte";
-import {wallet} from "../store";
+import {portfolio} from "../portfolio/store";
 
 
   // TODO: Handle any sort of error scenarios
   function clear() {
     infoMessages.addMessage("Data cleared.");
-	  wallet.reset();
+	  portfolio.reset();
 	}
 </script>
 

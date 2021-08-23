@@ -1,7 +1,7 @@
 <script>
 	import Holding from "./Holding.svelte";
-	import {displayData, lastUpdated} from "../store";
-
+	import {displayData} from "../portfolio/store";
+	import {lastUpdated} from "../store";
 </script>
 
 <ul>

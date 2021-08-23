@@ -1,7 +1,8 @@
 <script>
   import {writable} from "svelte/store";
-  import {wallet} from "../../../store";
-  import {isEditMode, selectedHolding} from "../../../applicationStateStore";
+  import {portfolio, isEditMode } from "../../../portfolio/store.js";
+
+  import {selectedHolding} from "../../../store";
   import Overlay from "../../../components/Overlay.svelte";
   import NumberInput from "../../../components/forms/NumberInput.svelte";
   import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
@@ -17,7 +18,7 @@
   });
   const submit = (event) => {
     const newAmount = parseFloat(event.target.amount.value);
-    wallet.updateAmount($selectedHolding.id, newAmount);
+    portfolio.updateAmount($selectedHolding.id, newAmount);
     reset();
   };
 

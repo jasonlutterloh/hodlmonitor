@@ -1,5 +1,5 @@
 <script>
-	import {totalValue} from "../store.js";
+	import {totalValue} from "../portfolio/store.js";
 import {getDollarDisplayValue} from "./utils.js";
 </script>
 

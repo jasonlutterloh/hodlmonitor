@@ -1,7 +1,7 @@
 <script>
-  import NumberInput from "../../../components/forms/NumberInput.svelte";
-  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
-  import FormButton from "../../../components/buttons/FormButton.svelte";
+  import NumberInput from "./NumberInput.svelte";
+  import ButtonContainer from "../buttons/ButtonContainer.svelte";
+  import FormButton from "../buttons/FormButton.svelte";
 
   export let amountToAdd;
   export let currencyName;

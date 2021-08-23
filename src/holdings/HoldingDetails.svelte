@@ -2,7 +2,7 @@
   import {getDollarDisplayValue} from "./utils";
   import {slide} from "svelte/transition";
   import HoldingDetail from "./HoldingDetail.svelte";
-  import {totalValue} from "../store";
+  import {totalValue} from "../portfolio/store";
 
   export let holding;
 

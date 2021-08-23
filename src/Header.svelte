@@ -1,7 +1,9 @@
 <script>
   import HeaderButton from "./components/buttons/HeaderButton.svelte";
-  import RefreshButton from "./holdings/RefreshButton.svelte";
-  import {isAddMode} from "./applicationStateStore";
+  import RefreshButton from "./components/buttons/RefreshButton.svelte";
+import PortfolioHeaderButtons from "./portfolio/PortfolioHeaderButtons.svelte";
+  import {activePane} from "./store";
+import WatchlistHeaderButtons from "./watchlist/WatchlistHeaderButtons.svelte";
   export let isSidebarOpen = false;
 </script>
 
@@ -18,11 +20,7 @@
   </div>
   <div>
     <RefreshButton />
-    <HeaderButton on:click={() => isAddMode.set(true)} >
-      <span class="material-icons">
-        add
-      </span>
-    </HeaderButton>
+    <svelte:component this={$activePane.buttons} />
   </div>
 </header>
 

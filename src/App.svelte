@@ -1,23 +1,29 @@
 <script>
-	import {wallet, commaSeparatedHoldings, cryptoList, updatePrices} from "./store.js";
-	import TotalValue from "./holdings/TotalValue.svelte";
-	import AddHolding from "./holdings/actions/add/AddHolding.svelte";
-	import EditHolding from "./holdings/actions/edit/EditHolding.svelte";
-	import HoldingsList from "./holdings/HoldingsList.svelte";
-	import HoldingTopBar from "./holdings/HoldingTopBar.svelte";
+	import {commaSeparatedSymbols, activePane, tabs, updatePrices} from "./store.js";
+	import {portfolio} from "./portfolio/store";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
 	import Sidebar from "./components/Sidebar.svelte";
 	import InfoMessages from "./components/InfoMessages.svelte";
 	import Settings from "./settings/Settings.svelte";
+	import Tabs from "./Tabs.svelte";
 	import {onMount} from "svelte";
 
 	let isSidebarOpen = false;
-
+	
 	onMount(async () => {
-	  if ($wallet.length > 0) {
-			setInterval(()=>updatePrices($commaSeparatedHoldings), 60000);
+	  if ($portfolio.length > 0) {
+			setInterval(()=>updatePrices($commaSeparatedSymbols), 60000);
 	  }
+
+    fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+        return result.json();
+      })
+      .then(data => cryptoList.set(data))
+      .catch(error => {
+        infoMessages.addMessage("Error fetching available cryptocurrencies.");
+        console.error("Error getting crypto list", error);
+      });
 	});
 </script>
 
@@ -26,12 +32,8 @@
 	<Sidebar bind:isSidebarOpen >
 		<Settings />
 	</Sidebar>
-	<TotalValue  />
-	<HoldingsList/>
-	<!-- These are not shown by default -->
-	<HoldingTopBar />
-	<AddHolding />
-	<EditHolding />
+	<Tabs />
+	<svelte:component this={$activePane.component} />
 	<InfoMessages />
 </main>
 <Footer />

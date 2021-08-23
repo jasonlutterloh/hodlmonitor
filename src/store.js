@@ -1,69 +1,62 @@
 import {derived, writable} from "svelte/store";
-import {infoMessages} from "./applicationStateStore";
+import {portfolio} from "./portfolio/store";
+import {watchlist} from "./watchlist/store";
+import Portfolio from "./portfolio/Portfolio.svelte";
+import Watchlist from "./watchlist/Watchlist.svelte";
+import PortfolioHeaderButtons from "./portfolio/PortfolioHeaderButtons.svelte";
+import WatchlistHeaderButtons from "./watchlist/WatchlistHeaderButtons.svelte";
 
-export const cryptoList = writable(JSON.parse(localStorage.getItem("list")) || []);
-export const wallet = createWallet();
+
+
+export const tabs = [
+  {
+    id:"portfolio",
+    name: "Portfolio",
+    component: Portfolio,
+    buttons: PortfolioHeaderButtons,
+    icon: "account_balance_wallet"
+  },
+  {
+    id:"watchlist",
+    name: "Watchlist",
+    component: Watchlist,
+    buttons: WatchlistHeaderButtons,
+    icon: "visibility"
+  }
+];
+
+export const activePane = writable(tabs[0]);
 export const lastUpdated = writable(localStorage.getItem("lastUpdated") || "");
+export const isExpanded = writable(false);
+export const selectedHolding = writable({});
+export const infoMessages = createInfoMessageSystem();
 
-function createWallet() {
-  const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("wallet")) || []);
+function createInfoMessageSystem() {
+  const { subscribe, update } = writable([]);
 
   return {
     subscribe,
-    addHolding: (apiData, amount) => {
-      update(walletArray => {
-        const doesExist = walletArray.some((holding) => holding.id === apiData.id);
-        if (!doesExist) {
-          const newHolding = {
-            "id": apiData.id,
-            "name": apiData.name,
-            "symbol": apiData.symbol.toUpperCase(),
-            "amountHeld": amount,
-            "lastPrice": 0,
-            "value": 0,
-          };
-
-          return [...walletArray, newHolding];
-        }
-        return walletArray;
-      });
+    addMessage: (newMessage) => {
+      update(messages => [...messages, newMessage]);
+      setTimeout(()=>update(messages => messages.filter(message => message !== newMessage)), 8000);
     },
-    updatePrice: (id, price) => {
-      update(walletArray => {
-        const index = walletArray.findIndex((obj => obj.id == id));
-        walletArray[index].lastPrice = price;
-        walletArray[index].value = (parseFloat(price) * parseFloat(walletArray[index].amountHeld));
-        return [...walletArray];
-      });
-    },
-    updateAmount: (id, amount) => {
-      update(walletArray => {
-        const index = walletArray.findIndex((obj => obj.id == id));
-        walletArray[index].amountHeld = amount;
-        walletArray[index].value = (parseFloat(walletArray[index].lastPrice) * parseFloat(amount));
-        return [...walletArray];
-      });
-    },
-    removeHolding: (id) => {
-      update(walletArray => walletArray.filter((holding) => holding.id !== id));
-    },
-    restoreFromFile: (walletToRestore) => {
-      set(walletToRestore);
-    },
-    reset: () => set([]),
   };
 }
+
+export const cryptoList = writable(JSON.parse(localStorage.getItem("list")) || []);
 
 export const updatePrices = (commaSeparatedHoldings) => {
   fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=" + commaSeparatedHoldings).then(result => {
     return result.json();
   }).then(json => {
+    console.log(json);
     const timestamp = new Date();
 
     for (const cryptoId in json) {
       if (json.hasOwnProperty(cryptoId)) {
         const price = json[cryptoId].usd;
-        wallet.updatePrice(cryptoId, price);
+        portfolio.updatePrice(cryptoId, price);
+        watchlist.updatePrice(cryptoId, price);
       }
     }
     updateTimestamp(timestamp);
@@ -78,10 +71,6 @@ const updateTimestamp = (timestamp) => {
   lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
 };
 
-wallet.subscribe((value) => {
-  localStorage.setItem("wallet", JSON.stringify(value));
-});
-
 cryptoList.subscribe((value) => {
   localStorage.setItem("list", JSON.stringify(value));
 });
@@ -90,34 +79,10 @@ lastUpdated.subscribe((value) => {
   localStorage.setItem("lastUpdated", value);
 });
 
-export const commaSeparatedHoldings = derived(wallet, ($wallet) => {
-  return $wallet.map((holding)=> holding.id).toString();
+export const commaSeparatedSymbols = derived([portfolio, watchlist], ([$portfolio, $watchlist]) => {
+  return $portfolio.map((holding)=> holding.id).toString() + "," + $watchlist.map(item => item.id).toString();
 });
 
-commaSeparatedHoldings.subscribe(value => {
+commaSeparatedSymbols.subscribe(value => {
   updatePrices(value);
-});
-
-export const displayData = derived([wallet], ([$wallet]) => {
-  const returnData = [];
-  $wallet.forEach((holding) => {
-    returnData.push(holding);
-  });
-
-  // Sort by value
-  returnData.sort(function(a, b) {
-    return a["value"] - b["value"];
-  }).reverse();
-
-  return returnData;
-});
-
-export const totalValue = derived(wallet, ($wallet) => {
-  let total = 0;
-  $wallet.forEach((holding) => {
-    if (holding.value) {
-      total += holding.value;
-    }
-  });
-  return total;
 });

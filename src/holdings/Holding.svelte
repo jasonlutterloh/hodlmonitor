@@ -2,7 +2,7 @@
   import {getDollarDisplayValue} from "./utils";
 import {fly} from "svelte/transition";
 import HoldingDetails from "./HoldingDetails.svelte";
-import { selectedHolding } from "../applicationStateStore";
+import { selectedHolding } from "../store";
 
 export let holding;
 

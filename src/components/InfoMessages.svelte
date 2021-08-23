@@ -1,6 +1,6 @@
 <script>
   	import {fade} from "svelte/transition";
-import {infoMessages} from "../applicationStateStore";
+import {infoMessages} from "../store";
 </script>
 
 {#if $infoMessages.length > 0}

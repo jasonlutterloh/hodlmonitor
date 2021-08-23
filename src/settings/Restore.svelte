@@ -1,12 +1,12 @@
 <script>
-  import { wallet } from "../store";
-  import {infoMessages} from "../applicationStateStore";
+  import { portfolio } from "../portfolio/store";
+  import {infoMessages} from "../store";
   let files;
 
-  const updateWallet = (data) => {
+  const updatePortfolio = (data) => {
     try {
       let json = JSON.parse(data);
-      wallet.restoreFromFile(json);
+      portfolio.restoreFromFile(json);
       infoMessages.addMessage("Restored data successfully.");
     } catch (error) {
       infoMessages.addMessage("Could not restore data.");
@@ -18,7 +18,7 @@
     if (files && files.length > 0) {
       const reader = new FileReader();
       reader.onload = function(e) {
-        updateWallet(e.target.result);
+        updatePortfolio(e.target.result);
       };
       reader.readAsText(files[0]);
     }
