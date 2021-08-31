@@ -1,11 +1,12 @@
 import {derived, writable} from "svelte/store";
 import { infoMessages } from "../store";
+import {getDollarDisplayValue} from "../utils";
 
 export const portfolio = createPortfolio();
 export const isAddMode = writable(false);
 export const isEditMode = writable(false);
 export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");
-
+export const selectedItem = writable({});
 
 function createPortfolio() {
   const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("wallet")) || []); // Not happy with this var but its already set so would break existing users if changed
@@ -15,7 +16,7 @@ function createPortfolio() {
     addHolding: (apiData, amount) => {
       update(portfolioArray => {
         const doesExist = portfolioArray.some((holding) => holding.id === apiData.id);
-        if (!doesExist) {
+        if (!doesExist && apiData != null) {
           const newHolding = {
             "id": apiData.id,
             "name": apiData.name,
@@ -26,8 +27,9 @@ function createPortfolio() {
           };
 
           return [...portfolioArray, newHolding];
+        } else {
+          throw new Error("Cryptocurrency already already exists in portfolio.");
         }
-        return portfolioArray;
       });
     },
     updatePrice: (id, price) => {
@@ -84,21 +86,6 @@ portfolio.subscribe((value) => {
   localStorage.setItem("portfolio", JSON.stringify(value));
 });
 
-
-export const displayData = derived([portfolio], ([$portfolio]) => {
-  const returnData = [];
-  $portfolio.forEach((holding) => {
-    returnData.push(holding);
-  });
-
-  // Sort by value
-  returnData.sort(function(a, b) {
-    return a["value"] - b["value"];
-  }).reverse();
-
-  return returnData;
-});
-
 export const totalValue = derived(portfolio, ($portfolio) => {
   let total = 0;
   $portfolio.forEach((holding) => {
@@ -107,6 +94,26 @@ export const totalValue = derived(portfolio, ($portfolio) => {
     }
   });
   return total;
+});
+
+export const displayData = derived([portfolio, totalValue], ([$portfolio, $totalValue]) => {
+  const returnData = [];
+  $portfolio.forEach((item) => {
+    item["details"] = {
+      "Portfolio Percentage": getPercentage(item.value, $totalValue) + "%",
+      "Quantity": item.amountHeld,
+      "Current Price": getDollarDisplayValue(item.lastPrice),
+      "Current Value": getDollarDisplayValue(item.value)
+    };
+    returnData.push(item);
+  });
+
+  // Sort by value
+  returnData.sort(function(a, b) {
+    return a["value"] - b["value"];
+  }).reverse();
+
+  return returnData;
 });
 
 export const updatePortfolioPrices = (symbols) => {
@@ -144,3 +151,7 @@ export const portfolioSymbols = derived(portfolio, ($portfolio) => {
 portfolioSymbols.subscribe(value => {
   updatePortfolioPrices(value);
 });
+
+const getPercentage = (value, total) => {
+  return parseFloat((value / total) * 100).toFixed(2);
+}

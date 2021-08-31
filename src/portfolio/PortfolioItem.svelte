@@ -1,10 +1,10 @@
 <script>
-  import {getDollarDisplayValue} from "./utils";
+  import {getDollarDisplayValue} from "../utils";
 import {fly} from "svelte/transition";
-import HoldingDetails from "./HoldingDetails.svelte";
-import { selectedHolding } from "../store";
+import PortfolioItemDetails from "../portfolio/PortfolioItemDetails.svelte";
+import { selectedItem } from "../portfolio/store";
 
-export let holding;
+export let item;
 
 const handleKeyboard = (event) => {
     if(event.keyCode == 13) {
@@ -13,10 +13,10 @@ const handleKeyboard = (event) => {
   }
 
 	const handleExpandCollapse = () => {
-		if ($selectedHolding.id === holding.id){
-			selectedHolding.set({});
+		if ($selectedItem.id === item.id){
+			selectedItem.set({});
 		} else {
-			selectedHolding.set(holding);
+			selectedItem.set(item);
 		}
 	}
 </script>
@@ -24,24 +24,24 @@ const handleKeyboard = (event) => {
 <li out:fly="{{x: -200}}">
   <div class="container" on:click={handleExpandCollapse} tabindex="0" on:keypress={handleKeyboard}>
     <div class="name-container">
-      <h2>{holding.name}</h2>
+      <h2>{item.name}</h2>
     </div>
-    {#if $selectedHolding.id != holding.id}
+    {#if $selectedItem.id != item.id}
     <!-- Doing it this way to make the animation nice. Not ideal from a code perspective-->
     <div class="value-container" transition:fly="{{x: 200, duration: 500}}">
-      <span>${getDollarDisplayValue(holding.value)}</span>
+      <span>${getDollarDisplayValue(item.value)}</span>
     </div>
     {/if}
     <span class="material-icons">
-			{#if $selectedHolding.id === holding.id} 
+			{#if $selectedItem.id === item.id} 
 				keyboard_arrow_up
 			{:else}
 				keyboard_arrow_down
 			{/if}
 			</span>
   </div>
-  {#if $selectedHolding.id === holding.id}
-		<HoldingDetails holding={holding}/>
+  {#if $selectedItem.id === item.id}
+		<PortfolioItemDetails details={item.details}/>
   {/if}
 </li>
 

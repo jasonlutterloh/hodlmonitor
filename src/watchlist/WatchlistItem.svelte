@@ -1,5 +1,5 @@
 <script>
-  import {getDollarDisplayValue} from "../holdings/utils";
+  import {getDollarDisplayValue} from "../utils";
   export let name, currentPrice;
 </script>
 <li>

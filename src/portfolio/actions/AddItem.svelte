@@ -1,14 +1,12 @@
 <script>
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
-  import {portfolio, isAddMode } from "../../../portfolio/store.js";
-  import SearchForm from "../../../components/forms/SearchForm.svelte";
-  import AmountForm from "../../../components/forms/AmountForm.svelte";
-  import Overlay from "../../../components/Overlay.svelte";
-  import ResultsList from "../../../components/forms/ResultsList.svelte";
-  import { onMount } from "svelte";
-  import {cryptoList, infoMessages} from "../../../store";
-
+  import {portfolio, isAddMode } from "../store.js";
+  import SearchForm from "../../components/forms/SearchForm.svelte";
+  import AmountForm from "../../components/forms/AmountForm.svelte";
+  import Overlay from "../../components/Overlay.svelte";
+  import ResultsList from "../../components/forms/ResultsList.svelte";
+  
   const hasError = writable(false);
   const step = writable(1);
 
@@ -46,12 +44,11 @@
     if (value > 0) {
       hasError.set(false);
 
-      const doesExist = $portfolio.some((holding) => holding.id === $itemToAdd.id);
-
-      if (!doesExist && $itemToAdd != null) {
+      try{
         portfolio.addHolding($itemToAdd, value);
         reset();
-      } else {
+      } catch (e){
+        console.error(e);
         hasError.set(true);
       }
     }

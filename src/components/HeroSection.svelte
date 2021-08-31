@@ -1,11 +1,11 @@
 <script>
-	import {totalValue} from "../portfolio/store.js";
-import {getDollarDisplayValue} from "./utils.js";
+  export let title;
+  export let value;
 </script>
 
 <div>
-  <h2>Total Value</h2> 
-  <p>${getDollarDisplayValue($totalValue)}</p>
+  <h2>{title}</h2> 
+  <p>{value}</p>
 </div>
 
 <style>

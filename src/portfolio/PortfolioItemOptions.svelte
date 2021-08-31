@@ -1,11 +1,11 @@
 <script>
   import {slide} from "svelte/transition";
-  import {portfolio,isEditMode} from "../portfolio/store";
+  import {portfolio,isEditMode,selectedItem} from "../portfolio/store";
   import HeaderButton from "../components/buttons/HeaderButton.svelte";
-  import { infoMessages,  selectedHolding } from "../store";
+  import { infoMessages } from "../store";
 
   export const removeCurrency = (currencyId) => {
-    selectedHolding.set({});
+    selectedItem.set({});
 
     portfolio.removeHolding(currencyId);
     infoMessages.addMessage("Crypto removed.")
@@ -13,10 +13,10 @@
 </script>
 
 <!-- If ID exists, we're in edit mode. -->
-{#if $selectedHolding.id} 
+{#if $selectedItem.id} 
 <div class="bar" transition:slide>
   <div>
-    <HeaderButton on:click={()=> selectedHolding.set({})}>
+    <HeaderButton on:click={()=> selectedItem.set({})}>
       <span class="material-icons">
         close
       </span>
@@ -28,7 +28,7 @@
         edit
       </span>
     </HeaderButton>
-    <HeaderButton on:click={() => removeCurrency($selectedHolding.id)} >
+    <HeaderButton on:click={() => removeCurrency($selectedItem.id)} >
       <span class="material-icons">
         delete
       </span>

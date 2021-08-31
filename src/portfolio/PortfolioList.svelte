@@ -1,13 +1,12 @@
 <script>
-	import Holding from "./Holding.svelte";
-	import {displayData, lastUpdated} from "../portfolio/store";
-	// import {lastUpdated} from "../store";
+	import PortfolioItem from "./PortfolioItem.svelte";
+	import {displayData, lastUpdated} from "./store";
 </script>
 
 {#if $displayData.length > 0}
 <ul>
-  {#each $displayData as holding}
-	<Holding holding={holding} />
+  {#each $displayData as item}
+	<PortfolioItem item={item} />
   {/each}
 </ul>
 <p class="last-updated">Last Updated: {$lastUpdated}</p>

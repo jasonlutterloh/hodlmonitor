@@ -1,12 +1,12 @@
 <script>
   import {writable} from "svelte/store";
-  import {portfolio, isEditMode } from "../../../portfolio/store.js";
+  import {portfolio, isEditMode } from "../store.js";
 
-  import {selectedHolding} from "../../../store";
-  import Overlay from "../../../components/Overlay.svelte";
-  import NumberInput from "../../../components/forms/NumberInput.svelte";
-  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
-  import FormButton from "../../../components/buttons/FormButton.svelte";
+  import {selectedItem} from "../store";
+  import Overlay from "../../components/Overlay.svelte";
+  import NumberInput from "../../components/forms/NumberInput.svelte";
+  import ButtonContainer from "../../components/buttons/ButtonContainer.svelte";
+  import FormButton from "../../components/buttons/FormButton.svelte";
 
   let y;
 
@@ -18,7 +18,7 @@
   });
   const submit = (event) => {
     const newAmount = parseFloat(event.target.amount.value);
-    portfolio.updateAmount($selectedHolding.id, newAmount);
+    portfolio.updateAmount($selectedItem.id, newAmount);
     reset();
   };
 
@@ -35,7 +35,7 @@
 <Overlay title="Edit Holding" onClose={reset}>
   <div>
     <form on:submit|preventDefault={submit}>
-      <NumberInput name="amount" value={$selectedHolding.amountHeld}>What amount of {$selectedHolding.name} do you hold?</NumberInput>
+      <NumberInput name="amount" value={$selectedItem.amountHeld}>What amount of {$selectedItem.name} do you hold?</NumberInput>
     
       <ButtonContainer>
         <FormButton type="submit">Edit</FormButton>

@@ -1,16 +1,19 @@
 <script>
-  import TotalValue from "../holdings/TotalValue.svelte";
-	import AddHolding from "../holdings/actions/add/AddHolding.svelte";
-	import EditHolding from "../holdings/actions/edit/EditHolding.svelte";
-	import HoldingsList from "../holdings/HoldingsList.svelte";
-  import HoldingTopBar from "../holdings/HoldingTopBar.svelte";
+  import HeroSection from "../components/HeroSection.svelte";
+	import AddItem from "./actions/AddItem.svelte";
+	import EditItem from "./actions/EditItem.svelte";
+	import PortfolioList from "./PortfolioList.svelte";
+  import PortfolioItemOptions from "./PortfolioItemOptions.svelte";
 	import {fly} from "svelte/transition";
+
+	import {totalValue} from "../portfolio/store.js";
+  import {getDollarDisplayValue} from "../utils.js";
 </script>
 
 <div in:fly="{{x:-2000, delay: 500}}" out:fly="{{x:-2000, duration: 500}}">
-<TotalValue  />
-<HoldingsList/>
-<AddHolding />
-<EditHolding />
-<HoldingTopBar />
+	<HeroSection title="Total Value" value={getDollarDisplayValue($totalValue)} />
+	<PortfolioList />
+	<AddItem />
+	<EditItem />
+	<PortfolioItemOptions />
 </div>
