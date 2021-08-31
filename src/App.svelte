@@ -1,6 +1,7 @@
 <script>
-	import {commaSeparatedSymbols, activePane, tabs, updatePrices} from "./store.js";
-	import {portfolio} from "./portfolio/store";
+	import {activePane, cryptoList, infoMessages} from "./store.js";
+	import {portfolioSymbols, updatePortfolioPrices, portfolio} from "./portfolio/store";
+	import {watchlistSymbols, updateWatchlistPrices, watchlist} from "./watchlist/store";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
 	import Sidebar from "./components/Sidebar.svelte";
@@ -13,8 +14,11 @@
 	
 	onMount(async () => {
 	  if ($portfolio.length > 0) {
-			setInterval(()=>updatePrices($commaSeparatedSymbols), 60000);
+			setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
 	  }
+		if ($watchlist.length > 0) {
+			setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
+		}
 
     fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
         return result.json();

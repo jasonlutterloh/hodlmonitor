@@ -26,7 +26,7 @@ export const tabs = [
 ];
 
 export const activePane = writable(tabs[0]);
-export const lastUpdated = writable(localStorage.getItem("lastUpdated") || "");
+// export const lastUpdated = writable(localStorage.getItem("lastUpdated") || "");
 export const isExpanded = writable(false);
 export const selectedHolding = writable({});
 export const infoMessages = createInfoMessageSystem();
@@ -44,45 +44,43 @@ function createInfoMessageSystem() {
 }
 
 export const cryptoList = writable(JSON.parse(localStorage.getItem("list")) || []);
-
-export const updatePrices = (commaSeparatedHoldings) => {
-  fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=" + commaSeparatedHoldings).then(result => {
-    return result.json();
-  }).then(json => {
-    console.log(json);
-    const timestamp = new Date();
-
-    for (const cryptoId in json) {
-      if (json.hasOwnProperty(cryptoId)) {
-        const price = json[cryptoId].usd;
-        portfolio.updatePrice(cryptoId, price);
-        watchlist.updatePrice(cryptoId, price);
-      }
-    }
-    updateTimestamp(timestamp);
-  }).catch(error => {
-    infoMessages.addMessage("Error getting current prices.");
-    console.error("Error getting current prices.", error);
-    return [];
-  });
-};
-
-const updateTimestamp = (timestamp) => {
-  lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
-};
-
 cryptoList.subscribe((value) => {
   localStorage.setItem("list", JSON.stringify(value));
 });
 
-lastUpdated.subscribe((value) => {
-  localStorage.setItem("lastUpdated", value);
-});
+// export const updatePrices = (commaSeparatedHoldings) => {
+//   fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=" + commaSeparatedHoldings).then(result => {
+//     return result.json();
+//   }).then(json => {
+//     const timestamp = new Date();
 
-export const commaSeparatedSymbols = derived([portfolio, watchlist], ([$portfolio, $watchlist]) => {
-  return $portfolio.map((holding)=> holding.id).toString() + "," + $watchlist.map(item => item.id).toString();
-});
+//     for (const cryptoId in json) {
+//       if (json.hasOwnProperty(cryptoId)) {
+//         const price = json[cryptoId].usd;
+//         portfolio.updatePrice(cryptoId, price);
+//         watchlist.updatePrice(cryptoId, price);
+//       }
+//     }
+//     updateTimestamp(timestamp);
+//   }).catch(error => {
+//     infoMessages.addMessage("Error getting current prices.");
+//     console.error("Error getting current prices.", error);
+//     return [];
+//   });
+// };
 
-commaSeparatedSymbols.subscribe(value => {
-  updatePrices(value);
-});
+// const updateTimestamp = (timestamp) => {
+//   lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
+// };
+
+// lastUpdated.subscribe((value) => {
+//   localStorage.setItem("lastUpdated", value);
+// });
+
+// export const commaSeparatedSymbols = derived([portfolio, watchlist], ([$portfolio, $watchlist]) => {
+//   return $portfolio.map((holding)=> holding.id).toString() + "," + $watchlist.map(item => item.id).toString();
+// });
+
+// commaSeparatedSymbols.subscribe(value => {
+//   updatePrices(value);
+// });

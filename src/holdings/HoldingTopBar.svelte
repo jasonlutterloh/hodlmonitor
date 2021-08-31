@@ -60,7 +60,6 @@
 
 @media(prefers-color-scheme: dark){
   .bar{
-    background-color: var(--border-color);
     box-shadow: 0 1px 4px #000000;
   }
 }

@@ -23,7 +23,6 @@ import { onMount } from "svelte";
   };
 
   isAddMode.subscribe(value => {
-    console.log(value);
       if (value === true){
         y = 0;
       }
@@ -36,7 +35,6 @@ import { onMount } from "svelte";
   })
   itemToAdd.subscribe((value) => {
     if (value != "") {
-      console.log(value);
       hasError.set(false);
 
       const doesExist = $watchlist.some((item) => item.id === $itemToAdd.id);

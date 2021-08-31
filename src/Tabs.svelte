@@ -2,9 +2,9 @@
   import {activePane, tabs} from "./store.js";
 </script>
 
-<div>
+<div role="tablist">
   {#each tabs as tab}
-  <button class="tab" on:click={()=>{activePane.set(tab)}} style="width: {100/tabs.length}%" role="tab" aria-selected={$activePane.id==tab.id}>
+  <button class="tab" on:click={()=>{activePane.set(tab)}} style="width: {100/tabs.length}%" role="tab" aria-selected={$activePane.id==tab.id} tabindex={$activePane.id==tab.id ? "0" : "-1"}>
     {#if tab.icon}
       <span class="material-icons">{tab.icon}</span>
     {/if}
@@ -43,7 +43,7 @@
  @media(prefers-color-scheme: dark){
   button{
    color: var(--text-color);
-    background: var(--top-bar-color);
+    background: var(--body-color);
   }
  }
 </style>

@@ -1,12 +1,15 @@
 <script>
   import { portfolio } from "../portfolio/store";
   import {infoMessages} from "../store";
+import { watchlist } from "../watchlist/store";
   let files;
 
   const updatePortfolio = (data) => {
     try {
       let json = JSON.parse(data);
-      portfolio.restoreFromFile(json);
+      json.portfolio ? portfolio.restoreFromFile(json.portfolio) : console.error("No portfolio backup");
+      json.watchlist ? watchlist.restoreFromFile(json.watchlist) : console.error("No watchlist backup");
+      // watchlist.restoreFromFile(json.watchlist);
       infoMessages.addMessage("Restored data successfully.");
     } catch (error) {
       infoMessages.addMessage("Could not restore data.");
@@ -32,28 +35,28 @@
 </script>
 
 <form on:submit|preventDefault={upload}>
-  <label tabindex="0" for="file" on:keypress={handleKeyboard}>Restore from Backup</label>
+  <label tabindex="0" for="file" on:keypress={handleKeyboard}><span class="material-icons">restore</span>Restore from Local Backup</label>
   <input required type="file" bind:files name="file" id="file" on:change={upload}/>
 </form>
 
 <style>
 label {
   box-sizing: border-box;
-  margin: 1em auto;
+  margin: 0 auto;
   display: block;
   background: var(--primary-color);
   color: var(--alt-text-color);
   cursor: pointer;
-  text-transform: uppercase;
+  /* text-transform: uppercase;
   font-weight: bold;
-  border: 3px solid var(--alt-text-color);
-  padding: 1em 0;
+  border: 3px solid var(--alt-text-color); */
+  padding: 1em;
   transition: 0.2s all;
   width: 100%;
   max-width: 400px;
-  font-size: .9em;
+  font-size: 18px;
   text-decoration: none;
-  text-align: center;
+  text-align: left;
 }
 label:hover, label:focus {
   background: var(--alt-text-color);
@@ -62,12 +65,16 @@ label:hover, label:focus {
 label:active {
   transform: scale(.95);
 }
+label > span{
+  vertical-align: text-bottom;
+  padding-right: .5em;
+}
 
 @media(prefers-color-scheme: dark){
   label {
     background: var(--secondary-body-color);
     color: var(--text-color);
-    border: 3px solid var(--text-color);
+    /* border: 3px solid var(--text-color); */
   }
   label:hover, label:focus {
     background: var(--text-color);

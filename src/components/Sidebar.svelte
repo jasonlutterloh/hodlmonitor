@@ -14,9 +14,9 @@
     </span>
   </HeaderButton>
 </div>
-  <div>
-    <slot></slot>
-  </div>
+  
+  <slot></slot>
+  
 </aside>
 <div class="overlay" on:click={() => isSidebarOpen = !isSidebarOpen}></div>
 {/if}
@@ -36,13 +36,11 @@
     left: 0;
     box-shadow: var(--border-color);
   }
-  aside > div{
-    padding: 8px;
-  }
   aside > div:first-of-type{
     position: absolute;
     right: 0;
     top: 0;
+    padding: 8px;
   }
   .overlay{
     position:fixed;
