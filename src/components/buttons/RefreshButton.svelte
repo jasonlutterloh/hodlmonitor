@@ -1,15 +1,15 @@
 <script>
   import HeaderButton from "./HeaderButton.svelte";
   import {infoMessages } from "../../store";
-  import {portfolioSymbols, updatePortfolioPrices, portfolio} from "../../portfolio/store";
-	import {watchlistSymbols, updateWatchlistPrices, watchlist} from "../../watchlist/store";
+  import {portfolioSymbols, updatePortfolioPrices} from "../../portfolio/store";
+	import {watchlistSymbols, updateWatchlistPrices} from "../../watchlist/store";
 
   const refresh = () => {
-    if ($portfolio.length > 0) {
-			setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
+    if ($portfolioSymbols.length > 0) {
+			updatePortfolioPrices($portfolioSymbols);
 	  }
-		if ($watchlist.length > 0) {
-			setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
+		if ($watchlistSymbols.length > 0) {
+			updateWatchlistPrices($watchlistSymbols);
 		}
     infoMessages.addMessage("Prices refreshing.")
   };

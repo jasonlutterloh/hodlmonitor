@@ -35,7 +35,7 @@
     </span>
   </div>
   {#if isSelected}
-    <slot></slot>
+    <slot />
   {/if}
 </li>
 
@@ -64,5 +64,10 @@
   .value-container {
     margin-right: 1em;
     text-align: center;
+  }
+  @media (prefers-color-scheme: dark) {
+    .value-container span {
+      color: var(--primary-color);
+    }
   }
 </style>

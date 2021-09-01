@@ -1,41 +1,22 @@
 <script>
   import {slide} from "svelte/transition";
-  import {portfolio,isEditMode,selectedItem} from "../portfolio/store";
   import HeaderButton from "../components/buttons/HeaderButton.svelte";
-  import { infoMessages } from "../store";
 
-  export const removeCurrency = (currencyId) => {
-    selectedItem.set({});
-
-    portfolio.removeHolding(currencyId);
-    infoMessages.addMessage("Crypto removed.")
-  };
+  export let closeCallback;
 </script>
 
-<!-- If ID exists, we're in edit mode. -->
-{#if $selectedItem.id} 
 <div class="bar" transition:slide>
   <div>
-    <HeaderButton on:click={()=> selectedItem.set({})}>
+    <HeaderButton on:click={closeCallback}>
       <span class="material-icons">
         close
       </span>
     </HeaderButton>
   </div>
   <div>
-    <HeaderButton on:click={() => isEditMode.set(true)} >
-      <span class="material-icons">
-        edit
-      </span>
-    </HeaderButton>
-    <HeaderButton on:click={() => removeCurrency($selectedItem.id)} >
-      <span class="material-icons">
-        delete
-      </span>
-    </HeaderButton>
+    <slot></slot>
   </div>
 </div>
-{/if}
 
 <style>
   .bar{

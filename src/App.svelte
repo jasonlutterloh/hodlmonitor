@@ -1,7 +1,7 @@
 <script>
 	import {activePane, cryptoList, infoMessages} from "./store.js";
-	import {portfolioSymbols, updatePortfolioPrices, portfolio} from "./portfolio/store";
-	import {watchlistSymbols, updateWatchlistPrices, watchlist} from "./watchlist/store";
+	import {portfolioSymbols, updatePortfolioPrices} from "./portfolio/store";
+	import {watchlistSymbols, updateWatchlistPrices} from "./watchlist/store";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
 	import Sidebar from "./components/Sidebar.svelte";
@@ -13,10 +13,10 @@
 	let isSidebarOpen = false;
 	
 	onMount(async () => {
-	  if ($portfolio.length > 0) {
+	  if ($portfolioSymbols.length > 0) {
 			setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
 	  }
-		if ($watchlist.length > 0) {
+		if ($watchlistSymbols.length > 0) {
 			setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
 		}
 

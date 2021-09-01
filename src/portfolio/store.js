@@ -8,8 +8,23 @@ export const isEditMode = writable(false);
 export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");
 export const selectedItem = writable({});
 
+// This has to exist to support migrating to the new variable
+function getPortfolioFromLocalStorage() {
+  const portfolio = localStorage.getItem("portfolio");
+  const oldPortfolio = localStorage.getItem("wallet");
+  console.log(portfolio);
+  console.log(oldPortfolio);
+  if (portfolio) {
+    return JSON.parse(portfolio);
+  } else if (oldPortfolio) {
+    return JSON.parse(oldPortfolio);
+  } else {
+    return [];
+  }
+}
+
 function createPortfolio() {
-  const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("wallet")) || []); // Not happy with this var but its already set so would break existing users if changed
+  const { subscribe, set, update } = writable(getPortfolioFromLocalStorage()); // Not happy with this var but its already set so would break existing users if changed
 
   return {
     subscribe,
@@ -35,7 +50,7 @@ function createPortfolio() {
     updatePrice: (id, price) => {
       update(portfolioArray => {
         const index = portfolioArray.findIndex((obj => obj.id == id));
-        if (index >= 0){
+        if (index >= 0) {
           portfolioArray[index].lastPrice = price;
           portfolioArray[index].value = (parseFloat(price) * parseFloat(portfolioArray[index].amountHeld));
           return [...portfolioArray];
@@ -51,13 +66,13 @@ function createPortfolio() {
         return [...portfolioArray];
       });
     },
-    removeHolding: (id) => {
+    removeItem: (id) => {
       update(portfolioArray => portfolioArray.filter((holding) => holding.id !== id));
     },
     restoreFromFile: (fileData) => {
-      let isArray = Array.isArray(fileData);
+      const isArray = Array.isArray(fileData);
       let errorFlag = false;
-      if (isArray){
+      if (isArray) {
         // This just checks if the property exists, not the type. Could got that far but probably not needed.
         fileData.forEach(item => {
           !(
@@ -68,12 +83,12 @@ function createPortfolio() {
             item.hasOwnProperty("lastPrice") &&
             item.hasOwnProperty("value")
           ) ? errorFlag = true : null;
-        })
+        });
       }
-      if (!errorFlag){
+      if (!errorFlag) {
         set(fileData);
       } else {
-        console.error("Portfolio could not be restored.")
+        console.error("Portfolio could not be restored.");
         infoMessages.addMessage("Portfolio could not be restored.");
       }
     },
@@ -82,7 +97,6 @@ function createPortfolio() {
 }
 
 portfolio.subscribe((value) => {
-  localStorage.setItem("wallet", JSON.stringify(value));
   localStorage.setItem("portfolio", JSON.stringify(value));
 });
 
@@ -99,30 +113,31 @@ export const totalValue = derived(portfolio, ($portfolio) => {
 export const displayData = derived([portfolio, totalValue], ([$portfolio, $totalValue]) => {
   const returnData = [];
   $portfolio.forEach((item) => {
-    item["details"] = [
+    const displayItem = {...item};
+    displayItem["details"] = [
       {
         name: "Portfolio Percentage",
         value: getPercentage(item.value, $totalValue),
-        color: "var(--text-color)"
+        color: "var(--text-color)",
       },
       {
         name: "Quantity",
         value: item.amountHeld,
-        color: "var(--text-color)"
+        color: "var(--text-color)",
       },
       {
         name: "Current Price",
         value: getDollarDisplayValue(item.lastPrice),
-        color: "var(--text-color)"
+        color: "var(--text-color)",
       },
       {
         name: "Current Value",
         value: getDollarDisplayValue(item.value),
-        color: "var(--text-color)"
+        color: "var(--text-color)",
       },
     ];
-    
-    returnData.push(item);
+
+    returnData.push(displayItem);
   });
 
   // Sort by value

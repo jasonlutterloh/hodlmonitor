@@ -1,12 +1,10 @@
 <script>
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
-  import {cryptoList, infoMessages} from "../store.js";
-  import {watchlist, isAddMode} from "./store.js";
-  import SearchForm from "../components/forms/SearchForm.svelte";
-  import Overlay from "../components/Overlay.svelte";
-  import ResultsList from "../components/forms/ResultsList.svelte";
-import { onMount } from "svelte";
+  import {watchlist, isAddMode} from "../store.js";
+  import SearchForm from "../../components/forms/SearchForm.svelte";
+  import Overlay from "../../components/Overlay.svelte";
+  import ResultsList from "../../components/forms/ResultsList.svelte";
 
   const hasError = writable(false);
   const step = writable(1);
