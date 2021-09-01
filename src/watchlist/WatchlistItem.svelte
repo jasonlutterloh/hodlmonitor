@@ -8,7 +8,7 @@
       <h2>{name}</h2>
     </div>
     <div class="value-container">
-      <span>${getDollarDisplayValue(currentPrice)}</span>
+      <span>{getDollarDisplayValue(currentPrice)}</span>
     </div>
   </div>
 </li>

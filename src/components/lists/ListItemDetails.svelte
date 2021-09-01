@@ -1,14 +1,14 @@
 <script>
   import {slide} from "svelte/transition";
-  import ListItemDetail from "../components/lists/ListItemDetail.svelte";
+  import ListItemDetail from "./ListItemDetail.svelte";
 
   export let details;
 </script>
 
 <div transition:slide class="container">
   <div class="details">
-    {#each Object.keys(details) as detailKey}
-      <ListItemDetail name={detailKey} value={details[detailKey]} />
+    {#each details as detail}
+      <ListItemDetail name={detail.name} value={detail.value} textColor={detail.color}/>
     {/each}
   </div>
 </div>

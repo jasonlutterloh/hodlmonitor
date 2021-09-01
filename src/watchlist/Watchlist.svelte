@@ -1,16 +1,29 @@
 <script>
 	import AddItem from "./AddItem.svelte";
-import {watchlist} from "./store";
-import WatchlistItem from "./WatchlistItem.svelte";
-import {fly} from "svelte/transition";
+	import {watchlist} from "./store";
+	import ListItem from "../components/lists/ListItem.svelte";
+	import {fly} from "svelte/transition";
+	import {getDollarDisplayValue} from "../utils";
+	import ListItemDetails from "../components/lists/ListItemDetails.svelte";
 
+	let selectedId = "";
+
+	const handleClick = (id) => {
+		if (selectedId === id){
+			selectedId = ""; 
+		} else {
+			selectedId = id;
+		}
+	};
 </script>
 
 <div in:fly="{{x:2000, delay:500}}" out:fly="{{x:2000, duration: 500}}">
 	{#if $watchlist.length > 0}
 	<ul>
-		{#each $watchlist as listItem}
-		<WatchlistItem name={listItem.name} currentPrice={listItem.currentPrice} />
+		{#each $watchlist as item}
+			<ListItem name={item.name} value={getDollarDisplayValue(item.currentPrice)} isSelected={selectedId === item.id} clickHandler={() => handleClick(item.id)}>
+				<ListItemDetails details={item.details} />
+			</ListItem>
 		{/each}
 	</ul>
 	{:else}

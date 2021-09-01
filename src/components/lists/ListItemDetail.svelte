@@ -1,11 +1,14 @@
 <script>
   export let name;
   export let value;
+	export let textColor;
+
+	// I don't love this textColor thing. Maybe use classnames? 
 </script>
 
 <div>
   <span>{name}</span>
-  <span>{value}</span>
+  <span style="color:{textColor}">{value}</span>
 </div>
 
 <style>
@@ -26,11 +29,6 @@
 	span:last-of-type{
 		font-size: 1.4em;
 		margin: 0 1em 1em 1em;
-	}
-	@media(prefers-color-scheme: dark){
-		span:last-of-type{
-			color: var(--primary-color);
-		}
 	}
 	@media only screen and (max-width: 568px) {
 		div{

@@ -1,6 +1,6 @@
 import {derived, writable} from "svelte/store";
 import { infoMessages } from "../store";
-import {getDollarDisplayValue} from "../utils";
+import {getDollarDisplayValue, getPercentage} from "../utils";
 
 export const portfolio = createPortfolio();
 export const isAddMode = writable(false);
@@ -99,12 +99,29 @@ export const totalValue = derived(portfolio, ($portfolio) => {
 export const displayData = derived([portfolio, totalValue], ([$portfolio, $totalValue]) => {
   const returnData = [];
   $portfolio.forEach((item) => {
-    item["details"] = {
-      "Portfolio Percentage": getPercentage(item.value, $totalValue) + "%",
-      "Quantity": item.amountHeld,
-      "Current Price": getDollarDisplayValue(item.lastPrice),
-      "Current Value": getDollarDisplayValue(item.value)
-    };
+    item["details"] = [
+      {
+        name: "Portfolio Percentage",
+        value: getPercentage(item.value, $totalValue),
+        color: "var(--text-color)"
+      },
+      {
+        name: "Quantity",
+        value: item.amountHeld,
+        color: "var(--text-color)"
+      },
+      {
+        name: "Current Price",
+        value: getDollarDisplayValue(item.lastPrice),
+        color: "var(--text-color)"
+      },
+      {
+        name: "Current Value",
+        value: getDollarDisplayValue(item.value),
+        color: "var(--text-color)"
+      },
+    ];
+    
     returnData.push(item);
   });
 
@@ -151,7 +168,3 @@ export const portfolioSymbols = derived(portfolio, ($portfolio) => {
 portfolioSymbols.subscribe(value => {
   updatePortfolioPrices(value);
 });
-
-const getPercentage = (value, total) => {
-  return parseFloat((value / total) * 100).toFixed(2);
-}

@@ -4,5 +4,9 @@ export const getDollarDisplayValue = (text) => {
     text = text.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  return text;
+  return "$" + text;
 };
+
+export const getPercentage = (value, total) => {
+  return parseFloat((value / total) * 100).toFixed(2) + "%";
+}

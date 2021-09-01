@@ -1,7 +1,7 @@
 <script>
   import {getDollarDisplayValue} from "../utils";
 import {fly} from "svelte/transition";
-import PortfolioItemDetails from "../portfolio/PortfolioItemDetails.svelte";
+import PortfolioItemDetails from "../components/lists/ListItemDetails.svelte";
 import { selectedItem } from "../portfolio/store";
 
 export let item;
@@ -29,7 +29,7 @@ const handleKeyboard = (event) => {
     {#if $selectedItem.id != item.id}
     <!-- Doing it this way to make the animation nice. Not ideal from a code perspective-->
     <div class="value-container" transition:fly="{{x: 200, duration: 500}}">
-      <span>${getDollarDisplayValue(item.value)}</span>
+      <span>{getDollarDisplayValue(item.value)}</span>
     </div>
     {/if}
     <span class="material-icons">
