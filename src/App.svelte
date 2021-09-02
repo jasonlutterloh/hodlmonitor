@@ -4,13 +4,9 @@
 	import {watchlistSymbols, updateWatchlistPrices} from "./watchlist/store";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
-	import Sidebar from "./components/Sidebar.svelte";
 	import InfoMessages from "./components/InfoMessages.svelte";
-	import Settings from "./settings/Settings.svelte";
 	import Tabs from "./Tabs.svelte";
 	import {onMount} from "svelte";
-
-	let isSidebarOpen = false;
 	
 	onMount(async () => {
 	  if ($portfolioSymbols.length > 0) {
@@ -31,11 +27,8 @@
 	});
 </script>
 
-<Header bind:isSidebarOpen/>
+<Header />
 <main>
-	<Sidebar bind:isSidebarOpen >
-		<Settings />
-	</Sidebar>
 	<Tabs />
 	<svelte:component this={$activePane.component} />
 	<InfoMessages />

@@ -1,29 +1,30 @@
 <script>
   import {fly} from "svelte/transition";
   import {writable} from "svelte/store";
-  import {portfolio, isAddMode } from "../store.js";
+  import {portfolio } from "../store.js";
   import SearchForm from "../../components/forms/SearchForm.svelte";
   import AmountForm from "../../components/forms/AmountForm.svelte";
   import Overlay from "../../components/Overlay.svelte";
   import ResultsList from "../../components/forms/ResultsList.svelte";
-  
+  import HeaderButton from "../../components/buttons/HeaderButton.svelte";
+
   const hasError = writable(false);
   const step = writable(1);
-
+  const isExpanded = writable(false);
   let results = writable([]);
   let itemToAdd = writable("");
   let amountToAdd = writable(0);
   let y;
 
   const reset = () => {
-    isAddMode.set(false);
+    isExpanded.set(false);
     hasError.set(false);
     itemToAdd.set("");
     amountToAdd.set(0);
     step.set(1);
   };
 
-  isAddMode.subscribe(value => {
+  isExpanded.subscribe(value => {
     if (value === true) {
       y = 0;
     }
@@ -48,7 +49,6 @@
         portfolio.addHolding($itemToAdd, value);
         reset();
       } catch (e) {
-        console.error(e);
         hasError.set(true);
       }
     }
@@ -58,7 +58,12 @@
 
 <svelte:window bind:scrollY={y}/>
 
-{#if $isAddMode}
+<HeaderButton on:click={() => isExpanded.set(true)} >
+  <span class="material-icons">
+    add
+  </span>
+</HeaderButton>
+{#if $isExpanded}
 <Overlay title="Add Holding" onClose={reset}>
   {#if $step == 1}
     <div out:fly="{{x: -200, duration: 500}}">

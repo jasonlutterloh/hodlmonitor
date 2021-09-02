@@ -1,23 +1,34 @@
 <script>
+  import Sidebar from "../components/Sidebar.svelte";
+  import HeaderButton from "../components/buttons/HeaderButton.svelte";
   import Backup from "./Backup.svelte";
   import Restore from "./Restore.svelte";
   import ClearData from "./ClearData.svelte";
+
+  let isSidebarOpen = false;
 </script>
 
-<h2>Manage Your Data</h2>
-<div class="container">
-  <div class="top-menu">
-    <Backup />
-    <Restore />
+<HeaderButton on:click={() => (isSidebarOpen = !isSidebarOpen)}>
+  <span class="material-icons" aria-hidden="true"> menu </span>
+  <span class="sr-only">Data Menu</span>
+</HeaderButton>
+<Sidebar bind:isSidebarOpen>
+  <h2>Manage Your Data</h2>
+  <div class="container">
+    <div class="top-menu">
+      <Backup />
+      <Restore />
+    </div>
+    <div class="bottom-menu">
+      <ClearData />
+      <p>
+        Reminder: Your data is not sent anywhere or stored remotely. This app
+        runs in the browser and uses local storage on your device.
+      </p>
+    </div>
   </div>
-  <div class="bottom-menu">
-    <ClearData />
-    <p>
-      Reminder: Your data is not sent anywhere or stored remotely. This app runs
-      in the browser and uses local storage on your device.
-    </p>
-  </div>
-</div>
+</Sidebar>
+
 
 <style>
   .container {

@@ -3,9 +3,9 @@ import { getDollarDisplayValue, getPercentage, getColor } from "../utils";
 import { infoMessages } from "../store";
 
 export const watchlist = createWatchlist();
-export const isAddMode = writable(false);
 export const apiResponse = writable([]);
 export const lastUpdated = writable(localStorage.getItem("watchlistLastUpdated") || "");
+export const selectedId = writable(null);
 
 function createWatchlist() {
   const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("watchlist")) || []);

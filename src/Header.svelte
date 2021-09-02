@@ -1,24 +1,19 @@
 <script>
-  import HeaderButton from "./components/buttons/HeaderButton.svelte";
   import RefreshButton from "./components/buttons/RefreshButton.svelte";
+  import DataMenu from "./settings/DataMenu.svelte";
   import {activePane} from "./store";
-  export let isSidebarOpen = false;
 </script>
 
 <header>
   <div>
-    <HeaderButton on:click={() => isSidebarOpen = !isSidebarOpen} >
-      <span class="material-icons">
-        menu
-      </span>
-    </HeaderButton>
+    <DataMenu />
   </div>
   <div>
     <h1>HODL Monitor</h1>
   </div>
   <div>
     <RefreshButton />
-    <svelte:component this={$activePane.buttons} />
+    <svelte:component this={$activePane.headerContent} />
   </div>
 </header>
 

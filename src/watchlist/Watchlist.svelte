@@ -1,27 +1,18 @@
 <script>
-  import AddItem from "./actions/AddItem.svelte";
-  import { watchlist, displayData } from "./store";
+  import { selectedId, displayData } from "./store";
   import ListItem from "../components/lists/ListItem.svelte";
   import { fly } from "svelte/transition";
   import { getDollarDisplayValue } from "../utils";
   import ListItemDetails from "../components/lists/ListItemDetails.svelte";
-  import Bar from "../components/Bar.svelte";
-  import HeaderButton from "../components/buttons/HeaderButton.svelte";
-import {infoMessages} from "../store";
+import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
 
-  let selectedId;
   let screenWidth;
 
-  const removeItem = () => {
-    watchlist.removeItem(selectedId);
-    selectedId = null;
-    infoMessages.addMessage("Crypto removed.");
-  };
   const handleClick = (id) => {
-    if (selectedId === id) {
-      selectedId = null;
+    if ($selectedId === id) {
+      selectedId.set(null);
     } else {
-      selectedId = id;
+      selectedId.set(id);
     }
   };
 </script>
@@ -31,6 +22,10 @@ import {infoMessages} from "../store";
 <div
   in:fly={{ x: screenWidth, delay: 500 }}
   out:fly={{ x: screenWidth, duration: 500 }}
+  role="tabpanel"
+  tabindex="0"
+  aria-labelledby="watchlist-tab"
+  id="watchlist-panel"
 >
   {#if $displayData.length > 0}
     <ul>
@@ -38,10 +33,11 @@ import {infoMessages} from "../store";
         <ListItem
           name={item.name}
           value={getDollarDisplayValue(item.currentPrice)}
-          isSelected={selectedId === item.id}
+          isSelected={$selectedId === item.id}
           clickHandler={() => handleClick(item.id)}
         >
           <ListItemDetails details={item.details} />
+          <WatchlistItemOptions />
         </ListItem>
       {/each}
     </ul>
@@ -52,14 +48,6 @@ import {infoMessages} from "../store";
     </p>
   {/if}
 </div>
-{#if selectedId}
-  <Bar closeCallback={() => (selectedId = null)}>
-    <HeaderButton on:click={() => removeItem()}>
-      <span class="material-icons"> delete </span>
-    </HeaderButton>
-  </Bar>
-{/if}
-<AddItem />
 
 <style>
   ul {

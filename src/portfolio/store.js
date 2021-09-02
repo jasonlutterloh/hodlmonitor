@@ -3,7 +3,6 @@ import { infoMessages } from "../store";
 import {getDollarDisplayValue, getPercentage} from "../utils";
 
 export const portfolio = createPortfolio();
-export const isAddMode = writable(false);
 export const isEditMode = writable(false);
 const apiResponse = writable({});
 export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");

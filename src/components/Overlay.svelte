@@ -29,7 +29,7 @@
 .overlay {
   background: var(--primary-color);
   color: var(--alt-text-color);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   margin: 0 auto;

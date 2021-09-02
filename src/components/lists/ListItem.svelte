@@ -40,7 +40,9 @@
   {#if isSelected}
     <slot />
   {/if}
+
 </li>
+
 
 <style>
   h2 {
@@ -52,6 +54,9 @@
     transition: all 0.5s;
     border-bottom: thin solid var(--border-color);
   }
+  /* .container:focus{
+    outline: var(--primary-color) 1px dotted;
+  } */
   .container {
     display: flex;
     align-items: center;
