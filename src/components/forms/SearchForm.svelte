@@ -11,8 +11,8 @@
   const searchError = writable(false);
 
   export const filterCrypto = (searchTerm) => {
-    let filteredList = $cryptoList.filter(crypto => {
-      if (crypto.symbol.toUpperCase() == searchTerm.toUpperCase() || crypto.name.toUpperCase() == searchTerm.toUpperCase()){
+    const filteredList = $cryptoList.filter(crypto => {
+      if (crypto.symbol.toUpperCase() == searchTerm.toUpperCase() || crypto.name.toUpperCase() == searchTerm.toUpperCase()) {
         return true;
       }
     });

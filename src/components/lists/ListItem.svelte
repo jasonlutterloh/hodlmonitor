@@ -1,7 +1,10 @@
 <script>
   import { fly } from "svelte/transition";
 
-  export let name, value, isSelected, clickHandler;
+  export let name; 
+  export let value; 
+  export let isSelected; 
+  export let clickHandler;
 
   const handleKeyboard = (event) => {
     if (event.keyCode == 13) {

@@ -24,16 +24,16 @@
   };
 
   isAddMode.subscribe(value => {
-      if (value === true){
-        y = 0;
-      }
+    if (value === true) {
+      y = 0;
+    }
   });
 
   results.subscribe((value) => {
     if (value.length !== 0) {
       step.set(2);
     }
-  })
+  });
   itemToAdd.subscribe((value) => {
     if (value != "") {
       step.set(3);
@@ -44,10 +44,10 @@
     if (value > 0) {
       hasError.set(false);
 
-      try{
+      try {
         portfolio.addHolding($itemToAdd, value);
         reset();
-      } catch (e){
+      } catch (e) {
         console.error(e);
         hasError.set(true);
       }

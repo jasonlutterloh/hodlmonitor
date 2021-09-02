@@ -8,14 +8,14 @@ export const apiResponse = writable([]);
 export const lastUpdated = writable(localStorage.getItem("watchlistLastUpdated") || "");
 
 function createWatchlist() {
-  const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("watchlist")) || []); 
+  const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("watchlist")) || []);
 
   return {
     subscribe,
     addItem: (apiData) => {
       update((watchlistArray) => {
         const doesExist = watchlistArray.some((item) => item.id === apiData.id);
-        if (!doesExist) {
+        if (!doesExist && apiData != null) {
           const newItem = {
             id: apiData.id,
             name: apiData.name,
@@ -23,52 +23,14 @@ function createWatchlist() {
           };
 
           return [...watchlistArray, newItem];
+        } else {
+          throw new Error("Cryptocurrency already already exists in watchlist.");
         }
-        return watchlistArray;
       });
     },
-    // updateItem: (id, apiData) => {
-    //   update((watchlistArray) => {
-    //     const index = watchlistArray.findIndex((obj) => obj.id == id);
-    //     if (index >= 0) {
-    //       const currentPrice = apiData.current_price;
-    //       const priceChangePercentage = getPercentage(
-    //         apiData.price_change_percentage_24h,
-    //         100
-    //       );
-    //       const priceChange = getDollarDisplayValue(apiData.price_change_24h);
-    //       watchlistArray[index].currentPrice = currentPrice;
-    //       watchlistArray[index].details = [
-    //         {
-    //           name: "Current Price",
-    //           value: getDollarDisplayValue(currentPrice),
-    //           color: "var(--text-color)",
-    //         },
-    //         {
-    //           name: "24hr % Change",
-    //           value: priceChangePercentage,
-    //           color: getColor(priceChangePercentage),
-    //         },
-    //         {
-    //           name: "All Time High",
-    //           value: getDollarDisplayValue(apiData.ath),
-    //           color: "var(--text-color)",
-    //         },
-    //         {
-    //           name: "24hr Price Change",
-    //           value: priceChange,
-    //           color: getColor(priceChange),
-    //         },
-    //       ];
-
-    //       return [...watchlistArray];
-    //     }
-    //     return watchlistArray;
-    //   });
-    // },
     removeItem: (id) => {
       update((watchlistArray) =>
-        watchlistArray.filter((item) => item.id !== id)
+        watchlistArray.filter((item) => item.id !== id),
       );
     },
     restoreFromFile: (fileData) => {
@@ -80,8 +42,7 @@ function createWatchlist() {
           !(
             item.hasOwnProperty("id") &&
             item.hasOwnProperty("name") &&
-            item.hasOwnProperty("symbol") &&
-            item.hasOwnProperty("currentPrice")
+            item.hasOwnProperty("symbol")
           ) ? (errorFlag = true) : null;
         });
       }
@@ -112,7 +73,7 @@ export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiR
       const priceChange = getDollarDisplayValue(apiItem.price_change_24h);
 
       displayItem.currentPrice = currentPrice;
-      console.log($watchlist);
+
       displayItem.details = [
         {
           name: "Current Price",
@@ -146,32 +107,29 @@ export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiR
 export const updateWatchlistPrices = (symbols) => {
   if (symbols.length > 0) {
     fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" +
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" +
         symbols +
-        "&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h"
+        "&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h",
     )
-      .then((result) => {
-        return result.json();
-      })
-      .then((json) => {
-        const timestamp = new Date();
-        apiResponse.set(json);
-        // json.forEach(result => {
-        //   watchlist.updateItem(result.id, result);
-        // });
-        updateTimestamp(timestamp);
-      })
-      .catch((error) => {
-        infoMessages.addMessage("Error getting current prices.");
-        console.error("Error getting current prices.", error);
-        return [];
-      });
+        .then((result) => {
+          return result.json();
+        })
+        .then((json) => {
+          const timestamp = new Date();
+          apiResponse.set(json);
+          updateTimestamp(timestamp);
+        })
+        .catch((error) => {
+          infoMessages.addMessage("Error getting current prices.");
+          console.error("Error getting current prices.", error);
+          return [];
+        });
   }
 };
 
 const updateTimestamp = (timestamp) => {
   lastUpdated.set(
-    timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString()
+      timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString(),
   );
 };
 

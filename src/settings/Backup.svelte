@@ -2,9 +2,9 @@
 import {portfolio} from "../portfolio/store.js";
 import {watchlist} from "../watchlist/store";
 
-let json = {
+const json = {
   portfolio: $portfolio,
-  watchlist: $watchlist
+  watchlist: $watchlist,
 };
 
 let backupHref = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));

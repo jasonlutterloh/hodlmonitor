@@ -12,7 +12,7 @@
 
   const hasError = writable(false);
   isEditMode.subscribe(value => {
-    if (value == true){
+    if (value == true) {
       y = 0;
     }
   });

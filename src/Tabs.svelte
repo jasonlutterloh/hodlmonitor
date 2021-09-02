@@ -1,5 +1,28 @@
 <script>
-  import { activePane, tabs } from "./store.js";
+  import { activePane } from "./store.js";
+  import Portfolio from "./portfolio/Portfolio.svelte";
+  import PortfolioHeaderButtons from "./portfolio/PortfolioHeaderButtons.svelte";
+  import Watchlist from "./watchlist/Watchlist.svelte";
+  import WatchlistHeaderButtons from "./watchlist/WatchlistHeaderButtons.svelte";
+
+  const tabs = [
+    {
+      id: "portfolio",
+      name: "Portfolio",
+      component: Portfolio,
+      buttons: PortfolioHeaderButtons,
+      icon: "account_balance_wallet",
+    },
+    {
+      id: "watchlist",
+      name: "Watchlist",
+      component: Watchlist,
+      buttons: WatchlistHeaderButtons,
+      icon: "visibility",
+    },
+  ];
+
+  activePane.set(tabs[0]);
 </script>
 
 <div role="tablist">

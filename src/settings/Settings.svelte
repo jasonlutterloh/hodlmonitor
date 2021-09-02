@@ -1,20 +1,14 @@
 <script>
-  import FormButton from "../components/buttons/FormButton.svelte";
-  import {infoMessages} from "../store";
-import Backup from "./Backup.svelte";
-import Restore from "./Restore.svelte";
-import {portfolio} from "../portfolio/store";
-import ClearData from "./ClearData.svelte";
-
-
-
+  import Backup from "./Backup.svelte";
+  import Restore from "./Restore.svelte";
+  import ClearData from "./ClearData.svelte";
 </script>
 
 <h2>Manage Your Data</h2>
 <div class="container">
   <div class="top-menu">
     <Backup />
-    <Restore/>
+    <Restore />
   </div>
   <div class="bottom-menu">
     <ClearData />
@@ -26,20 +20,20 @@ import ClearData from "./ClearData.svelte";
 </div>
 
 <style>
-  .container{
+  .container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: calc(100vh - 72px);
     padding: 8px;
   }
-  .top-menu{
+  .top-menu {
     flex: 1 1 auto;
   }
-  .bottom-menu{
+  .bottom-menu {
     flex: 0 1 auto;
   }
-  h2{
+  h2 {
     display: block;
     margin: 0;
     padding: 16px;
@@ -50,13 +44,12 @@ import ClearData from "./ClearData.svelte";
     white-space: nowrap;
     line-height: 24px;
   }
-  p{
+  p {
     text-align: center;
   }
-  @media(prefers-color-scheme: dark){
-    h2{
+  @media (prefers-color-scheme: dark) {
+    h2 {
       color: var(--text-color);
     }
-    
   }
 </style>

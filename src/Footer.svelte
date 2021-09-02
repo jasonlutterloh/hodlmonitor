@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <footer>
 	<p>Open source available on <a href="https://github.com/jasonlutterloh/hodltracker" target="_blank">GitHub</a> | <a href="https://hodl.lutterloh.dev/privacy" target="_blank">Privacy Policy and Terms of Use</a></p>
 </footer>

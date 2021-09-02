@@ -7,7 +7,7 @@
   import ListItemDetails from "../components/lists/ListItemDetails.svelte";
   import Bar from "../components/Bar.svelte";
   import HeaderButton from "../components/buttons/HeaderButton.svelte";
-	import {infoMessages} from "../store";
+import {infoMessages} from "../store";
 
   let selectedId;
   let screenWidth;
@@ -15,7 +15,7 @@
   const removeItem = () => {
     watchlist.removeItem(selectedId);
     selectedId = null;
-		infoMessages.addMessage("Crypto removed.")
+    infoMessages.addMessage("Crypto removed.");
   };
   const handleClick = (id) => {
     if (selectedId === id) {

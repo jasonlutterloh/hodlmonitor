@@ -1,9 +1,7 @@
 <script>
   import HeaderButton from "./components/buttons/HeaderButton.svelte";
   import RefreshButton from "./components/buttons/RefreshButton.svelte";
-import PortfolioHeaderButtons from "./portfolio/PortfolioHeaderButtons.svelte";
   import {activePane} from "./store";
-import WatchlistHeaderButtons from "./watchlist/WatchlistHeaderButtons.svelte";
   export let isSidebarOpen = false;
 </script>
 

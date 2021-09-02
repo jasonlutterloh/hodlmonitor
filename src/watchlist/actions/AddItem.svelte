@@ -21,26 +21,25 @@
   };
 
   isAddMode.subscribe(value => {
-      if (value === true){
-        y = 0;
-      }
+    if (value === true) {
+      y = 0;
+    }
   });
 
   results.subscribe((value) => {
     if (value.length !== 0) {
       step.set(2);
     }
-  })
+  });
   itemToAdd.subscribe((value) => {
     if (value != "") {
       hasError.set(false);
 
-      const doesExist = $watchlist.some((item) => item.id === $itemToAdd.id);
-
-      if (!doesExist && $itemToAdd != null) {
+      try {
         watchlist.addItem(value);
         reset();
-      } else {
+      } catch (e) {
+        console.error(e);
         hasError.set(true);
       }
     }

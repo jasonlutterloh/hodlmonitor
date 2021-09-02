@@ -6,7 +6,7 @@ import { watchlist } from "../watchlist/store";
 
   const updatePortfolio = (data) => {
     try {
-      let json = JSON.parse(data);
+      const json = JSON.parse(data);
       json.portfolio ? portfolio.restoreFromFile(json.portfolio) : console.error("No portfolio backup");
       json.watchlist ? watchlist.restoreFromFile(json.watchlist) : console.error("No watchlist backup");
       // watchlist.restoreFromFile(json.watchlist);
@@ -28,10 +28,10 @@ import { watchlist } from "../watchlist/store";
   };
 
   const handleKeyboard = (event) => {
-    if(event.keyCode == 13) {
+    if (event.keyCode == 13) {
       event.target.click();
     }
-  }
+  };
 </script>
 
 <form on:submit|preventDefault={upload}>

@@ -14,15 +14,15 @@
 	
 	onMount(async () => {
 	  if ($portfolioSymbols.length > 0) {
-			setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
+	    setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
 	  }
-		if ($watchlistSymbols.length > 0) {
-			setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
-		}
+	  if ($watchlistSymbols.length > 0) {
+	    setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
+	  }
 
-    fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
-        return result.json();
-      })
+  fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+    return result.json();
+  })
       .then(data => cryptoList.set(data))
       .catch(error => {
         infoMessages.addMessage("Error fetching available cryptocurrencies.");

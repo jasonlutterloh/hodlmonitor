@@ -5,6 +5,7 @@ import {getDollarDisplayValue, getPercentage} from "../utils";
 export const portfolio = createPortfolio();
 export const isAddMode = writable(false);
 export const isEditMode = writable(false);
+const apiResponse = writable({});
 export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");
 export const selectedItem = writable({});
 
@@ -12,8 +13,7 @@ export const selectedItem = writable({});
 function getPortfolioFromLocalStorage() {
   const portfolio = localStorage.getItem("portfolio");
   const oldPortfolio = localStorage.getItem("wallet");
-  console.log(portfolio);
-  console.log(oldPortfolio);
+
   if (portfolio) {
     return JSON.parse(portfolio);
   } else if (oldPortfolio) {
@@ -37,8 +37,8 @@ function createPortfolio() {
             "name": apiData.name,
             "symbol": apiData.symbol.toUpperCase(),
             "amountHeld": amount,
-            "lastPrice": 0,
-            "value": 0,
+            // "lastPrice": 0,
+            // "value": 0,
           };
 
           return [...portfolioArray, newHolding];
@@ -47,17 +47,17 @@ function createPortfolio() {
         }
       });
     },
-    updatePrice: (id, price) => {
-      update(portfolioArray => {
-        const index = portfolioArray.findIndex((obj => obj.id == id));
-        if (index >= 0) {
-          portfolioArray[index].lastPrice = price;
-          portfolioArray[index].value = (parseFloat(price) * parseFloat(portfolioArray[index].amountHeld));
-          return [...portfolioArray];
-        }
-        return portfolioArray;
-      });
-    },
+    // updatePrice: (id, price) => {
+    //   update(portfolioArray => {
+    //     const index = portfolioArray.findIndex((obj => obj.id == id));
+    //     if (index >= 0) {
+    //       portfolioArray[index].lastPrice = price;
+    //       portfolioArray[index].value = (parseFloat(price) * parseFloat(portfolioArray[index].amountHeld));
+    //       return [...portfolioArray];
+    //     }
+    //     return portfolioArray;
+    //   });
+    // },
     updateAmount: (id, amount) => {
       update(portfolioArray => {
         const index = portfolioArray.findIndex((obj => obj.id == id));
@@ -79,9 +79,7 @@ function createPortfolio() {
             item.hasOwnProperty("id") &&
             item.hasOwnProperty("name") &&
             item.hasOwnProperty("symbol") &&
-            item.hasOwnProperty("amountHeld") &&
-            item.hasOwnProperty("lastPrice") &&
-            item.hasOwnProperty("value")
+            item.hasOwnProperty("amountHeld")
           ) ? errorFlag = true : null;
         });
       }
@@ -100,52 +98,66 @@ portfolio.subscribe((value) => {
   localStorage.setItem("portfolio", JSON.stringify(value));
 });
 
-export const totalValue = derived(portfolio, ($portfolio) => {
+export const displayData = derived([portfolio, apiResponse], ([$portfolio, $apiResponse]) => {
+  const returnData = [];
+
+  if (Object.keys($apiResponse).length > 0) {
+    $portfolio.forEach((item) => {
+      const displayItem = {...item};
+      const itemApiData = $apiResponse[displayItem.id];
+
+      const price = itemApiData?.usd ? itemApiData.usd : 0;
+      displayItem.lastPrice = price;
+      displayItem.value = (parseFloat(price) * parseFloat(displayItem.amountHeld));
+      displayItem["details"] = [
+        {
+          name: "Quantity",
+          value: displayItem.amountHeld,
+          color: "var(--text-color)",
+        },
+        {
+          name: "Current Price",
+          value: getDollarDisplayValue(price),
+          color: "var(--text-color)",
+        },
+        {
+          name: "Current Value",
+          value: getDollarDisplayValue(displayItem.value),
+          color: "var(--text-color)",
+        },
+      ];
+
+      returnData.push(displayItem);
+    });
+
+    const totalValue = returnData.reduce((accumulator, current) => accumulator + current.value, 0);
+
+    returnData.forEach(item => {
+      const detail = {
+        name: "Portfolio Percentage",
+        value: getPercentage(item.value, totalValue),
+        color: "var(--text-color)",
+      };
+      item["details"].unshift(detail);
+    });
+
+    // Sort by value
+    returnData.sort(function(a, b) {
+      return a["value"] - b["value"];
+    }).reverse();
+  }
+
+  return returnData;
+});
+
+export const totalValue = derived(displayData, ($displayData) => {
   let total = 0;
-  $portfolio.forEach((holding) => {
-    if (holding.value) {
-      total += holding.value;
+  $displayData.forEach((item) => {
+    if (item.value) {
+      total += item.value;
     }
   });
   return total;
-});
-
-export const displayData = derived([portfolio, totalValue], ([$portfolio, $totalValue]) => {
-  const returnData = [];
-  $portfolio.forEach((item) => {
-    const displayItem = {...item};
-    displayItem["details"] = [
-      {
-        name: "Portfolio Percentage",
-        value: getPercentage(item.value, $totalValue),
-        color: "var(--text-color)",
-      },
-      {
-        name: "Quantity",
-        value: item.amountHeld,
-        color: "var(--text-color)",
-      },
-      {
-        name: "Current Price",
-        value: getDollarDisplayValue(item.lastPrice),
-        color: "var(--text-color)",
-      },
-      {
-        name: "Current Value",
-        value: getDollarDisplayValue(item.value),
-        color: "var(--text-color)",
-      },
-    ];
-
-    returnData.push(displayItem);
-  });
-
-  // Sort by value
-  returnData.sort(function(a, b) {
-    return a["value"] - b["value"];
-  }).reverse();
-
-  return returnData;
 });
 
 export const updatePortfolioPrices = (symbols) => {
@@ -153,13 +165,7 @@ export const updatePortfolioPrices = (symbols) => {
     return result.json();
   }).then(json => {
     const timestamp = new Date();
-
-    for (const cryptoId in json) {
-      if (json.hasOwnProperty(cryptoId)) {
-        const price = json[cryptoId].usd;
-        portfolio.updatePrice(cryptoId, price);
-      }
-    }
+    apiResponse.set(json);
     updateTimestamp(timestamp);
   }).catch(error => {
     infoMessages.addMessage("Error getting current prices.");

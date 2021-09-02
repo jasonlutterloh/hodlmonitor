@@ -1,9 +1,9 @@
 <script>
   export let name;
   export let value;
-	export let textColor;
+export let textColor;
 
-	// I don't love this textColor thing. Maybe use classnames? 
+// I don't love this textColor thing. Maybe use classnames?
 </script>
 
 <div>

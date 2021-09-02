@@ -1,27 +1,6 @@
 import { writable } from "svelte/store";
-import Portfolio from "./portfolio/Portfolio.svelte";
-import Watchlist from "./watchlist/Watchlist.svelte";
-import PortfolioHeaderButtons from "./portfolio/PortfolioHeaderButtons.svelte";
-import WatchlistHeaderButtons from "./watchlist/WatchlistHeaderButtons.svelte";
 
-export const tabs = [
-  {
-    id: "portfolio",
-    name: "Portfolio",
-    component: Portfolio,
-    buttons: PortfolioHeaderButtons,
-    icon: "account_balance_wallet",
-  },
-  {
-    id: "watchlist",
-    name: "Watchlist",
-    component: Watchlist,
-    buttons: WatchlistHeaderButtons,
-    icon: "visibility",
-  },
-];
-
-export const activePane = writable(tabs[0]);
+export const activePane = writable({});
 export const infoMessages = createInfoMessageSystem();
 
 function createInfoMessageSystem() {

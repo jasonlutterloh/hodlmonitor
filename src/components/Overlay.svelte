@@ -1,6 +1,5 @@
 <script>
   import {fly} from "svelte/transition";
-  import {writable} from "svelte/store";
   import HeaderButton from "./buttons/HeaderButton.svelte";
 
   export let title;
@@ -9,7 +8,7 @@
 </script>
 
 
-<div class="overlay" in:fly="{{y:200}}" out:fly="{{y:200}}">
+<div class="overlay" in:fly="{{y: 200}}" out:fly="{{y: 200}}">
   <div class="header">
     <div>
       <h2>{title}</h2>

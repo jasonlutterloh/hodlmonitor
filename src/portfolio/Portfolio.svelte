@@ -11,15 +11,15 @@
 	import {infoMessages} from "../store";
   import {getDollarDisplayValue} from "../utils.js";
 
-	let screenWidth;
+let screenWidth;
 
-	const removeItem = () => {
+const removeItem = () => {
     portfolio.removeItem($selectedItem.id);
     selectedItem.set({});
-		infoMessages.addMessage("Crypto removed.")
+    infoMessages.addMessage("Crypto removed.");
   };
 
-	const handleClick = (item) => {
+const handleClick = (item) => {
     if ($selectedItem.id === item.id) {
       selectedItem.set({});
     } else {
@@ -30,27 +30,25 @@
 
 <svelte:window bind:innerWidth={screenWidth} />
 
-<div in:fly="{{x:screenWidth*(-1), delay: 500}}" out:fly="{{x:screenWidth*(-1), duration: 500}}">
+<div in:fly="{{x: screenWidth*(-1), delay: 500}}" out:fly="{{x: screenWidth*(-1), duration: 500}}">
 	<HeroSection title="Total Value" value={getDollarDisplayValue($totalValue)} />
 	{#if $displayData.length > 0}
 	<ul>
 		{#each $displayData as item}
 		<ListItem
-          name={item.name}
-          value={getDollarDisplayValue(item.value)}
-          isSelected={$selectedItem.id === item.id}
-          clickHandler={() => handleClick(item)}
-        >
-          <ListItemDetails details={item.details} />
-        </ListItem>
+			name={item.name}
+			value={getDollarDisplayValue(item.value)}
+			isSelected={$selectedItem.id === item.id}
+			clickHandler={() => handleClick(item)}
+		>
+			<ListItemDetails details={item.details} />
+		</ListItem>
 		{/each}
 	</ul>
 	<p class="last-updated">Last Updated: {$lastUpdated}</p>
 	{:else}
 	<p class="instruction">Tap the <span class="material-icons">add</span> button above to add a cryptocurrency to your portfolio.</p>
 	{/if}
-	<AddItem />
-	<EditItem />
 	{#if $selectedItem.id}
 		<Bar closeCallback = {() => selectedItem.set({})}>
 			<HeaderButton on:click={() => isEditMode.set(true)} >
@@ -65,6 +63,8 @@
 			</HeaderButton>
 		</Bar>
 	{/if}
+	<AddItem />
+	<EditItem />
 </div>
 
 <style>
