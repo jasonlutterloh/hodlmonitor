@@ -2,6 +2,8 @@
 	import {activePane, cryptoList, infoMessages} from "./store.js";
 	import {portfolioSymbols, updatePortfolioPrices} from "./portfolio/store";
 	import {watchlistSymbols, updateWatchlistPrices} from "./watchlist/store";
+	import Portfolio from "./portfolio/Portfolio.svelte";
+	import Watchlist from "./watchlist/Watchlist.svelte";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
 	import InfoMessages from "./components/InfoMessages.svelte";
@@ -30,7 +32,8 @@
 <Header />
 <main>
 	<Tabs />
-	<svelte:component this={$activePane.component} />
+	<Portfolio isHidden = {!($activePane.id === "portfolio")} />
+	<Watchlist isHidden = {!($activePane.id === "watchlist")} />
 	<InfoMessages />
 </main>
 <Footer />

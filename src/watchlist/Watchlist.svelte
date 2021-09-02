@@ -6,6 +6,7 @@
   import ListItemDetails from "../components/lists/ListItemDetails.svelte";
 import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
 
+  export let isHidden = true;
   let screenWidth;
 
   const handleClick = (id) => {
@@ -26,6 +27,7 @@ import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
   tabindex="0"
   aria-labelledby="watchlist-tab"
   id="watchlist-panel"
+  hidden={isHidden}
 >
   {#if $displayData.length > 0}
     <ul>

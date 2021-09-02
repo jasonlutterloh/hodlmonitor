@@ -1,22 +1,18 @@
 <script>
   import HeroSection from "../components/HeroSection.svelte";
-  import AddItem from "./actions/AddItem.svelte";
-  import EditItem from "./actions/EditItem.svelte";
   import { fly } from "svelte/transition";
   import ListItem from "../components/lists/ListItem.svelte";
   import ListItemDetails from "../components/lists/ListItemDetails.svelte";
-  import HeaderButton from "../components/buttons/HeaderButton.svelte";
   import {
     totalValue,
     displayData,
     lastUpdated,
-    portfolio,
     selectedItem,
-    isEditMode,
   } from "../portfolio/store.js";
-  import { infoMessages } from "../store";
   import { getDollarDisplayValue } from "../utils.js";
+import PortfolioItemOptions from "./PortfolioItemOptions.svelte";
 
+  export let isHidden = true;
   let screenWidth;
 
   const handleClick = (item) => {
@@ -37,6 +33,7 @@
   tabindex="0"
 	aria-labelledby="portfolio-tab"
 	id="portfolio-panel"
+  hidden={isHidden}
 >
   <HeroSection title="Total Value" value={getDollarDisplayValue($totalValue)} />
   {#if $displayData.length > 0}
@@ -49,6 +46,7 @@
           clickHandler={() => handleClick(item)}
         >
           <ListItemDetails details={item.details} />
+          <PortfolioItemOptions />
         </ListItem>
       {/each}
     </ul>

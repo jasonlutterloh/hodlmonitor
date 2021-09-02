@@ -10,14 +10,12 @@
     {
       id: "portfolio",
       name: "Portfolio",
-      component: Portfolio,
       headerContent: PortfolioHeaderContent,
       icon: "account_balance_wallet",
     },
     {
       id: "watchlist",
       name: "Watchlist",
-      component: Watchlist,
       headerContent: WatchlistHeaderContent,
       icon: "visibility",
     },
