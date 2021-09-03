@@ -1,9 +1,9 @@
 <script>
   export let name;
   export let value;
-export let textColor;
+  export let textColor;
 
-// I don't love this textColor thing. Maybe use classnames?
+  // I don't love this textColor way of doing things but works for now.
 </script>
 
 <div>
@@ -12,27 +12,27 @@ export let textColor;
 </div>
 
 <style>
-  div{
+  div {
     flex: 1 1 auto;
   }
-  span{
-		display: block;
-		margin: 1em 1em 0 1em;
-	}
-  span:first-of-type{
-		color: var(--text-color);
-		opacity: .8;
-		display: block;
-		text-transform: uppercase;
-		font-size: .6em;
-	}
-	span:last-of-type{
-		font-size: 1.4em;
-		margin: 0 1em 1em 1em;
-	}
-	@media only screen and (max-width: 568px) {
-		div{
-    flex: 1 1 50%;
+  span {
+    display: block;
+    margin: 1em 1em 0 1em;
   }
-	}
+  span:first-of-type {
+    color: var(--text-color);
+    opacity: 0.8;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.6em;
+  }
+  span:last-of-type {
+    font-size: 1.4em;
+    margin: 0 1em 1em 1em;
+  }
+  @media only screen and (max-width: 568px) {
+    div {
+      flex: 1 1 50%;
+    }
+  }
 </style>

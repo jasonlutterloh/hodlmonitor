@@ -1,12 +1,12 @@
 <script>
   import HeaderButton from "../../components/buttons/HeaderButton.svelte";
   import { selectedId, watchlist } from "../store";
-  import { infoMessages } from "../../store";
+  import { snackbar } from "../../store";
 
   const removeItem = () => {
     watchlist.removeItem($selectedId);
     selectedId.set(null);
-    infoMessages.addMessage("Crypto removed.");
+    snackbar.addMessage("Crypto removed.");
   };
 </script>
 

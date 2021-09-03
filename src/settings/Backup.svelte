@@ -21,7 +21,9 @@ watchlist.subscribe(value => {
 
 </script>
 
-<a type="button" href={backupHref} download="hodl-backup.json"><span class="material-icons">backup</span>Backup to Local File</a>
+<a type="button" href={backupHref} download="hodl-backup.json">
+  <span class="material-icons">backup</span>Backup to Local File
+</a>
 
 <style>
 a {
@@ -31,14 +33,11 @@ a {
   background: var(--primary-color);
   color: var(--alt-text-color);
   cursor: pointer;
-  /* text-transform: uppercase; */
   font-size: 18px;
-  /* border: 3px solid var(--alt-text-color); */
   padding: 1em;
   transition: 0.2s all;
   width: 100%;
   max-width: 400px;
-  /* font-size: .9em; */
   text-decoration: none;
   text-align: left;
 }
@@ -58,7 +57,6 @@ a > span{
   a {
     background: var(--secondary-body-color);
     color: var(--text-color);
-    /* border: 3px solid var(--text-color); */
   }
   a:hover, a:focus {
     background: var(--text-color);

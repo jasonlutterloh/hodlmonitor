@@ -1,9 +1,9 @@
 import { writable } from "svelte/store";
 
 export const activePane = writable({});
-export const infoMessages = createInfoMessageSystem();
+export const snackbar = createSnackbarSystem();
 
-function createInfoMessageSystem() {
+function createSnackbarSystem() {
   const { subscribe, update } = writable([]);
 
   return {

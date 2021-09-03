@@ -1,10 +1,10 @@
 import { derived, writable } from "svelte/store";
 import { getDollarDisplayValue, getPercentage, getColor } from "../utils";
-import { infoMessages } from "../store";
+import { snackbar } from "../store";
 
 export const watchlist = createWatchlist();
 export const apiResponse = writable([]);
-export const lastUpdated = writable(localStorage.getItem("watchlistLastUpdated") || "");
+export const lastUpdated = writable("");
 export const selectedId = writable(null);
 
 function createWatchlist() {
@@ -50,7 +50,7 @@ function createWatchlist() {
         set(fileData);
       } else {
         console.error("Watchlist could not be restored.");
-        infoMessages.addMessage("Watchlist could not be restored.");
+        snackbar.addMessage("Watchlist could not be restored.");
       }
     },
     reset: () => set([]),
@@ -106,6 +106,7 @@ export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiR
 
 export const updateWatchlistPrices = (symbols) => {
   if (symbols.length > 0) {
+    snackbar.addMessage("Watchlist prices refreshing...");
     fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" +
         symbols +
@@ -115,26 +116,19 @@ export const updateWatchlistPrices = (symbols) => {
           return result.json();
         })
         .then((json) => {
-          const timestamp = new Date();
           apiResponse.set(json);
-          updateTimestamp(timestamp);
         })
         .catch((error) => {
-          infoMessages.addMessage("Error getting current prices.");
+          snackbar.addMessage("Error getting current prices.");
           console.error("Error getting current prices.", error);
           return [];
         });
   }
 };
 
-const updateTimestamp = (timestamp) => {
-  lastUpdated.set(
-      timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString(),
-  );
-};
-
-lastUpdated.subscribe((value) => {
-  localStorage.setItem("watchlistLastUpdated", value);
+apiResponse.subscribe((value) => {
+  const timestamp = new Date();
+  lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
 });
 
 export const watchlistSymbols = derived(watchlist, ($watchlist) => {

@@ -1,12 +1,12 @@
 <script>
   import HeaderButton from "../../components/buttons/HeaderButton.svelte";
   import { selectedItem, portfolio } from "../store";
-  import { infoMessages } from "../../store";
+  import { snackbar } from "../../store";
 
   const removeItem = () => {
     portfolio.removeItem($selectedItem.id);
     selectedItem.set({});
-    infoMessages.addMessage("Crypto removed.");
+    snackbar.addMessage("Crypto removed.");
   };
 </script>
 

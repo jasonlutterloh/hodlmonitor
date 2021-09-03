@@ -1,12 +1,12 @@
 <script>
-  import { infoMessages } from "../store";
+  import { snackbar } from "../store";
   import { portfolio } from "../portfolio/store";
-import { watchlist } from "../watchlist/store";
+  import { watchlist } from "../watchlist/store";
   // TODO: Handle any sort of error scenarios
   function clear() {
-    infoMessages.addMessage("Data cleared.");
     portfolio.reset();
     watchlist.reset();
+    snackbar.addMessage("Data cleared.");
   }
 </script>
 
@@ -39,9 +39,9 @@ import { watchlist } from "../watchlist/store";
   button:active {
     transform: scale(0.95);
   }
-  button > span:nth-of-type(1){
+  button > span:nth-of-type(1) {
     vertical-align: text-bottom;
-    padding-right: .5em;
+    padding-right: 0.5em;
   }
 
   @media (prefers-color-scheme: dark) {

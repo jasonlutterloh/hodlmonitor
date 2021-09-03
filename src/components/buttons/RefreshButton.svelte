@@ -1,6 +1,6 @@
 <script>
   import HeaderButton from "./HeaderButton.svelte";
-  import { infoMessages } from "../../store";
+  import { snackbar } from "../../store";
   import {
     portfolioSymbols,
     updatePortfolioPrices,
@@ -11,13 +11,8 @@
   } from "../../watchlist/store";
 
   const refresh = () => {
-    if ($portfolioSymbols.length > 0) {
-      updatePortfolioPrices($portfolioSymbols);
-    }
-    if ($watchlistSymbols.length > 0) {
-      updateWatchlistPrices($watchlistSymbols);
-    }
-    infoMessages.addMessage("Prices refreshing.");
+    updatePortfolioPrices($portfolioSymbols);
+    updateWatchlistPrices($watchlistSymbols);
   };
 </script>
 

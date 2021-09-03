@@ -1,5 +1,5 @@
 <script>
-  import { selectedId, displayData } from "./store";
+  import { selectedId, displayData, lastUpdated } from "./store";
   import ListItem from "../components/lists/ListItem.svelte";
   import { fly } from "svelte/transition";
   import { getDollarDisplayValue } from "../utils";
@@ -43,8 +43,9 @@ import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
         </ListItem>
       {/each}
     </ul>
+    <p class="last-updated">Last Updated: {$lastUpdated}</p>
   {:else}
-    <p>
+    <p class="instruction">
       Tap the <span class="material-icons">add</span> button above to add a cryptocurrency
       to your watchlist.
     </p>
@@ -60,7 +61,13 @@ import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
     padding: 0;
     list-style: none;
   }
-  p {
+  .last-updated {
+    font-size: 0.8em;
+    color: var(--text-color);
+    text-align: center;
+  }
+
+  .instruction {
     text-align: center;
     margin: 4em 2em;
   }
