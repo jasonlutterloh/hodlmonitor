@@ -55,9 +55,7 @@ function createPortfolio() {
       });
     },
     removeItem: (id) => {
-      update((portfolioArray) =>
-        portfolioArray.filter((holding) => holding.id !== id)
-      );
+      update((portfolioArray) => portfolioArray.filter((holding) => holding.id !== id));
     },
     restoreFromFile: (fileData) => {
       const isArray = Array.isArray(fileData);
@@ -88,7 +86,7 @@ portfolio.subscribe((value) => {
   localStorage.setItem("portfolio", JSON.stringify(value));
 });
 
-export const displayData = derived([portfolio, apiResponse],([$portfolio, $apiResponse]) => {
+export const displayData = derived([portfolio, apiResponse], ([$portfolio, $apiResponse]) => {
   const returnData = [];
 
   if (Object.keys($apiResponse).length > 0) {
@@ -132,7 +130,7 @@ export const displayData = derived([portfolio, apiResponse],([$portfolio, $apiRe
     });
 
     // Sort by value
-    returnData.sort(function (a, b) {
+    returnData.sort(function(a, b) {
       return a["value"] - b["value"];
     }).reverse();
   }
