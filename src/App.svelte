@@ -11,21 +11,21 @@
 	import {onMount} from "svelte";
 	
 	onMount(async () => {
-	  if ($portfolioSymbols.length > 0) {
-	    setInterval(()=>updatePortfolioPrices($portfolioSymbols), 60000);
-	  }
-	  if ($watchlistSymbols.length > 0) {
-	    setInterval(()=>updateWatchlistPrices($watchlistSymbols), 60000);
-	  }
-
-  fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
-    return result.json();
-  })
+		let interval = setInterval(()=> {
+			updatePortfolioPrices($portfolioSymbols);
+			updateWatchlistPrices($watchlistSymbols);
+		}, 60000);
+	  
+		fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+			return result.json();
+		})
       .then(data => cryptoList.set(data))
       .catch(error => {
         snackbar.addMessage("Error fetching available cryptocurrencies.");
-        console.error("Error getting crypto list", error);
+        console.error("Error getting list of available cryptocurrencies", error);
       });
+
+		return () => {clearInterval(interval)};
 	});
 </script>
 
