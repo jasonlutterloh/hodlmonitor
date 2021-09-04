@@ -117,22 +117,22 @@ export const displayData = derived([portfolio, totalValue], ([$portfolio, $total
       {
         name: "Portfolio Percentage",
         value: getPercentage(item.value, $totalValue),
-        color: "var(--text-color)",
+        color: "var(--item-detail-color)",
       },
       {
         name: "Quantity",
         value: item.amountHeld,
-        color: "var(--text-color)",
+        color: "var(--item-detail-color)",
       },
       {
         name: "Current Price",
         value: getDollarDisplayValue(item.price),
-        color: "var(--text-color)",
+        color: "var(--item-detail-color)",
       },
       {
         name: "Current Value",
         value: getDollarDisplayValue(item.value),
-        color: "var(--text-color)",
+        color: "var(--item-detail-color)",
       },
     ];
 
