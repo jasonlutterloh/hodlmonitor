@@ -2,7 +2,7 @@
   import {slide} from "svelte/transition";
   import ListItemDetail from "./ListItemDetail.svelte";
 
-  export let details;
+  export let details = [];
 </script>
 
 <div transition:slide class="container">

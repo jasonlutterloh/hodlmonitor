@@ -4,7 +4,7 @@ import { getDollarDisplayValue, getPercentage } from "../utils";
 
 export const portfolio = createPortfolio();
 export const isEditMode = writable(false);
-export const lastUpdated = writable("");
+export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");
 export const selectedItem = writable({});
 
 const apiResponse = writable({});
@@ -37,6 +37,8 @@ function createPortfolio() {
             name: apiData.name,
             symbol: apiData.symbol.toUpperCase(),
             amountHeld: amount,
+            price: 0,
+            value: 0,
           };
 
           return [...portfolioArray, newHolding];
@@ -50,7 +52,16 @@ function createPortfolio() {
         const index = portfolioArray.findIndex((obj) => obj.id == id);
         portfolioArray[index].amountHeld = amount;
         portfolioArray[index].value =
-          parseFloat(portfolioArray[index].lastPrice) * parseFloat(amount);
+          parseFloat(portfolioArray[index].price) * parseFloat(amount);
+        return [...portfolioArray];
+      });
+    },
+    updatePrice: (id, price) => {
+      // Price needs to stay part of portfolio and not just displayData or we run into some weird loading issues
+      update((portfolioArray) => {
+        const index = portfolioArray.findIndex((obj) => obj.id == id);
+        portfolioArray[index].price = price;
+        portfolioArray[index].value = parseFloat(price) * parseFloat(portfolioArray[index].amountHeld);
         return [...portfolioArray];
       });
     },
@@ -86,65 +97,54 @@ portfolio.subscribe((value) => {
   localStorage.setItem("portfolio", JSON.stringify(value));
 });
 
-export const displayData = derived([portfolio, apiResponse], ([$portfolio, $apiResponse]) => {
-  const returnData = [];
-
-  if (Object.keys($apiResponse).length > 0) {
-    $portfolio.forEach((item) => {
-      const displayItem = { ...item };
-      const itemApiData = $apiResponse[displayItem.id];
-
-      const price = itemApiData?.usd ? itemApiData.usd : 0;
-      displayItem.lastPrice = price;
-      displayItem.value = parseFloat(price) * parseFloat(displayItem.amountHeld);
-      displayItem["details"] = [
-        {
-          name: "Quantity",
-          value: displayItem.amountHeld,
-          color: "var(--text-color)",
-        },
-        {
-          name: "Current Price",
-          value: getDollarDisplayValue(price),
-          color: "var(--text-color)",
-        },
-        {
-          name: "Current Value",
-          value: getDollarDisplayValue(displayItem.value),
-          color: "var(--text-color)",
-        },
-      ];
-
-      returnData.push(displayItem);
-    });
-
-    const totalValue = returnData.reduce((accumulator, current) => accumulator + current.value, 0);
-
-    returnData.forEach((item) => {
-      const detail = {
-        name: "Portfolio Percentage",
-        value: getPercentage(item.value, totalValue),
-        color: "var(--text-color)",
-      };
-      item["details"].unshift(detail);
-    });
-
-    // Sort by value
-    returnData.sort(function(a, b) {
-      return a["value"] - b["value"];
-    }).reverse();
-  }
-  return returnData;
-});
-
-export const totalValue = derived(displayData, ($displayData) => {
+export const totalValue = derived(portfolio, ($portfolio) => {
   let total = 0;
-  $displayData.forEach((item) => {
+  $portfolio.forEach((item) => {
     if (item.value) {
       total += item.value;
     }
   });
   return total;
+});
+
+export const displayData = derived([portfolio, totalValue], ([$portfolio, $totalValue]) => {
+  let returnData = [];
+
+  $portfolio.forEach((item) => {
+    const displayItem = { ...item };
+
+    displayItem["details"] = [
+      {
+        name: "Portfolio Percentage",
+        value: getPercentage(item.value, $totalValue),
+        color: "var(--text-color)",
+      },
+      {
+        name: "Quantity",
+        value: item.amountHeld,
+        color: "var(--text-color)",
+      },
+      {
+        name: "Current Price",
+        value: getDollarDisplayValue(item.price),
+        color: "var(--text-color)",
+      },
+      {
+        name: "Current Value",
+        value: getDollarDisplayValue(item.value),
+        color: "var(--text-color)",
+      },
+    ];
+
+    returnData.push(displayItem);
+  });
+
+  // Sort by value
+  returnData.sort(function(a, b) {
+    return a["value"] - b["value"];
+  }).reverse();
+
+  return returnData;
 });
 
 export const updatePortfolioPrices = (symbols) => {
@@ -166,8 +166,17 @@ export const updatePortfolioPrices = (symbols) => {
 };
 
 apiResponse.subscribe((value) => {
-  const timestamp = new Date();
-  lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
+  if (Object.keys(value).length > 0) {
+    const timestamp = new Date();
+    lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
+  }
+  Object.keys(value).forEach(key => {
+    portfolio.updatePrice(key, value[key].usd);
+  });
+});
+
+lastUpdated.subscribe((value) => {
+  localStorage.setItem("portfolioLastUpdated", value);
 });
 
 export const portfolioSymbols = derived(portfolio, ($portfolio) => {

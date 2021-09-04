@@ -34,7 +34,7 @@ import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
       {#each $displayData as item}
         <ListItem
           name={item.name}
-          value={getDollarDisplayValue(item.currentPrice)}
+          value={getDollarDisplayValue(item.price)}
           isSelected={$selectedId === item.id}
           clickHandler={() => handleClick(item.id)}
         >

@@ -3,9 +3,10 @@ import { getDollarDisplayValue, getPercentage, getColor } from "../utils";
 import { snackbar } from "../store";
 
 export const watchlist = createWatchlist();
-export const apiResponse = writable([]);
-export const lastUpdated = writable("");
+export const lastUpdated = writable(localStorage.getItem("watchlistLastUpdated") || "");
 export const selectedId = writable(null);
+
+const apiResponse = writable([]);
 
 function createWatchlist() {
   const { subscribe, set, update } = writable(JSON.parse(localStorage.getItem("watchlist")) || []);
@@ -20,12 +21,24 @@ function createWatchlist() {
             id: apiData.id,
             name: apiData.name,
             symbol: apiData.symbol.toUpperCase(),
+            price: 0,
           };
 
           return [...watchlistArray, newItem];
         } else {
           throw new Error("Cryptocurrency already already exists in watchlist.");
         }
+      });
+    },
+    updateData: (apiData) => {
+      // Price needs to stay part of portfolio and not just displayData or we run into some weird loading issues
+      update((watchlistArray) => {
+        const index = watchlistArray.findIndex((obj) => obj.id == apiData.id);
+        watchlistArray[index].price = apiData.current_price;
+        watchlistArray[index].ath = apiData.ath;
+        watchlistArray[index].priceChange24hPercentage = apiData.price_change_percentage_24h;
+        watchlistArray[index].priceChange24h = apiData.price_change_24h;
+        return [...watchlistArray];
       });
     },
     removeItem: (id) => {
@@ -62,43 +75,41 @@ watchlist.subscribe((value) => {
 });
 
 export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiResponse]) => {
-  const returnData = [];
+  let returnData = [];
+
   $watchlist.forEach((item) => {
     const displayItem = {...item};
-    const index = $apiResponse.findIndex((obj) => obj.id === displayItem.id);
-    if (index >= 0) {
-      const apiItem = $apiResponse[index];
-      const currentPrice = apiItem.current_price;
-      const priceChangePercentage = getPercentage(apiItem.price_change_percentage_24h, 100);
-      const priceChange = getDollarDisplayValue(apiItem.price_change_24h);
+    const priceChange24hPercentage = getPercentage(item.priceChange24hPercentage, 100);
+    const priceChange24h = getDollarDisplayValue(item.priceChange24h);
 
-      displayItem.currentPrice = currentPrice;
+    displayItem.details = [
+      {
+        name: "Current Price",
+        value: getDollarDisplayValue(item.price),
+        color: "var(--text-color)",
+      },
+      {
+        name: "24hr % Change",
+        value: priceChange24hPercentage,
+        color: getColor(priceChange24hPercentage),
+      },
+      {
+        name: "All Time High",
+        value: getDollarDisplayValue(item.ath),
+        color: "var(--text-color)",
+      },
+      {
+        name: "24hr Price Change",
+        value: priceChange24h,
+        color: getColor(priceChange24h),
+      },
+    ];
 
-      displayItem.details = [
-        {
-          name: "Current Price",
-          value: getDollarDisplayValue(currentPrice),
-          color: "var(--text-color)",
-        },
-        {
-          name: "24hr % Change",
-          value: priceChangePercentage,
-          color: getColor(priceChangePercentage),
-        },
-        {
-          name: "All Time High",
-          value: getDollarDisplayValue(apiItem.ath),
-          color: "var(--text-color)",
-        },
-        {
-          name: "24hr Price Change",
-          value: priceChange,
-          color: getColor(priceChange),
-        },
-      ];
-
-      returnData.push(displayItem);
-    }
+    returnData.push(displayItem);
+    // } else {
+    //   // Return something so data at least shows present
+    //   returnData.push(displayItem);
+    // }
   });
 
   return returnData;
@@ -127,8 +138,17 @@ export const updateWatchlistPrices = (symbols) => {
 };
 
 apiResponse.subscribe((value) => {
-  const timestamp = new Date();
-  lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
+  if (Object.keys(value).length > 0) {
+    const timestamp = new Date();
+    lastUpdated.set(timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString());
+  }
+  Object.keys(value).forEach(key => {
+    watchlist.updateData(value[key]);
+  });
+});
+
+lastUpdated.subscribe((value) => {
+  localStorage.setItem("watchlistLastUpdated", value);
 });
 
 export const watchlistSymbols = derived(watchlist, ($watchlist) => {
