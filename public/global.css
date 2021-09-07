@@ -48,3 +48,21 @@ button{
 		font-size: 18px;
 	}
 }
+
+:root{
+	--negative: rgba(255,73,73,1);
+	--positive: rgba(1,204,3,1);
+}
+
+[data-type="default"]{
+	color: var(--item-detail-color);
+}
+[data-type="neutral"]{
+	color: var(--text-color);
+}
+[data-type="positive"]{
+	color: var(--positive);
+}
+[data-type="negative"]{
+	color: var(--negative);
+}

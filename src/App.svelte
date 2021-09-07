@@ -1,38 +1,40 @@
 <script>
-	import {wallet, commaSeparatedHoldings, cryptoList, updatePrices} from "./store.js";
-	import TotalValue from "./holdings/TotalValue.svelte";
-	import AddHolding from "./holdings/actions/add/AddHolding.svelte";
-	import EditHolding from "./holdings/actions/edit/EditHolding.svelte";
-	import HoldingsList from "./holdings/HoldingsList.svelte";
-	import HoldingTopBar from "./holdings/HoldingTopBar.svelte";
+	import {activePane, cryptoList, snackbar} from "./store.js";
+	import {portfolioSymbols, updatePortfolioPrices} from "./portfolio/store";
+	import {watchlistSymbols, updateWatchlistPrices} from "./watchlist/store";
+	import Portfolio from "./portfolio/Portfolio.svelte";
+	import Watchlist from "./watchlist/Watchlist.svelte";
 	import Header from "./Header.svelte";
 	import Footer from "./Footer.svelte";
-	import Sidebar from "./components/Sidebar.svelte";
-	import InfoMessages from "./components/InfoMessages.svelte";
-	import Settings from "./settings/Settings.svelte";
+	import Snackbar from "./components/Snackbar.svelte";
+	import Tabs from "./Tabs.svelte";
 	import {onMount} from "svelte";
-
-	let isSidebarOpen = false;
-
+	
 	onMount(async () => {
-	  if ($wallet.length > 0) {
-			setInterval(()=>updatePrices($commaSeparatedHoldings), 60000);
-	  }
+		let interval = setInterval(()=> {
+			updatePortfolioPrices($portfolioSymbols);
+			updateWatchlistPrices($watchlistSymbols);
+		}, 60000);
+	  
+		fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=false").then(result => {
+			return result.json();
+		})
+      .then(data => cryptoList.set(data))
+      .catch(error => {
+        snackbar.addMessage("Error fetching available cryptocurrencies.");
+        console.error("Error getting list of available cryptocurrencies", error);
+      });
+
+		return () => {clearInterval(interval)};
 	});
 </script>
 
-<Header bind:isSidebarOpen/>
+<Header />
 <main>
-	<Sidebar bind:isSidebarOpen >
-		<Settings />
-	</Sidebar>
-	<TotalValue  />
-	<HoldingsList/>
-	<!-- These are not shown by default -->
-	<HoldingTopBar />
-	<AddHolding />
-	<EditHolding />
-	<InfoMessages />
+	<Tabs />
+	<Portfolio isHidden = {!($activePane.id === "portfolio")} />
+	<Watchlist isHidden = {!($activePane.id === "watchlist")} />
+	<Snackbar />
 </main>
 <Footer />
 

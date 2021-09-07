@@ -1,28 +1,19 @@
 <script>
-  import HeaderButton from "./components/buttons/HeaderButton.svelte";
-  import RefreshButton from "./holdings/RefreshButton.svelte";
-  import {isAddMode} from "./applicationStateStore";
-  export let isSidebarOpen = false;
+  import RefreshButton from "./components/buttons/RefreshButton.svelte";
+  import DataMenu from "./settings/DataMenu.svelte";
+  import {activePane} from "./store";
 </script>
 
 <header>
   <div>
-    <HeaderButton on:click={() => isSidebarOpen = !isSidebarOpen} >
-      <span class="material-icons">
-        menu
-      </span>
-    </HeaderButton>
+    <DataMenu />
   </div>
   <div>
     <h1>HODL Monitor</h1>
   </div>
   <div>
     <RefreshButton />
-    <HeaderButton on:click={() => isAddMode.set(true)} >
-      <span class="material-icons">
-        add
-      </span>
-    </HeaderButton>
+    <svelte:component this={$activePane.headerContent} />
   </div>
 </header>
 

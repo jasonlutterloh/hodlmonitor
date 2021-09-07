@@ -1,16 +1,16 @@
 <script>
-	import {totalValue} from "../store.js";
-import {getDollarDisplayValue} from "./utils.js";
+  export let title;
+  export let value;
 </script>
 
 <div>
-  <h2>Total Value</h2> 
-  <p>${getDollarDisplayValue($totalValue)}</p>
+  <h2>{title}</h2> 
+  <p>{value}</p>
 </div>
 
 <style>
   div{
-    background:var(--primary-color);
+    background:var(--total-value-color);
     color: var(--alt-text-color);
     margin: 0 auto;
     padding: 2em 1em;
@@ -30,7 +30,7 @@ import {getDollarDisplayValue} from "./utils.js";
   }
   @media(prefers-color-scheme: dark){
     div{
-      background:var(--body-color);
+      background:var(--total-value-color);
       color: var(--primary-color);
       border-bottom: 1px solid var(--border-color);
     }

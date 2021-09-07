@@ -1,12 +1,12 @@
 <script>
   export let results;
-  export let holdingToAdd;
+  export let itemToAdd;
 </script>
 <div class="results">
   <p>Select Crypto</p>
   <ul>
   {#each $results as result}
-    <li role="button" on:click={() => holdingToAdd.set(result)}>{result.name} ({result.symbol.toUpperCase()})
+    <li role="button" on:click={() => itemToAdd.set(result)}>{result.name} ({result.symbol.toUpperCase()})
       <span class="material-icons">add</span>
     </li>
   {/each}

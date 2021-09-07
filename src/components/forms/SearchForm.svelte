@@ -1,9 +1,9 @@
 <script>
   import {writable} from "svelte/store";
-  import TextInput from "../../../components/forms/TextInput.svelte";
-  import ButtonContainer from "../../../components/buttons/ButtonContainer.svelte";
-  import FormButton from "../../../components/buttons/FormButton.svelte";
-  import {cryptoList} from "../../../store";
+  import TextInput from "./TextInput.svelte";
+  import ButtonContainer from "../buttons/ButtonContainer.svelte";
+  import FormButton from "../buttons/FormButton.svelte";
+  import {cryptoList} from "../../store";
 
   export let results;
   
@@ -11,8 +11,8 @@
   const searchError = writable(false);
 
   export const filterCrypto = (searchTerm) => {
-    let filteredList = $cryptoList.filter(crypto => {
-      if (crypto.symbol.toUpperCase() == searchTerm.toUpperCase() || crypto.name.toUpperCase() == searchTerm.toUpperCase()){
+    const filteredList = $cryptoList.filter(crypto => {
+      if (crypto.symbol.toUpperCase() == searchTerm.toUpperCase() || crypto.name.toUpperCase() == searchTerm.toUpperCase()) {
         return true;
       }
     });
