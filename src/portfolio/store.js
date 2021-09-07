@@ -3,7 +3,6 @@ import { snackbar } from "../store";
 import { getDollarDisplayValue, getPercentage } from "../utils";
 
 export const portfolio = createPortfolio();
-export const isEditMode = writable(false);
 export const lastUpdated = writable(localStorage.getItem("portfolioLastUpdated") || "");
 export const selectedItem = writable({});
 
@@ -117,22 +116,22 @@ export const displayData = derived([portfolio, totalValue], ([$portfolio, $total
       {
         name: "Portfolio Percentage",
         value: getPercentage(item.value, $totalValue),
-        color: "var(--item-detail-color)",
+        dataType: "default",
       },
       {
         name: "Quantity",
         value: item.amountHeld,
-        color: "var(--item-detail-color)",
+        dataType: "default",
       },
       {
         name: "Current Price",
         value: getDollarDisplayValue(item.price),
-        color: "var(--item-detail-color)",
+        dataType: "default",
       },
       {
         name: "Current Value",
         value: getDollarDisplayValue(item.value),
-        color: "var(--item-detail-color)",
+        dataType: "default",
       },
     ];
 

@@ -37,6 +37,7 @@ import WatchlistItemOptions from "./WatchlistItemOptions.svelte";
           value={getDollarDisplayValue(item.price)}
           isSelected={$selectedId === item.id}
           clickHandler={() => handleClick(item.id)}
+          dataType={item.priceChange24h?.toString().includes("-") ? "negative" : "positive"}
         >
           <ListItemDetails details={item.details} />
           <WatchlistItemOptions />

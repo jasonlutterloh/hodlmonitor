@@ -1,14 +1,14 @@
 <script>
   export let name;
   export let value;
-  export let textColor;
+  export let dataType;
 
   // I don't love this textColor way of doing things but works for now.
 </script>
 
 <div>
   <span>{name}</span>
-  <span style="color:{textColor}">{value}</span>
+  <span data-type={dataType}>{value}</span>
 </div>
 
 <style>
@@ -29,6 +29,18 @@
   span:last-of-type {
     font-size: 1.4em;
     margin: 0 1em 1em 1em;
+  }
+  [data-type="default"]{
+    color: var(--item-detail-color);
+  }
+  [data-type="neutral"]{
+    color: var(--text-color);
+  }
+  [data-type="positive"]{
+    color: var(--positive);
+  }
+  [data-type="negative"]{
+    color: var(--negative);
   }
   @media only screen and (max-width: 568px) {
     div {

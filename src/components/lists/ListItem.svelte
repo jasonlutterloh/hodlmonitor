@@ -5,6 +5,7 @@
   export let value; 
   export let isSelected; 
   export let clickHandler;
+  export let dataType = null;
 
   const handleKeyboard = (event) => {
     if (event.keyCode == 13) {
@@ -26,7 +27,7 @@
     {#if !isSelected}
       <!-- Doing it this way to make the animation nice. Not ideal from a code perspective-->
       <div class="value-container" transition:fly={{ x: 200, duration: 500 }}>
-        <span>{value}</span>
+        <span data-type={dataType}>{value}</span>
       </div>
     {/if}
     <span class="material-icons">
@@ -74,7 +75,7 @@
     text-align: center;
   }
   @media (prefers-color-scheme: dark) {
-    .value-container span {
+    .value-container {
       color: var(--primary-color);
     }
   }

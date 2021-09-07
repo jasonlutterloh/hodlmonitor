@@ -1,5 +1,5 @@
 import { derived, writable } from "svelte/store";
-import { getDollarDisplayValue, getPercentage, getColor } from "../utils";
+import { getDollarDisplayValue, getPercentage} from "../utils";
 import { snackbar } from "../store";
 
 export const watchlist = createWatchlist();
@@ -86,30 +86,32 @@ export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiR
       {
         name: "Current Price",
         value: getDollarDisplayValue(item.price),
-        color: "var(--text-color)",
+        dataType: "neutral",
       },
       {
         name: "24hr % Change",
         value: priceChange24hPercentage,
-        color: getColor(priceChange24hPercentage),
+        dataType: priceChange24hPercentage.includes("-") ? "negative" : "positive",
       },
       {
         name: "All Time High",
         value: getDollarDisplayValue(item.ath),
-        color: "var(--text-color)",
+        dataType: "neutral",
       },
       {
         name: "24hr Price Change",
         value: priceChange24h,
-        color: getColor(priceChange24h),
+        dataType: priceChange24h.includes("-") ? "negative" : "positive",
       },
     ];
 
     returnData.push(displayItem);
-    // } else {
-    //   // Return something so data at least shows present
-    //   returnData.push(displayItem);
-    // }
+  });
+
+  returnData.sort(function(a, b) {
+    const textA = a.symbol.toUpperCase();
+    const textB = b.symbol.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
   });
 
   return returnData;

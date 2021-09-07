@@ -8,7 +8,7 @@
 <div transition:slide class="container">
   <div class="details">
     {#each details as detail}
-      <ListItemDetail name={detail.name} value={detail.value} textColor={detail.color}/>
+      <ListItemDetail name={detail.name} value={detail.value} dataType={detail.dataType}/>
     {/each}
   </div>
 </div>
