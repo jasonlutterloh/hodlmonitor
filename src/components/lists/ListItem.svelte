@@ -64,7 +64,6 @@
     flex: 0 1 auto;
     padding: 1em 0.8em 1em 1.4em;
     cursor: pointer;
-    outline: 0;
   }
   .name-container {
     flex: 1 1 auto;

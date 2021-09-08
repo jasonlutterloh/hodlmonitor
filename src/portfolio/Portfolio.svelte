@@ -12,7 +12,6 @@
   import { getDollarDisplayValue } from "../utils.js";
 import PortfolioItemOptions from "./PortfolioItemOptions.svelte";
 
-  export let isHidden = true;
   let screenWidth;
 
   const handleClick = (item) => {
@@ -33,7 +32,6 @@ import PortfolioItemOptions from "./PortfolioItemOptions.svelte";
   tabindex="0"
 	aria-labelledby="portfolio-tab"
 	id="portfolio-panel"
-  hidden={isHidden}
 >
   <HeroSection title="Total Value" value={getDollarDisplayValue($totalValue)} />
   {#if $displayData.length > 0}

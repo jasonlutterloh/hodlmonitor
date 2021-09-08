@@ -32,8 +32,11 @@
 <Header />
 <main>
 	<Tabs />
-	<Portfolio isHidden = {!($activePane.id === "portfolio")} />
-	<Watchlist isHidden = {!($activePane.id === "watchlist")} />
+	{#if $activePane.id === "watchlist"}
+	<Watchlist />
+	{:else if $activePane.id === "portfolio"} 
+		<Portfolio />
+	{/if}
 	<Snackbar />
 </main>
 <Footer />
