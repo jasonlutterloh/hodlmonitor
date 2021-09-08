@@ -18,6 +18,9 @@ function createSnackbarSystem() {
         ), timeout
       );
     },
+    dismiss: () => {
+      update((messages) => []);
+    },
   };
 }
 

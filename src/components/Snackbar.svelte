@@ -4,8 +4,8 @@
 </script>
 
 {#if $snackbar.length > 0}
-  <div transition:fade>
-    <h2 class="sr-only">Informational Messages:</h2>
+  <div transition:fade on:click={() => snackbar.dismiss()}>
+    <h2 class="sr-only">Informational Messages (Click to dismiss):</h2>
     <ul>
       {#each $snackbar as message}
         <li>{message}</li>
