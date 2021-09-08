@@ -8,14 +8,14 @@ function createSnackbarSystem() {
 
   return {
     subscribe,
-    addMessage: (newMessage) => {
+    addMessage: (newMessage, timeout = 5000) => {
       update((messages) => [...messages, newMessage]);
       setTimeout(() =>
         update((messages) =>
           // eslint-disable-next-line comma-dangle
           messages.filter((message) => message !== newMessage)
         // eslint-disable-next-line comma-dangle
-        ), 8000
+        ), timeout
       );
     },
   };

@@ -148,7 +148,7 @@ export const displayData = derived([portfolio, totalValue], ([$portfolio, $total
 
 export const updatePortfolioPrices = (symbols) => {
   if (symbols.length > 0) {
-    snackbar.addMessage("Portfolio prices refreshing...");
+    snackbar.addMessage("Portfolio prices refreshing...", 2000);
     fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=" + symbols)
         .then((result) => {
           return result.json();

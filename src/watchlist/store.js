@@ -119,7 +119,7 @@ export const displayData = derived([watchlist, apiResponse], ([$watchlist, $apiR
 
 export const updateWatchlistPrices = (symbols) => {
   if (symbols.length > 0) {
-    snackbar.addMessage("Watchlist prices refreshing...");
+    snackbar.addMessage("Watchlist prices refreshing...", 2000);
     fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" +
         symbols +
